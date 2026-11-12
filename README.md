@@ -4,7 +4,7 @@ Aplicación de escritorio (Windows) para editar vídeos verticales de TikTok en 
 **suscripción de Claude** (nunca una API key de pago). Corta silencios y tomas falsas, transcribe y subtitula,
 añade zooms, transiciones, música con ducking, efectos y stickers, y entrega el vídeo en 1080x1920 a -14 LUFS.
 
-Versión actual: **0.6.1**
+Versión actual: **0.7.0**
 
 ## Qué hace
 

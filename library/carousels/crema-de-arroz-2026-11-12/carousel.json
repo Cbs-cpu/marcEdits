@@ -1,0 +1,56 @@
+{
+  "id": "crema-de-arroz-2026-11-12",
+  "title": "Crema de arroz",
+  "format": "tutorial-pasos",
+  "reference": null,
+  "size": [
+    1080,
+    1920
+  ],
+  "product": {
+    "name": "Crema de arroz",
+    "price": "",
+    "notes": "Desayuno para ponerse fuerte: mucha energía y un buen porcentaje de proteína. Varios sabores. Se agota cada vez que sale stock; acaban de reponer. Si compras más de una, envío gratis. Las fotos son fotogramas de un vídeo: úsalas solo para saber cómo es el paquete."
+  },
+  "slides": [
+    {
+      "n": 1,
+      "job": "gancho / resultado final",
+      "text": "Cómo desayunar con proteína en 3 pasos (sin madrugar)",
+      "html": "slides/01.html"
+    },
+    {
+      "n": 2,
+      "job": "paso 1",
+      "text": "Paso 1 / Echa la crema de arroz en un bol / Unas cucharadas, del sabor que más te guste",
+      "html": "slides/02.html"
+    },
+    {
+      "n": 3,
+      "job": "paso 2",
+      "text": "Paso 2 / Añade leche o agua caliente y remueve / Hasta que quede cremosa, sin grumos",
+      "html": "slides/03.html"
+    },
+    {
+      "n": 4,
+      "job": "paso 3",
+      "text": "Paso 3 / Ponle toppings / Plátano, frutos rojos o crema de cacahuete",
+      "html": "slides/04.html"
+    },
+    {
+      "n": 5,
+      "job": "truco extra",
+      "text": "Truco extra / Hazla con leche en vez de agua: queda más cremosa y sumas más proteína",
+      "html": "slides/05.html"
+    },
+    {
+      "n": 6,
+      "job": "producto + cta",
+      "text": "Crema de arroz, varios sabores / Se agota siempre y acaban de reponer. / Llevando más de una, envío gratis / Está en el carrito naranja",
+      "html": "slides/06.html"
+    }
+  ],
+  "caption": "Desayuno con proteína en 3 pasos y sin madrugar. Guárdalo para mañana.\n#cremadearroz #desayunoproteico #gym #recetasfit #tiktokshop",
+  "sound": "Self Aware - Temper City",
+  "style": "Ilustración SVG (assets/toons.js): paquete de crema de arroz, bol, leche y toppings con cara; foto real pequeña del paquete al final (assets/paquete.jpg, recorte de 04.jpg)"
+}

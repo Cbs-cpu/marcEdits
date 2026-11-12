@@ -1,0 +1,92 @@
+[
+ {
+  "id": "s1",
+  "clip": "c1",
+  "in": 4.03,
+  "out": 7.72,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Este es el desayuno para ponerse realmente fuerte."
+ },
+ {
+  "id": "s2",
+  "clip": "c1",
+  "in": 15.29,
+  "out": 16.9,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Es esto de aquí."
+ },
+ {
+  "id": "s3",
+  "clip": "c1",
+  "in": 18.09,
+  "out": 19.98,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Te va a aportar una gran fuente de energía,"
+ },
+ {
+  "id": "s4",
+  "clip": "c1",
+  "in": 21.48,
+  "out": 23.32,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "además de un gran porcentaje de proteína."
+ },
+ {
+  "id": "s5",
+  "clip": "c1",
+  "in": 26.46,
+  "out": 28.56,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Lo vas a tener en un montón de sabores,"
+ },
+ {
+  "id": "s6",
+  "clip": "c1",
+  "in": 30.27,
+  "out": 31.56,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "pero sí que tiene algo malo:"
+ },
+ {
+  "id": "s7",
+  "clip": "c1",
+  "in": 32.03,
+  "out": 33.72,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "cada vez que sale stock, se agotan."
+ },
+ {
+  "id": "s8",
+  "clip": "c1",
+  "in": 34.85,
+  "out": 37.96,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Pero justo ahora vas a estar de suerte: acaban de reponer nuevo stock."
+ },
+ {
+  "id": "s9",
+  "clip": "c1",
+  "in": 48.4,
+  "out": 54.1,
+  "zoom": 1.0,
+  "cx": 0.5,
+  "cy": 0.5,
+  "line": "Simplemente, si te aparece un carrito verde aquí abajo, accede corriendo y selecciona tu sabor favorito. Y si pillas más de una, tienes envío gratis, bro."
+ }
+]

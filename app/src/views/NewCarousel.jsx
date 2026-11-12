@@ -64,6 +64,9 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
   useEffect(() => {
     if (window.__MARC_TEST_IMAGES) addPhotos(window.__MARC_TEST_IMAGES);
     if (window.__MARC_TEST_PRODUCT) setProduct(window.__MARC_TEST_PRODUCT);
+    if (window.__MARC_TEST_TONE) setTone(window.__MARC_TEST_TONE);
+    if (window.__MARC_TEST_FORMAT) setFormatId(window.__MARC_TEST_FORMAT);
+    if (window.__MARC_TEST_CEXTRA) setExtra(window.__MARC_TEST_CEXTRA);
   }, []);
   const ref = refs?.find((r) => r.id === refId) || null;
   const format = formats.find((f) => f.id === formatId) || null;

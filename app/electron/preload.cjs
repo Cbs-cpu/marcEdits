@@ -46,6 +46,7 @@ contextBridge.exposeInMainWorld('api', {
   prepareEdit: (o) => ipcRenderer.invoke('edit:prepare', o),
   discardEdit: (id) => ipcRenderer.invoke('edit:discard', id),
   runEdit: (o) => ipcRenderer.invoke('edit:run', o),
+  runExpress: (o) => ipcRenderer.invoke('edit:express', o),
   toolsList: (cat) => ipcRenderer.invoke('tools:list', cat),
   toolsAdd: (cat, files) => ipcRenderer.invoke('tools:add', { cat, files }),
   toolsPreset: (o) => ipcRenderer.invoke('tools:preset', o),

@@ -45,6 +45,17 @@ The app launches `claude -p` in this folder. Speak to the user in Spanish.
 - `.claude/skills/tiktok-hooks/`: 3-second hook formulas, retention rules and TikTok caption rules (knowledge from
   sergebulaev/tiktok-skills, MIT; its Publora/Apify publishing code is deliberately NOT included). Every new edit
   writes `library/edited/<id>/caption.txt` (shown in the video's Info tab).
+- `.claude/skills/cut-video/`: the cut method (relative silence threshold, Spanish fillers, keep the last good take,
+  re-transcribe an isolated window around EVERY join, repetition scan before delivering). Adapted for Spanish/Windows
+  from louisedesadeleer/cut-video (MIT; original in `references/original-SKILL.md`). Every edit prompt points to it.
+- Black gradient look: `"look": "bold"` with `"grade"` set adds the top/bottom black gradient + light vignette.
+- **Express mode** (default in "Editar vídeo"): `engine/express.py <id> <videos…> [--title] [--notes] [--no-gradient]`
+  does everything in ONE process in ~20 s: faster-whisper (GPU if the CUDA pip libs work, see `engine/prep.py`),
+  real word bounds from audio energy (threshold max(floor+6, voice−32) dB), Claude in a single no-tools call
+  (`claude -p --tools "" --effort low`, JSON: words to drop, start word, caption, title), join verification in one
+  batched transcription, ffmpeg render (trim/concat, 12 ms audio fades, gradient PNG overlay, -14 LUFS, NVENC when
+  available). Writes the same files as a normal edit (incl. timeline.json, so it opens in the manual editor) plus
+  `work/express.json`. The full Claude flow stays for captions/effects/references.
 - Product spec (accounts, subscriptions, own server): `docs/SPEC.md` — nothing marked "Futuro" is built without approval.
 - Trending TikTok songs: `library/tools/tendencias.json` (list only; copyrighted, never downloaded or put in the
   video: the user adds them from TikTok when publishing).

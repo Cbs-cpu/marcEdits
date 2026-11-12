@@ -115,6 +115,8 @@ export const SUGGESTIONS = [
   { id: 'amarillo', text: 'Las palabras clave y los números, en grande y en amarillo.' },
   { id: 'sincabeza', text: 'Sin palabras detrás de la cabeza.' },
   { id: 'sinsfx', text: 'Sin efectos de sonido.' },
+  { id: 'sinemojis', text: 'Sin emojis ni stickers: look limpio, solo el vídeo.' },
+  { id: 'degradado', text: 'Degradado negro suave arriba y abajo con una viñeta ligera, para que se vea más cinematográfico (en timeline.json: "look": "bold" con "grade" activo). Ningún efecto más.' },
 ];
 
 const list = (items, empty) =>
@@ -257,9 +259,13 @@ ${list(effects, 'Elígelos tú (library/tools/efectos/, lee sus notas). ' + CHOO
 INDICACIONES
 ${tips.length ? tips.join('\n') : '- Ninguna extra.'}
 
+CORTES (la prioridad del cliente)
+- Sigue .claude/skills/cut-video/SKILL.md: umbral de silencio relativo al ruido de fondo, muletillas y tomas falsas fuera (te quedas con la última toma buena) y comprobación de CADA unión re-transcribiendo una ventana aislada. No entregues hasta que el escaneo de repeticiones salga limpio.
+
 GANCHO Y RETENCIÓN (skill tiktok-hooks: .claude/skills/tiktok-hooks/SKILL.md, léela)
 - Primer fotograma = la frase más fuerte o la tensión: nada de saludos, respiraciones ni intro antes de la primera palabra.
-- Texto de gancho en pantalla en los 0-3 s: 3-7 palabras, DISTINTO de lo que se dice (se ve sin sonido); elige la fórmula de references/hook-formulas.md que mejor encaje. Nunca inventes cifras.
+- Texto de gancho en pantalla en los 0-3 s (salvo que el usuario pida no poner textos): 3-7 palabras, DISTINTO de lo que se dice (se ve sin sonido); elige la fórmula de references/hook-formulas.md que mejor encaje. Nunca inventes cifras.
+- Las indicaciones del usuario mandan sobre estas reglas generales.
 - Sin tramos muertos de más de 3-4 s sin cambio visual (punch-in, B-roll, texto) y final en seco tras la última palabra para que el bucle enganche.
 
 ENTREGA

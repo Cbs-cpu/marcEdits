@@ -82,6 +82,11 @@ export default function NewEdit({ initial, onClose, onStarted }) {
   const [recipeId, setRecipeId] = useState(initial.recipeId || 'skill-video-edit');
   const [captionsId, setCaptionsId] = useState(null); // null = los del estilo · 'none' = sin subtítulos
   const [more, setMore] = useState(false);
+  // Exprés (por defecto): cortes perfectos + degradado en < 1 min, sin más preguntas · Completo: el asistente entero
+  const [express, setExpress] = useState(() => { try { return localStorage.getItem('edit.express') !== '0'; } catch { return true; } });
+  useEffect(() => { try { localStorage.setItem('edit.express', express ? '1' : '0'); } catch {} }, [express]);
+  const [gradient, setGradient] = useState(true);
+  const [notes, setNotes] = useState('');
   const [transitions, setTransitions] = useState([]);
   const [song, setSong] = useState(null);
   const [songVolume, setSongVolume] = useState('suave');
@@ -112,7 +117,15 @@ export default function NewEdit({ initial, onClose, onStarted }) {
     });
     if (!title) setTitle(list[0].split(/[\\/]/).pop().replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' '));
   };
-  useEffect(() => { if (window.__MARC_TEST_FILE) addFiles([].concat(window.__MARC_TEST_FILE)); }, []);
+  useEffect(() => {
+    if (!window.__MARC_TEST_FILE) return;
+    addFiles([].concat(window.__MARC_TEST_FILE));
+    // modo prueba: subtítulos, indicaciones y texto extra fijados desde el entorno
+    if (window.__MARC_TEST_CAPTIONS) setCaptionsId(window.__MARC_TEST_CAPTIONS);
+    if (window.__MARC_TEST_TIPS) setSuggestions((l) => [...new Set([...l, ...window.__MARC_TEST_TIPS])]);
+    if (window.__MARC_TEST_EXTRA) setExtra(window.__MARC_TEST_EXTRA);
+    if (window.__MARC_TEST_TITLE) setTitle(window.__MARC_TEST_TITLE);
+  }, []);
   const setF = (i, patch) => setFiles((fs) => fs.map((f, k) => (k === i ? { ...f, ...patch } : f)));
   const moveF = (i, d) => setFiles((fs) => { const a = [...fs]; const j = i + d; if (j < 0 || j >= a.length) return fs; [a[i], a[j]] = [a[j], a[i]]; return a; });
   const totalDur = files.reduce((a, f) => a + (f.dur || 0), 0);
@@ -160,6 +173,18 @@ export default function NewEdit({ initial, onClose, onStarted }) {
   const goTo = (name) => setStep(STEPS.indexOf(name));
   const close = () => { if (prep) api.discardEdit(prep.id); onClose(); };
 
+  const sendExpress = async () => {
+    setSending(true);
+    const a = await api.authStatus();
+    if (!a.loggedIn) { setNeedLogin(true); setSending(false); return; }
+    setPreparing(true);
+    try {
+      if (prep) await api.discardEdit(prep.id);
+      const p = await api.prepareEdit({ files: files.map((f) => ({ path: f.path, role: f.role, note: f.note })), title });
+      await api.runExpress({ id: p.id, title, notes: notes.trim(), gradient });
+      onStarted();
+    } finally { setPreparing(false); setSending(false); }
+  };
   const send = async () => {
     setSending(true);
     const a = await api.authStatus();
@@ -237,6 +262,30 @@ export default function NewEdit({ initial, onClose, onStarted }) {
           </div>
         )}
         <input className="field" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título" />
+        <div className="grid grid-cols-2 gap-2">
+          {[[true, '⚡ Exprés', 'menos de 1 min', 'Cortes perfectos y degradado negro. Sin subtítulos ni efectos: listo para subir.'],
+            [false, '🎬 Completo', '5-12 min', 'Claude edita con estilo: subtítulos, zooms, música, efectos, referencias.']].map(([v, t, d, txt]) => (
+            <button key={t} onClick={() => setExpress(v)}
+              className={`rounded-xl border px-3 py-2.5 text-left transition ${express === v ? 'border-accent/70 bg-accent/10' : 'border-line bg-card hover:border-white/20'}`}>
+              <div className="flex items-center gap-2 text-sm font-medium">{t}<span className="ml-auto text-[11px] font-normal text-muted">{d}</span></div>
+              <div className="mt-0.5 text-xs text-muted">{txt}</div>
+            </button>
+          ))}
+        </div>
+        {express && (
+          <div className="flex flex-col gap-2">
+            <button onClick={() => setGradient(!gradient)} className="flex items-center gap-2.5 rounded-lg border border-line bg-card px-3 py-2 text-left text-sm">
+              <span className={`grid size-4 shrink-0 place-items-center rounded border ${gradient ? 'border-accent bg-accent' : 'border-zinc-600'}`}>{gradient && <Check size={11} />}</span>
+              Degradado negro arriba y abajo (más cinematográfico)
+            </button>
+            <input className="field" value={notes} onChange={(e) => setNotes(e.target.value)}
+              placeholder="Indicaciones para los cortes (opcional): «quita la parte del precio», «la marca es Esamagna»…" />
+            {needLogin && (
+              <p className="flex items-center gap-2 text-xs text-amber-200">Claude no tiene la sesión iniciada.
+                <button className="btn-ghost py-1 text-xs" onClick={() => api.login()}><LogIn size={13} /> Iniciar sesión</button></p>
+            )}
+          </div>
+        )}
       </div>
     ),
     referencia: (
@@ -414,7 +463,11 @@ export default function NewEdit({ initial, onClose, onStarted }) {
 
         <div className="flex items-center justify-end gap-2 border-t border-line px-6 py-3.5">
           {step > 0 && <button className="btn-ghost mr-auto" onClick={() => setStep(step - 1)}>Atrás</button>}
-          {current === 'revision' ? (
+          {current === 'video' && express ? (
+            <button className="btn-primary" disabled={!files.length || sending || preparing} onClick={sendExpress}>
+              {preparing ? <><Loader2 size={15} className="animate-spin" /> Preparando…</> : <>⚡ Editar ya</>}
+            </button>
+          ) : current === 'revision' ? (
             <button className="btn-primary" disabled={sending || !prompt.trim()} onClick={send}><Send size={15} /> Enviar a Claude</button>
           ) : (
             <button className="btn-primary" disabled={!canNext || preparing} onClick={next}>

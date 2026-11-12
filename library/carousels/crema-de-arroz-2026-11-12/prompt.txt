@@ -1,0 +1,49 @@
+Eres el diseñador de carruseles de la app "Marc Edits". Crea un carrusel (post de fotos 9:16) para TikTok Shop, en español de España.
+
+Usa la skill tiktok-carousel (.claude/skills/tiktok-carousel/SKILL.md): léela y síguela. Para el gancho de la primera diapositiva y la descripción, aplica .claude/skills/tiktok-hooks/ (fórmulas en references/hook-formulas.md). Formato de archivos en engine/CAROUSEL.md.
+
+
+CARRUSEL
+- ID: crema-de-arroz-2026-11-12
+- Carpeta: library/carousels/crema-de-arroz-2026-11-12/  (diapositivas en library/carousels/crema-de-arroz-2026-11-12/slides/01.html, 02.html…)
+- Título: Crema de arroz
+- Diapositivas: las que pida el formato/la referencia (entre 4 y 8 suele ser lo mejor)
+- Estilo: Ilustrado con muñecos animados: personajes y escenas dibujados en SVG (el producto convertido en personaje con cara y brazos), fondos de color con degradado y cajas de texto de TikTok. No uses las fotos como fondo; como mucho, una foto pequeña del producto real al final. Ejemplo hecho: library/carousels/pack-de-embutido-iberico-2026-11-12 (assets/toons.js).
+
+PRODUCTO
+- Nombre: Crema de arroz
+- Lo que hay que saber: Desayuno para ponerse fuerte: mucha energía y un buen porcentaje de proteína. Varios sabores. Se agota cada vez que sale stock; acaban de reponer. Si compras más de una, envío gratis. Las fotos son fotogramas de un vídeo: úsalas solo para saber cómo es el paquete.
+- Fotos del producto (míralas todas antes de escribir):
+- library/carousels/crema-de-arroz-2026-11-12/assets/01.jpg
+- library/carousels/crema-de-arroz-2026-11-12/assets/02.jpg
+- library/carousels/crema-de-arroz-2026-11-12/assets/03.jpg
+- library/carousels/crema-de-arroz-2026-11-12/assets/04.jpg
+
+FORMATO: 👣 Tutorial paso a paso (5-8 diapositivas)
+- Gancho tipo: «Cómo ___ en 3 pasos (sin ___)»
+- Estructura:
+  1. Resultado final primero
+  2. Paso 1
+  3. Paso 2
+  4. Paso 3
+  5. Truco extra
+  6. Producto usado + carrito
+- Look: Fotos del proceso con número de paso grande en una esquina.
+
+INDICACIONES
+- Da valor real en las primeras diapositivas; el producto entra como uso natural, no como anuncio.
+- Gancho que se entienda en medio segundo (las 5 primeras palabras mandan), con curiosidad o un número.
+- Última diapositiva con CTA al carrito naranja de TikTok Shop.
+- Sin emojis. Público: gente que entrena y quiere un desayuno rápido con proteína.
+
+ENTREGA
+- library/carousels/crema-de-arroz-2026-11-12/carousel.json (formato en engine/CAROUSEL.md) con el texto exacto de cada diapositiva.
+- Render: python engine/carousel.py render crema-de-arroz-2026-11-12  → mira library/carousels/crema-de-arroz-2026-11-12/contact.jpg y cada PNG; corrige y vuelve a renderizar hasta que esté perfecto (ortografía, tildes, nada fuera de la zona segura, nada tapando caras o el producto).
+- library/carousels/crema-de-arroz-2026-11-12/caption.txt: descripción para TikTok (gancho corto + 3-5 hashtags del nicho) y en una línea aparte un sonido en tendencia que encaje (de library/tools/tendencias.json, solo el nombre: se añade desde TikTok).
+- Actualiza library/carousels/crema-de-arroz-2026-11-12/meta.json (añade slides, format, caption) sin borrar lo que ya tiene.
+- Sé eficiente: nada de pasos de más; un render, revisión y como mucho una o dos correcciones.
+- Termina con un resumen de 2 líneas.
+
+REGLAS DE EJECUCIÓN
+- Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.
+- No hay nadie para responder preguntas: decide tú y sigue hasta el final.

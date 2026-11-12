@@ -41,8 +41,8 @@ App de escritorio local para editar vídeos cortos verticales de TikTok en espa�
 | 0.3 | Opciones sobre vídeos editados (borrar, cambiar con Claude, ajustes rápidos, reproducción, versiones); canciones en tendencia; conversación por vídeo (`chat.json`, `--resume`); primer editor manual (`timeline.json`). |
 | 0.4 | Editor profesional (tira de fotogramas, formas de onda, velocidad, transiciones, stickers, efectos, imán, deshacer, exportar); vídeos con soporte de rangos HTTP (arreglo de «no carga el vídeo»); reel PRO del embutido. |
 | 0.5 | Varios vídeos por edición (orden fijo o libre, papel principal / B-roll), vídeos largos (duración objetivo, transcripción por trozos), paso de **referencia** en el asistente (enlace, archivo o skill; analizar y guardar como skill antes de editar); motor con `clips[].src`, `fit` (relleno / desenfocado / negro), volumen por plano y pista **B-roll**; editor con pestaña Vídeos, importar vídeos y pista B-roll. |
-
 | 0.6 | Inicio con dos pestañas **Vídeos / Carruseles**; carruseles para TikTok Shop (formatos en tendencia, referencias desde enlace o capturas, clonar, conversación con Claude, render HTML→PNG con Edge); **cronómetro** por vídeo y carrusel; análisis previo sin Claude (`engine/prep.py`, Whisper turbo: 35 s → 14 s por vídeo de 40 s); Claude en modo Rápido (`--effort medium`); formulario de 9 a 5 preguntas con **Sin subtítulos**; menos RAM (vistas bajo demanda, sin corrector ortográfico, tope de memoria); spec de cuentas y servidor propio en `docs/SPEC.md`. |
+| 0.7 | **Modo Exprés** (por defecto): edición completa en ~20 s (`engine/express.py`): Whisper turbo por GPU, Claude en una sola llamada sin herramientas, verificación de uniones y render directo con ffmpeg + degradado negro. Antes, el mismo vídeo tardaba 12:27 con el flujo completo. Skills `cut-video` (cortes) y `tiktok-hooks` (ganchos y descripción). |
 
 ## Cómo funciona por dentro
 

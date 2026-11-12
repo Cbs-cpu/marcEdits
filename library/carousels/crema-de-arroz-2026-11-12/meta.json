@@ -1,0 +1,26 @@
+{
+  "id": "crema-de-arroz-2026-11-12",
+  "title": "Crema de arroz",
+  "format": "tutorial-pasos",
+  "reference": null,
+  "product": {
+    "name": "Crema de arroz",
+    "price": "",
+    "notes": "Desayuno para ponerse fuerte: mucha energía y un buen porcentaje de proteína. Varios sabores. Se agota cada vez que sale stock; acaban de reponer. Si compras más de una, envío gratis. Las fotos son fotogramas de un vídeo: úsalas solo para saber cómo es el paquete."
+  },
+  "created": "2026-11-12T13:46:33",
+  "timing": {
+    "started": "2026-11-12T13:46:33",
+    "finished": "2026-11-12T13:49:35",
+    "seconds": 182
+  },
+  "slides": [
+    "slides/01.png",
+    "slides/02.png",
+    "slides/03.png",
+    "slides/04.png",
+    "slides/05.png",
+    "slides/06.png"
+  ],
+  "caption": "Desayuno con proteína en 3 pasos y sin madrugar. Guárdalo para mañana.\n#cremadearroz #desayunoproteico #gym #recetasfit #tiktokshop"
+}

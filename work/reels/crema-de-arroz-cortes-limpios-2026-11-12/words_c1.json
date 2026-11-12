@@ -1,0 +1,592 @@
+[
+ {
+  "text": "este",
+  "start": 4.02,
+  "end": 4.46
+ },
+ {
+  "text": "es",
+  "start": 4.46,
+  "end": 4.6
+ },
+ {
+  "text": "el",
+  "start": 4.6,
+  "end": 4.72
+ },
+ {
+  "text": "desayuno",
+  "start": 4.72,
+  "end": 5.26
+ },
+ {
+  "text": "para",
+  "start": 5.26,
+  "end": 5.48
+ },
+ {
+  "text": "ponerse",
+  "start": 5.48,
+  "end": 6.0
+ },
+ {
+  "text": "realmente",
+  "start": 6.0,
+  "end": 6.68
+ },
+ {
+  "text": "fuerte",
+  "start": 6.68,
+  "end": 7.72
+ },
+ {
+  "text": "es",
+  "start": 15.2,
+  "end": 15.64
+ },
+ {
+  "text": "esto",
+  "start": 15.64,
+  "end": 16.08
+ },
+ {
+  "text": "de",
+  "start": 16.08,
+  "end": 16.24
+ },
+ {
+  "text": "aquí",
+  "start": 16.24,
+  "end": 16.6
+ },
+ {
+  "text": "te",
+  "start": 17.76,
+  "end": 18.2
+ },
+ {
+  "text": "va",
+  "start": 18.2,
+  "end": 18.32
+ },
+ {
+  "text": "a",
+  "start": 18.32,
+  "end": 18.38
+ },
+ {
+  "text": "aportar",
+  "start": 18.38,
+  "end": 18.64
+ },
+ {
+  "text": "una",
+  "start": 18.64,
+  "end": 18.76
+ },
+ {
+  "text": "gran",
+  "start": 18.76,
+  "end": 18.94
+ },
+ {
+  "text": "fuente",
+  "start": 18.94,
+  "end": 19.28
+ },
+ {
+  "text": "de",
+  "start": 19.28,
+  "end": 19.38
+ },
+ {
+  "text": "energía",
+  "start": 19.38,
+  "end": 19.72
+ },
+ {
+  "text": "además",
+  "start": 21.4,
+  "end": 21.84
+ },
+ {
+  "text": "de",
+  "start": 21.84,
+  "end": 22.06
+ },
+ {
+  "text": "un",
+  "start": 22.06,
+  "end": 22.08
+ },
+ {
+  "text": "gran",
+  "start": 22.08,
+  "end": 22.22
+ },
+ {
+  "text": "porcentaje",
+  "start": 22.22,
+  "end": 22.66
+ },
+ {
+  "text": "de",
+  "start": 22.66,
+  "end": 22.8
+ },
+ {
+  "text": "proteína",
+  "start": 22.8,
+  "end": 23.28
+ },
+ {
+  "text": "lo",
+  "start": 26.58,
+  "end": 27.02
+ },
+ {
+  "text": "vas",
+  "start": 27.02,
+  "end": 27.24
+ },
+ {
+  "text": "a",
+  "start": 27.24,
+  "end": 27.3
+ },
+ {
+  "text": "tener",
+  "start": 27.3,
+  "end": 27.48
+ },
+ {
+  "text": "en",
+  "start": 27.48,
+  "end": 27.64
+ },
+ {
+  "text": "un",
+  "start": 27.64,
+  "end": 27.72
+ },
+ {
+  "text": "montón",
+  "start": 27.72,
+  "end": 27.94
+ },
+ {
+  "text": "de",
+  "start": 27.94,
+  "end": 28.06
+ },
+ {
+  "text": "sabores",
+  "start": 28.06,
+  "end": 28.52
+ },
+ {
+  "text": "pero",
+  "start": 30.0,
+  "end": 30.42
+ },
+ {
+  "text": "sí",
+  "start": 30.42,
+  "end": 30.58
+ },
+ {
+  "text": "que",
+  "start": 30.58,
+  "end": 30.7
+ },
+ {
+  "text": "tiene",
+  "start": 30.7,
+  "end": 30.9
+ },
+ {
+  "text": "algo",
+  "start": 30.9,
+  "end": 31.12
+ },
+ {
+  "text": "malo",
+  "start": 31.12,
+  "end": 31.52
+ },
+ {
+  "text": "cada",
+  "start": 31.52,
+  "end": 32.22
+ },
+ {
+  "text": "vez",
+  "start": 32.22,
+  "end": 32.4
+ },
+ {
+  "text": "que",
+  "start": 32.4,
+  "end": 32.54
+ },
+ {
+  "text": "sale",
+  "start": 32.54,
+  "end": 32.74
+ },
+ {
+  "text": "stock",
+  "start": 32.74,
+  "end": 32.98
+ },
+ {
+  "text": "se",
+  "start": 32.98,
+  "end": 33.18
+ },
+ {
+  "text": "agotan",
+  "start": 33.18,
+  "end": 33.64
+ },
+ {
+  "text": "o",
+  "start": 33.64,
+  "end": 34.06
+ },
+ {
+  "text": "se",
+  "start": 34.06,
+  "end": 34.2
+ },
+ {
+  "text": "encantan",
+  "start": 34.2,
+  "end": 34.74
+ },
+ {
+  "text": "pero",
+  "start": 34.74,
+  "end": 34.96
+ },
+ {
+  "text": "justo",
+  "start": 34.96,
+  "end": 35.22
+ },
+ {
+  "text": "ahora",
+  "start": 35.22,
+  "end": 35.44
+ },
+ {
+  "text": "vas",
+  "start": 35.44,
+  "end": 35.66
+ },
+ {
+  "text": "a",
+  "start": 35.66,
+  "end": 35.7
+ },
+ {
+  "text": "estar",
+  "start": 35.7,
+  "end": 35.88
+ },
+ {
+  "text": "de",
+  "start": 35.88,
+  "end": 36.04
+ },
+ {
+  "text": "suerte",
+  "start": 36.04,
+  "end": 36.38
+ },
+ {
+  "text": "acaban",
+  "start": 36.38,
+  "end": 36.96
+ },
+ {
+  "text": "de",
+  "start": 36.96,
+  "end": 37.04
+ },
+ {
+  "text": "reponer",
+  "start": 37.04,
+  "end": 37.36
+ },
+ {
+  "text": "nuevo",
+  "start": 37.36,
+  "end": 37.66
+ },
+ {
+  "text": "stock",
+  "start": 37.66,
+  "end": 38.0
+ },
+ {
+  "text": "simplemente",
+  "start": 38.0,
+  "end": 38.9
+ },
+ {
+  "text": "si",
+  "start": 38.9,
+  "end": 39.16
+ },
+ {
+  "text": "te",
+  "start": 39.16,
+  "end": 39.26
+ },
+ {
+  "text": "aparece",
+  "start": 39.26,
+  "end": 39.48
+ },
+ {
+  "text": "un",
+  "start": 39.48,
+  "end": 41.02
+ },
+ {
+  "text": "enlace",
+  "start": 41.02,
+  "end": 41.32
+ },
+ {
+  "text": "verde",
+  "start": 41.32,
+  "end": 41.58
+ },
+ {
+  "text": "aquí",
+  "start": 41.58,
+  "end": 41.78
+ },
+ {
+  "text": "abajo",
+  "start": 41.78,
+  "end": 42.06
+ },
+ {
+  "text": "accede",
+  "start": 42.06,
+  "end": 42.64
+ },
+ {
+  "text": "corriendo",
+  "start": 42.64,
+  "end": 43.08
+ },
+ {
+  "text": "simplemente",
+  "start": 43.08,
+  "end": 44.0
+ },
+ {
+  "text": "si",
+  "start": 44.0,
+  "end": 44.42
+ },
+ {
+  "text": "te",
+  "start": 44.42,
+  "end": 44.52
+ },
+ {
+  "text": "aparece",
+  "start": 44.52,
+  "end": 44.7
+ },
+ {
+  "text": "un",
+  "start": 44.7,
+  "end": 44.84
+ },
+ {
+  "text": "carrito",
+  "start": 44.84,
+  "end": 45.08
+ },
+ {
+  "text": "verde",
+  "start": 45.08,
+  "end": 45.3
+ },
+ {
+  "text": "aquí",
+  "start": 45.3,
+  "end": 45.46
+ },
+ {
+  "text": "abajo",
+  "start": 45.46,
+  "end": 45.76
+ },
+ {
+  "text": "accede",
+  "start": 45.76,
+  "end": 46.2
+ },
+ {
+  "text": "corriendo",
+  "start": 46.2,
+  "end": 46.56
+ },
+ {
+  "text": "selecciona",
+  "start": 46.56,
+  "end": 46.94
+ },
+ {
+  "text": "tu",
+  "start": 46.94,
+  "end": 47.06
+ },
+ {
+  "text": "usador",
+  "start": 47.06,
+  "end": 47.26
+ },
+ {
+  "text": "favorito",
+  "start": 47.26,
+  "end": 48.12
+ },
+ {
+  "text": "simplemente",
+  "start": 48.12,
+  "end": 48.68
+ },
+ {
+  "text": "si",
+  "start": 48.68,
+  "end": 48.96
+ },
+ {
+  "text": "te",
+  "start": 48.96,
+  "end": 49.04
+ },
+ {
+  "text": "aparece",
+  "start": 49.04,
+  "end": 49.24
+ },
+ {
+  "text": "un",
+  "start": 49.24,
+  "end": 49.38
+ },
+ {
+  "text": "carrito",
+  "start": 49.38,
+  "end": 49.6
+ },
+ {
+  "text": "verde",
+  "start": 49.6,
+  "end": 49.78
+ },
+ {
+  "text": "aquí",
+  "start": 49.78,
+  "end": 49.94
+ },
+ {
+  "text": "abajo",
+  "start": 49.94,
+  "end": 50.18
+ },
+ {
+  "text": "accede",
+  "start": 50.18,
+  "end": 50.58
+ },
+ {
+  "text": "corriendo",
+  "start": 50.58,
+  "end": 50.9
+ },
+ {
+  "text": "selecciona",
+  "start": 50.9,
+  "end": 51.28
+ },
+ {
+  "text": "tu",
+  "start": 51.28,
+  "end": 51.38
+ },
+ {
+  "text": "usador",
+  "start": 51.38,
+  "end": 51.62
+ },
+ {
+  "text": "favorito",
+  "start": 51.62,
+  "end": 51.96
+ },
+ {
+  "text": "y",
+  "start": 51.96,
+  "end": 52.04
+ },
+ {
+  "text": "tú",
+  "start": 52.04,
+  "end": 52.04
+ },
+ {
+  "text": "si",
+  "start": 52.04,
+  "end": 52.2
+ },
+ {
+  "text": "pillas",
+  "start": 52.2,
+  "end": 52.5
+ },
+ {
+  "text": "más",
+  "start": 52.5,
+  "end": 52.66
+ },
+ {
+  "text": "de",
+  "start": 52.66,
+  "end": 52.76
+ },
+ {
+  "text": "una",
+  "start": 52.76,
+  "end": 52.94
+ },
+ {
+  "text": "tienes",
+  "start": 52.94,
+  "end": 53.18
+ },
+ {
+  "text": "envío",
+  "start": 53.18,
+  "end": 53.56
+ },
+ {
+  "text": "gratis",
+  "start": 53.56,
+  "end": 53.84
+ },
+ {
+  "text": "bro",
+  "start": 53.84,
+  "end": 53.96
+ }
+]

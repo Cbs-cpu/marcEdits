@@ -1,0 +1,21 @@
+{
+  "id": "crema-de-arroz-cortes-limpios-2026-11-12",
+  "title": "Crema de arroz · cortes limpios",
+  "source": "inputs/crema-de-arroz-cortes-limpios-2026-11-12.mp4",
+  "recipe": "Bold · skill video-edit",
+  "created": "2026-11-12T13:50:00",
+  "timing": {
+    "started": "2026-11-12T13:50:00",
+    "steps": {
+      "analisis": 16,
+      "claude": 731
+    },
+    "finished": "2026-11-12T14:02:27",
+    "seconds": 747
+  },
+  "duration_in": 57.7,
+  "duration_out": 22.92,
+  "cuts": 9,
+  "transcript": "Este es el desayuno para ponerse realmente fuerte. Es esto de aquí. Te va a aportar una gran fuente de energía, además de un gran porcentaje de proteína. Lo vas a tener en un montón de sabores, pero sí que tiene algo malo: cada vez que sale stock, se agotan. Pero justo ahora vas a estar de suerte: acaban de reponer nuevo stock. Simplemente, si te aparece un carrito verde aquí abajo, accede corriendo y selecciona tu sabor favorito. Y si pillas más de una, tienes envío gratis, bro.",
+  "project": "work/reels/crema-de-arroz-cortes-limpios-2026-11-12"
+}

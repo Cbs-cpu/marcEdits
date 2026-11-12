@@ -879,6 +879,35 @@ ipcMain.handle('edit:prepare', async (_e, { file, files, title }) => {
   prepared.set(id, { inputAbs: inputs[0].abs, cleanup, inputs: out });
   return { id, input: out[0].path, inputs: out };
 });
+// Modo Exprés: engine/express.py hace TODO en un proceso (transcribir, Claude en una sola llamada sin herramientas,
+// verificar uniones, render ffmpeg con degradado). Objetivo: < 1 minuto.
+ipcMain.handle('edit:express', (_e, { id, title, notes, gradient }) => {
+  const p = prepared.get(id);
+  if (!p) throw new Error('Vídeo no preparado');
+  prepared.delete(id);
+  const dir = path.join(DIRS.edited, id);
+  const mp = path.join(dir, 'meta.json');
+  const t0 = Date.now();
+  writeJSON(mp, { id, title: title || id, source: rel(p.inputAbs), recipe: 'Exprés · cortes + degradado', status: 'processing',
+    created: isoNow(), express: true, timing: { started: isoNow() } });
+  if (notes) fs.writeFileSync(path.join(dir, 'prompt.txt'), `Modo Exprés
+Indicaciones: ${notes}`, 'utf8');
+  send('lib:changed', 'edited');
+  return runJob({
+    kind: 'edit', title: `⚡ Exprés · ${title || id}`, cmd: skillPython(),
+    args: ['engine/express.py', id, ...p.inputs.map((x) => x.path), '--title', title || '', ...(notes ? ['--notes', notes] : []),
+      ...(gradient === false ? ['--no-gradient'] : [])],
+    parser: (l, emit) => emit(l.replace(/^\[express\]\s*/, ''), l.startsWith('[express]') ? 'tool' : 'dim'),
+    onDone: (code) => {
+      const m = readJSON(mp, {});
+      m.timing = { ...(m.timing || {}), finished: isoNow(), seconds: secsSince(t0) };
+      if (code !== 0 || !exists(path.join(dir, 'final.mp4'))) m.status = 'error'; else delete m.status;
+      writeJSON(mp, m);
+      send('lib:changed', 'edited');
+    },
+  });
+});
+
 ipcMain.handle('edit:discard', (_e, id) => {
   const p = prepared.get(id);
   if (!p) return false;
@@ -1230,7 +1259,9 @@ function createWindow() {
       await clickHas('Carruseles'); await wait(600);
       for (const v of ['Mis carruseles', 'Referencias', 'Formatos en tendencia']) { await click(v); await shot(`car-${v}`); }
       if (process.env.MARC_TEST_CAROUSEL) {
-        await js(`window.__MARC_TEST_IMAGES = ${JSON.stringify(process.env.MARC_TEST_CAROUSEL.split('|'))}; window.__MARC_TEST_PRODUCT = ${process.env.MARC_TEST_PRODUCT || 'null'}`);
+        await js(`window.__MARC_TEST_IMAGES = ${JSON.stringify(process.env.MARC_TEST_CAROUSEL.split('|'))}; window.__MARC_TEST_PRODUCT = ${process.env.MARC_TEST_PRODUCT || 'null'};
+          window.__MARC_TEST_TONE = ${JSON.stringify(process.env.MARC_TEST_TONE || '')}; window.__MARC_TEST_FORMAT = ${JSON.stringify(process.env.MARC_TEST_FORMAT || '')};
+          window.__MARC_TEST_CEXTRA = ${JSON.stringify(process.env.MARC_TEST_CEXTRA || '')}`);
         await clickHas('Crear carrusel'); await wait(1500);
         for (let i = 0; i < 3; i++) { await shot(`car-wizard-${i}`); await click('Seguir'); await wait(1200); }
         await wait(1500);
@@ -1280,8 +1311,17 @@ function createWindow() {
         await js(`document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))`);
       }
       if (process.env.MARC_TEST_FILE) {
-        await js(`window.__MARC_TEST_FILE = ${JSON.stringify(process.env.MARC_TEST_FILE.split('|'))}`);
+        await js(`window.__MARC_TEST_FILE = ${JSON.stringify(process.env.MARC_TEST_FILE.split('|'))};
+          window.__MARC_TEST_CAPTIONS = ${JSON.stringify(process.env.MARC_TEST_CAPTIONS || '')}; window.__MARC_TEST_TIPS = ${JSON.stringify((process.env.MARC_TEST_TIPS || '').split(',').filter(Boolean))};
+          window.__MARC_TEST_EXTRA = ${JSON.stringify(process.env.MARC_TEST_EXTRA || '')}; window.__MARC_TEST_TITLE = ${JSON.stringify(process.env.MARC_TEST_TITLE || '')}`);
         await click('Editar vídeo');
+        if (process.env.MARC_TEST_EXPRESS) {
+          await wait(1500); await clickHas('Exprés'); await shot('express-0');
+          await clickHas('Editar ya'); await waitJobs('express-run', 10);
+          await click('Vídeos editados'); await shot('express-hecho');
+          app.quit(); return;
+        }
+        await clickHas('Completo');
         for (let i = 0; i < 11; i++) {
           if (i === 0) await wait(1500);
           if (i === 1 && process.env.MARC_TEST_REF) await js(`[...document.querySelectorAll('button')].find(b => b.textContent.includes(${JSON.stringify(process.env.MARC_TEST_REF)}))?.click()`);

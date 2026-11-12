@@ -33,6 +33,11 @@ python -m pip install --upgrade openai-whisper gallery-dl   # gallery-dl: descar
 
 Paso '4/7 Skill video-edit: entorno de Python, HyperFrames y efectos de sonido'
 python .claude\skills\video-edit\scripts\setup.py
+# Con tarjeta NVIDIA: librerías CUDA para que la transcripción vaya por GPU (modo Exprés en segundos)
+if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) {
+  & .claude\skills\video-edit\.venv\Scripts\python.exe -m pip install --upgrade nvidia-cublas-cu12 "nvidia-cudnn-cu12==9.*"
+  Remove-Item library\.cache\hw.json -ErrorAction SilentlyContinue   # se vuelve a detectar el PC
+}
 
 Paso '5/7 Efectos de sonido a Herramientas → Sonidos y a los proyectos de ejemplo'
 $sfx = Join-Path $Root '.claude\skills\video-edit\assets\template\assets\sfx'

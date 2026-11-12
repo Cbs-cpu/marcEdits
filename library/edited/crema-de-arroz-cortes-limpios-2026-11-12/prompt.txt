@@ -1,0 +1,81 @@
+Eres el editor de vídeo de la app "Marc Edits". Edita este vídeo vertical (9:16) para TikTok.
+
+VÍDEO
+- Entrada: inputs/crema-de-arroz-cortes-limpios-2026-11-12.mp4 (57.7 s)
+- Título: Crema de arroz · cortes limpios
+- ID de salida: crema-de-arroz-cortes-limpios-2026-11-12
+
+ANÁLISIS PREVIO (ya hecho por la app antes de llamarte; NO lo repitas)
+- library/edited/crema-de-arroz-cortes-limpios-2026-11-12/work/prep.json: por cada vídeo, duración, tamaño, fps, palabras con tiempos (Whisper large-v3-turbo, español), frases, silencios (silencedetect -40 dB / 0.08 s) y hoja de fotogramas (library/edited/crema-de-arroz-cortes-limpios-2026-11-12/work/sheet_N.jpg, mírala para saber qué hay en el vídeo).
+- Transcripción en formato whisper por vídeo: el campo "transcript" de cada entrada de prep.json (sirve tal cual para engine/edit.py --transcript).
+- La ingesta de la skill video-edit YA está hecha en work/reels/crema-de-arroz-cortes-limpios-2026-11-12/ (sources.json, words_cN.json, transcript.txt, work/sheets.jpg): NO ejecutes ingest.py; sigue desde el paso siguiente de la skill.
+- Si prep.json no existe (el análisis falló), haz tú la transcripción como diga el estilo.
+- Revisa la transcripción con criterio (nombres de marca, números, tildes) en vez de volver a transcribir.
+
+VELOCIDAD (el usuario cronometra cada edición)
+- Ve directo: lee solo lo que necesitas, no repitas análisis ni renders de prueba completos; comprueba cortes con fotogramas sueltos y renderiza el vídeo final una vez (como mucho una corrección).
+- Encadena comandos en un mismo Bash cuando no dependan de mirar el resultado.
+
+
+ESTILO
+Usa la skill "video-edit" (.claude/skills/video-edit/SKILL.md): léela entera, con sus references, y síguela.
+- Look: bold.
+- Carpeta de proyecto de la skill: work/reels/crema-de-arroz-cortes-limpios-2026-11-12
+- Referencia de cómo debe quedar: work/reels/embutido/build.py (vídeo del embutido ibérico, que al usuario le encanta).
+- Audio en ESPAÑOL: sus scripts de transcripción ya usan Whisper large-v3 con language=es. Nunca uses modelos ".en".
+
+SUBTÍTULOS
+SIN SUBTÍTULOS: el usuario no quiere subtítulos. No pongas subtítulos ni palabras de lo que se dice en pantalla (en timeline.json, sin pista de subtítulos ni palabras detrás de la cabeza). Los textos de gancho o stickers solo si el estilo los pide y aportan.
+
+TRANSICIONES
+Elígelas tú (library/tools/transiciones/, lee sus notas). Lo que mejor funcione para este vídeo según el estilo, las referencias analizadas (library/references/*/analysis.md, .claude/skills/ref-*/) y los vídeos ya editados que gustan (work/reels/embutido/build.py).
+
+MÚSICA DE FONDO
+Sin música.
+
+SONIDOS
+Ninguno.
+
+EFECTOS
+Elígelos tú (library/tools/efectos/, lee sus notas). Lo que mejor funcione para este vídeo según el estilo, las referencias analizadas (library/references/*/analysis.md, .claude/skills/ref-*/) y los vídeos ya editados que gustan (work/reels/embutido/build.py).
+
+INDICACIONES
+- Quita los silencios y las pausas muertas, con cortes limpios (confírmalos con silencedetect -40 dB / 0.08 s).
+- Quita las tomas falsas, las repeticiones y las palabras que sobran cuando se equivoca; deja solo la toma buena de cada frase.
+- Transcripción perfecta: revisa cada palabra, tildes, números y nombres de marca; los subtítulos dicen exactamente lo que se dice.
+- Que el gancho entre en los 2 primeros segundos, sin nada de relleno al principio.
+- Sin efectos de sonido.
+- Sin emojis ni stickers: look limpio, solo el vídeo.
+- Degradado negro suave arriba y abajo con una viñeta ligera, para que se vea más cinematográfico (en timeline.json: "look": "bold" con "grade" activo). Ningún efecto más.
+- Edición sencilla y lista para subir: SOLO cortes perfectos y el degradado negro. Sin subtítulos, sin emojis, sin stickers, sin textos en pantalla (tampoco texto de gancho), sin zooms ni transiciones llamativas, sin música ni efectos de sonido. No hace falta recortar a la persona (cutout). Lo importante: que no quede ni un silencio, muletilla, toma falsa ni repetición, y que empiece directamente en la primera frase fuerte.
+
+CORTES (la prioridad del cliente)
+- Sigue .claude/skills/cut-video/SKILL.md: umbral de silencio relativo al ruido de fondo, muletillas y tomas falsas fuera (te quedas con la última toma buena) y comprobación de CADA unión re-transcribiendo una ventana aislada. No entregues hasta que el escaneo de repeticiones salga limpio.
+
+GANCHO Y RETENCIÓN (skill tiktok-hooks: .claude/skills/tiktok-hooks/SKILL.md, léela)
+- Primer fotograma = la frase más fuerte o la tensión: nada de saludos, respiraciones ni intro antes de la primera palabra.
+- Texto de gancho en pantalla en los 0-3 s (salvo que el usuario pida no poner textos): 3-7 palabras, DISTINTO de lo que se dice (se ve sin sonido); elige la fórmula de references/hook-formulas.md que mejor encaje. Nunca inventes cifras.
+- Las indicaciones del usuario mandan sobre estas reglas generales.
+- Sin tramos muertos de más de 3-4 s sin cambio visual (punch-in, B-roll, texto) y final en seco tras la última palabra para que el bucle enganche.
+
+ENTREGA
+- El vídeo final va en library/edited/crema-de-arroz-cortes-limpios-2026-11-12/final.mp4 (1080x1920, 30 fps) y una copia para móvil en library/edited/crema-de-arroz-cortes-limpios-2026-11-12/final-movil.mp4 (720p).
+- Miniatura: library/edited/crema-de-arroz-cortes-limpios-2026-11-12/thumb.jpg (ffmpeg -ss 1, scale=540:-1).
+- library/edited/crema-de-arroz-cortes-limpios-2026-11-12/meta.json con: id, title, source, recipe ("Bold · skill video-edit"), duration_in, duration_out, cuts (número de planos), created (ISO), transcript (texto final) y project (la carpeta de trabajo con el build/EDL para poder hacer cambios después, p. ej. work/reels/crema-de-arroz-cortes-limpios-2026-11-12).
+- Descripción para TikTok en library/edited/crema-de-arroz-cortes-limpios-2026-11-12/caption.txt (reglas de la skill tiktok-hooks: 1-3 líneas, 3-5 hashtags al final y una línea «Sonido: …» con una canción de library/tools/tendencias.json que encaje).
+- Guion limpio en library/scripts/crema-de-arroz-cortes-limpios-2026-11-12.md ("# Crema de arroz · cortes limpios" y luego hook / desarrollo / CTA).
+- Render final con el motor de la app (así el editor manual lo abre entero y se puede retocar): escribe library/edited/crema-de-arroz-cortes-limpios-2026-11-12/timeline.json (formato en engine/TIMELINE.md: planos, textos, stickers, efectos, música, sonidos y, si hay recorte de la persona, cutout con su sig) y ejecuta «python engine/timeline.py render crema-de-arroz-cortes-limpios-2026-11-12»; copia library/edited/crema-de-arroz-cortes-limpios-2026-11-12/editor/render.mp4 a final.mp4. Ejemplo de reel terminado: library/edited/embutido-reel-pro-2026-11-09/timeline.json. Si usas la skill video-edit, aprovecha su análisis, sus cortes y su recorte (subject.webm), pero el resultado final sale de timeline.json.
+- Antes de entregar, comprueba el render final: fotogramas de cada corte y una transcripción del vídeo final para confirmar que no sobra ni falta ninguna palabra.
+- Termina con un resumen de 2-3 líneas: qué has cortado y qué palabras sobrantes has quitado.
+
+MEZCLA DE SONIDO
+- La voz manda: es lo que más se oye y siempre se entiende.
+- Música de fondo con ducking: baja sola cuando se habla (ffmpeg sidechaincompress con la voz como sidechain: threshold 0.02-0.05, ratio 6-10, attack 20 ms, release 300-400 ms) y sube un poco en los huecos sin voz. Antes del ducking, la música ya va 15-20 dB por debajo de la voz. Fade-in 0.5 s y fade-out 0.8-1 s al final.
+- Efectos de sonido cortos y por debajo de la voz (unos -8 a -12 dB respecto a ella), alineados al fotograma del corte o de la palabra; nunca dos a la vez encima de una frase.
+- Si la voz tiene ruido de fondo o reverberación, límpiala con suavidad (highpass 80 Hz, afftdn suave) sin que suene robótica.
+- Master final para TikTok: loudnorm a -14 LUFS integrados, true peak -1.5 dBTP, AAC 192 kbps 48 kHz. Comprueba con ebur128/volumedetect que no hay picos que saturen ni saltos de volumen entre cortes.
+- Escucha (analiza) las uniones: sin clics (micro-fades de 10-30 ms) ni cambios bruscos de ruido de fondo entre planos.
+
+REGLAS DE EJECUCIÓN
+- Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.
+- No hay nadie para responder preguntas: decide tú y sigue hasta el final.

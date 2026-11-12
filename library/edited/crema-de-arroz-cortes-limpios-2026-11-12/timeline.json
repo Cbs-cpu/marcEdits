@@ -1,0 +1,108 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/crema-de-arroz-cortes-limpios-2026-11-12.mp4",
+ "clips": [
+  {
+   "in": 4.03,
+   "out": 7.72,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 15.29,
+   "out": 16.9,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 18.09,
+   "out": 19.98,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 21.48,
+   "out": 23.32,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 26.46,
+   "out": 28.56,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 30.27,
+   "out": 31.56,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 32.03,
+   "out": 33.72,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 34.85,
+   "out": 37.96,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 48.4,
+   "out": 54.1,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false,
+  "pos": "top",
+  "color": "#FAE67A",
+  "height": 8
+ }
+}

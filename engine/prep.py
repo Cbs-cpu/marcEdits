@@ -34,6 +34,24 @@ TEXT = {'capture_output': True, 'encoding': 'utf-8', 'errors': 'replace'}
 NOWIN = {'creationflags': 0x08000000} if os.name == 'nt' else {}   # sin ventanas de consola
 
 
+# Librerías CUDA instaladas con pip (nvidia-cublas-cu12, nvidia-cudnn-cu12) en el entorno de Python: Windows no las
+# encuentra solo; se añaden al PATH para que faster-whisper pueda usar la GPU NVIDIA.
+def _cuda_dlls():
+    import glob
+    import site
+    for sp in site.getsitepackages() + [site.getusersitepackages()]:
+        for d in glob.glob(os.path.join(sp, 'nvidia', '*', 'bin')):
+            os.environ['PATH'] = d + os.pathsep + os.environ.get('PATH', '')
+            if hasattr(os, 'add_dll_directory'):
+                try:
+                    os.add_dll_directory(d)
+                except OSError:
+                    pass
+
+
+_cuda_dlls()
+
+
 def log(msg):
     print(f'[prep] {msg}', flush=True)
 
@@ -66,7 +84,8 @@ def cuda_works():
             return False
     except Exception:
         return False
-    code = ('import numpy as np\nfrom faster_whisper import WhisperModel\n'
+    code = (f'import sys\nsys.path.insert(0, {os.path.dirname(os.path.abspath(__file__))!r})\nimport prep\n'   # registra las DLL de CUDA
+            'import numpy as np\nfrom faster_whisper import WhisperModel\n'
             'm = WhisperModel("tiny", device="cuda", compute_type="float16")\n'
             'list(m.transcribe(np.zeros(16000, dtype=np.float32))[0])\nprint("OK")')
     try:
@@ -80,20 +99,20 @@ def profile():
     path = os.path.join(CACHE, 'hw.json')
     try:
         hw = json.load(open(path, encoding='utf-8'))
-        if hw.get('schema') == 2:
+        if hw.get('schema') == 3:
             return hw
     except Exception:
         pass
     cores = os.cpu_count() or 4
     ram = ram_gb()
     gpu = cuda_works()
-    if gpu:
-        model, device, ctype = 'large-v3', 'cuda', 'float16'
+    if gpu:   # con GPU también turbo: mismo texto en español y ~3x más rápido que large-v3
+        model, device, ctype = 'large-v3-turbo', 'cuda', 'float16'
     elif ram >= 6:
         model, device, ctype = 'large-v3-turbo', 'cpu', 'int8'
     else:
         model, device, ctype = 'small', 'cpu', 'int8'
-    hw = {'schema': 2, 'cores': cores, 'ram_gb': ram, 'cuda': gpu, 'model': model, 'device': device,
+    hw = {'schema': 3, 'cores': cores, 'ram_gb': ram, 'cuda': gpu, 'model': model, 'device': device,
           'compute_type': ctype, 'threads': max(2, min(16, cores // 2))}
     os.makedirs(CACHE, exist_ok=True)
     json.dump(hw, open(path, 'w', encoding='utf-8'), indent=1)
