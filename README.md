@@ -27,7 +27,7 @@ Requisitos: Windows 10/11, conexión a internet, una cuenta de Claude con suscri
    ```
    (o descarga el ZIP desde GitHub y descomprímelo). Ponlo en una ruta fija, por ejemplo el Escritorio: la app
    guarda la ruta de esta carpeta.
-2. Dentro de la carpeta, clic derecho en **`instalar.ps1`** → *Ejecutar con PowerShell*
+2. Dentro de la carpeta, doble clic en **`INSTALAR.bat`**
    (o `powershell -ExecutionPolicy Bypass -File .\instalar.ps1`). Instala ffmpeg, Node.js, Python, yt-dlp, Git,
    Claude Code, Whisper, el entorno de la skill de edición y compila e instala la app. Tarda 10-20 minutos la primera
    vez. Si algún paso pide reiniciar la consola, ciérrala y vuelve a ejecutar el script: solo instala lo que falta.
