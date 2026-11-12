@@ -1,0 +1,8 @@
+[
+ {"id": "hook", "clip": "c1", "in": 2.57, "out": 5.86, "zoom": 1.0, "cx": 0.5, "cy": 0.35, "line": "Aunque parezca que te esté engañando con esto, no me dedico a la charcutería."},
+ {"id": "casa", "clip": "c1", "in": 7.03, "out": 10.62, "zoom": 1.15, "cx": 0.5, "cy": 0.35, "line": "Y es que yo no sé en qué momento me he encontrado con todo este embutido ibérico en mi casa."},
+ {"id": "pack", "clip": "c1", "in": 11.17, "out": 14.87, "zoom": 1.0, "cx": 0.5, "cy": 0.35, "line": "Lo único que hice fue pedir un pack para poder tener embutido para todo el invierno."},
+ {"id": "veinte", "clip": "c1", "in": 15.09, "out": 18.90, "zoom": 1.15, "cx": 0.5, "cy": 0.35, "line": "Pero yo pensaba que me llegarían 4 o 5 paquetes, y es que me han llegado 20."},
+ {"id": "empresa", "clip": "c1", "in": 22.20, "out": 27.47, "zoom": 1.0, "cx": 0.5, "cy": 0.35, "line": "Y es que la empresa esa magna ha lanzado unos packs exclusivos limitados que van a durar muy poco, evidentemente."},
+ {"id": "cta", "clip": "c1", "in": 29.38, "out": 35.42, "zoom": 1.15, "cx": 0.5, "cy": 0.35, "line": "Si a ti te sigue apareciendo un carrito verde aquí abajo, accede corriendo, que significa que todavía quedan las últimas unidades disponibles para ti."}
+]

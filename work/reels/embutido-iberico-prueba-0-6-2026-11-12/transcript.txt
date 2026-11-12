@@ -1,0 +1,19 @@
+===== c1  embutido-iberico-prueba-0-6-2026-11-12.mp4
+[  2.40-  4.30] aunque parezca que te esté engañando con esto
+[  4.30-  5.72] no me dedico a la charcutería
+[  5.72-  8.14] y es que yo no sé en qué momento
+[  8.14- 10.56] me he encontrado con todo este embutido ibérico en mi casa
+[ 10.56- 12.28] lo único que hice fue pedir
+[ 12.28- 14.80] un pack para poder tener embutido para todo el invierno
+[ 14.80- 16.26] pero yo pensaba que me llegarían
+[ 16.26- 18.38] 4 o 5 paquetes y es que me han llegado
+[ 18.38- 18.72] 20
+[ 21.92- 23.96] y es que la empresa esa magna ha lanzado
+[ 23.96- 26.40] unos packs exclusivos limitados que van a durar muy poco
+[ 27.02- 27.42] evidentemente
+[ 29.12- 31.02] si a ti te sigue apareciendo un carrito verde
+[ 31.02- 32.30] aquí abajo accede corriendo
+[ 32.30- 34.94] que significa que todavía quedan las últimas unidades disponibles
+[ 34.94- 35.34] para ti
+words: aunque@2.40 parezca@2.80 que@3.18 te@3.30 esté@3.42 engañando@3.58 con@3.94 esto@4.08 no@4.30 me@4.44 dedico@4.58 a@4.86 la@4.98 charcutería@5.00 y@5.72 es@6.46 que@6.60 yo@6.70 no@7.48 sé@7.58 en@7.68 qué@7.78 momento@7.84 me@8.14 he@8.28 encontrado@8.32 con@8.74 todo@8.98 este@9.20 embutido@9.38 ibérico@9.68 en@9.98 mi@10.10 casa@10.26 lo@10.56 único@11.32 que@11.56 hice@11.70 fue@11.84 pedir@12.00 un@12.28 pack@12.46 para@12.70 poder@12.90 tener@13.14 embutido@13.36 para@13.86 todo@14.04 el@14.20 invierno@14.34 pero@14.80 yo@15.22 pensaba@15.38 que@15.70 me@15.84 llegarían@15.92 4@16.26 o@16.54 5@16.66 paquetes@16.82 y@17.38 es@17.64 que@17.74 me@17.86 han@17.96 llegado@18.04 20@18.38 y@21.92 es@22.32 que@22.48 la@22.56 empresa@22.64 esa@22.90 magna@23.14 ha@23.46 lanzado@23.58 unos@23.96 packs@24.26 exclusivos@24.48 limitados@25.00 que@25.48 van@25.60 a@25.70 durar@25.76 muy@25.98 poco@26.12 evidentemente@27.02 si@29.12 a@29.58 ti@29.70 te@29.76 sigue@29.88 apareciendo@30.04 un@30.42 carrito@30.58 verde@30.82 aquí@31.02 abajo@31.22 accede@31.50 corriendo@31.92 que@32.30 significa@32.42 que@32.80 todavía@33.00 quedan@33.26 las@33.58 últimas@33.70 unidades@34.02 disponibles@34.36 para@34.94 ti@35.16
+speech map: S0.00 E0.43 S0.43 E1.20 S1.22 E1.71 S1.72 E2.19 S2.26 E2.63 S5.90 E5.98 S6.26 E6.34 S19.06 E19.15 S19.23 E19.38 S19.38 E21.89 S21.89 E22.02 S22.09 E22.24 S27.50 E27.59 S27.89 E29.40 S35.43 E35.71 S35.81 E35.90 S35.90 E36.34 S36.34 E36.83 S36.84 E37.50 S37.58 E38.66 S38.67 E39.13 S39.13 E39.94

@@ -1,0 +1,48 @@
+Eres el diseñador de carruseles de la app "Marc Edits". Crea un carrusel (post de fotos 9:16) para TikTok Shop, en español de España.
+
+Usa la skill tiktok-carousel (.claude/skills/tiktok-carousel/SKILL.md): léela y síguela. Formato de archivos en engine/CAROUSEL.md.
+
+
+CARRUSEL
+- ID: pack-de-embutido-iberico-2026-11-12
+- Carpeta: library/carousels/pack-de-embutido-iberico-2026-11-12/  (diapositivas en library/carousels/pack-de-embutido-iberico-2026-11-12/slides/01.html, 02.html…)
+- Título: Pack de embutido ibérico
+- Diapositivas: las que pida el formato/la referencia (entre 4 y 8 suele ser lo mejor)
+- Estilo: Nativo de TikTok: parece una publicación normal (fotos reales, cajas de texto de TikTok, capturas), nada de diseño de agencia.
+
+PRODUCTO
+- Nombre: Pack de embutido ibérico
+- Lo que hay que saber: Lomo, chorizo y salchichón ibéricos en sobres loncheados. Ideal para regalar o para tener en casa.
+- Fotos del producto (míralas todas antes de escribir):
+- library/carousels/pack-de-embutido-iberico-2026-11-12/assets/01.jpg
+- library/carousels/pack-de-embutido-iberico-2026-11-12/assets/02.jpg
+- library/carousels/pack-de-embutido-iberico-2026-11-12/assets/03.jpg
+- library/carousels/pack-de-embutido-iberico-2026-11-12/assets/04.jpg
+
+FORMATO: 🧩 Problema → solución (5-7 diapositivas)
+- Gancho tipo: «Si te pasa ___, mira esto» / «Llevaba años con ___ hasta que…»
+- Estructura:
+  1. Gancho con el dolor concreto (foto real del problema)
+  2. Por qué pasa (1 dato fácil)
+  3. Lo que probé y no funcionó
+  4. El producto en uso (foto real)
+  5. Resultado / detalle que convence
+  6. CTA: «está en el carrito naranja 🧡»
+- Look: Foto real a pantalla completa + texto en cajas blancas o negras estilo TikTok (TikTok Sans).
+
+INDICACIONES
+- Da valor real en las primeras diapositivas; el producto entra como uso natural, no como anuncio.
+- Gancho que se entienda en medio segundo (las 5 primeras palabras mandan), con curiosidad o un número.
+- Última diapositiva con CTA al carrito naranja de TikTok Shop.
+
+ENTREGA
+- library/carousels/pack-de-embutido-iberico-2026-11-12/carousel.json (formato en engine/CAROUSEL.md) con el texto exacto de cada diapositiva.
+- Render: python engine/carousel.py render pack-de-embutido-iberico-2026-11-12  → mira library/carousels/pack-de-embutido-iberico-2026-11-12/contact.jpg y cada PNG; corrige y vuelve a renderizar hasta que esté perfecto (ortografía, tildes, nada fuera de la zona segura, nada tapando caras o el producto).
+- library/carousels/pack-de-embutido-iberico-2026-11-12/caption.txt: descripción para TikTok (gancho corto + 3-5 hashtags del nicho) y en una línea aparte un sonido en tendencia que encaje (de library/tools/tendencias.json, solo el nombre: se añade desde TikTok).
+- Actualiza library/carousels/pack-de-embutido-iberico-2026-11-12/meta.json (añade slides, format, caption) sin borrar lo que ya tiene.
+- Sé eficiente: nada de pasos de más; un render, revisión y como mucho una o dos correcciones.
+- Termina con un resumen de 2 líneas.
+
+REGLAS DE EJECUCIÓN
+- Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.
+- No hay nadie para responder preguntas: decide tú y sigue hasta el final.

@@ -10,6 +10,25 @@ export const fmtDur = (s) => {
   return m ? `${m}:${String(r).padStart(2, '0')}` : `${r}s`;
 };
 
+// Cronómetro: 75 → «1:15», 3725 → «1:02:05»
+export const fmtClock = (s) => {
+  if (s == null) return '—';
+  s = Math.max(0, Math.round(s));
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+  return h ? `${h}:${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}` : `${m}:${String(r).padStart(2, '0')}`;
+};
+
+// Segundos que avanzan solos desde `start` (ms) mientras `running`
+export function useElapsed(start, running) {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    if (!running) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [running]);
+  return start ? (now - start) / 1000 : 0;
+}
+
 export const fmtDate = (iso) => {
   if (!iso) return '';
   const d = new Date(typeof iso === 'number' ? iso : iso);

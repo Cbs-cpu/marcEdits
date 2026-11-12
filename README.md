@@ -4,7 +4,7 @@ Aplicación de escritorio (Windows) para editar vídeos verticales de TikTok en 
 **suscripción de Claude** (nunca una API key de pago). Corta silencios y tomas falsas, transcribe y subtitula,
 añade zooms, transiciones, música con ducking, efectos y stickers, y entrega el vídeo en 1080x1920 a -14 LUFS.
 
-Versión actual: **0.5.0**
+Versión actual: **0.6.1**
 
 ## Qué hace
 
@@ -16,6 +16,10 @@ Versión actual: **0.5.0**
 | **Guiones** | Guiones guardados (gancho / desarrollo / CTA). |
 | **Herramientas** | Estilos de subtítulos, transiciones, canciones, sonidos, efectos y canciones en tendencia (solo lista). |
 | **Referencias** | Vídeos de referencia (TikTok, Instagram, YouTube o archivo). «Guardar como skill» hace que Claude los analice y los convierta en un estilo reutilizable. |
+| **Carruseles** (2.ª pestaña) | Posts de fotos 9:16 para TikTok Shop: sube las fotos del producto, elige un formato en tendencia o **clona** un carrusel (enlace de TikTok o capturas) y Claude escribe y diseña las diapositivas (PNG 1080x1920 + descripción). Conversación para cambios. |
+
+Cada vídeo y carrusel lleva un **cronómetro** (cuánto tardó de principio a fin). Abajo a la izquierda eliges
+**Rápido** (por defecto) o **Máx. calidad** para Claude.
 
 ## Instalar en otro ordenador
 
@@ -53,6 +57,10 @@ app/                 App Electron + React + Tailwind (npm start = compilar y abr
 engine/edit.py       Motor rápido (Whisper → cortes → zooms → subtítulos)
 engine/timeline.py   Render desde timeline.json (editor manual y Claude): varios vídeos, B-roll, mezcla -14 LUFS
 engine/TIMELINE.md   Formato de timeline.json
+engine/prep.py       Análisis previo sin Claude (transcripción rápida, silencios, hojas de fotogramas)
+engine/carousel.py   Carruseles: HTML → PNG 1080x1920 (Edge/Chrome), descarga de referencias (gallery-dl)
+library/carousels/   Carruseles hechos · library/carousel-refs/ referencias · library/tools/carruseles/ formatos
+docs/SPEC.md         Spec pendiente de aprobado (cuentas, suscripciones, servidor propio)
 library/edited/      Vídeos editados (final.mp4, thumb.jpg, meta.json, timeline.json, chat.json, prompt.txt)
 library/references/  Referencias (vídeo, análisis)
 library/scripts/     Guiones

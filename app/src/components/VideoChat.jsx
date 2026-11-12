@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { api } from '../lib.js';
 import { buildChatContext, CHANGE_CHIPS } from '../prompt.js';
+import { buildCarouselChatContext, CAROUSEL_CHIPS } from '../carouselPrompt.js';
 
 // ---------- panel flotante encima del cuadro de texto ----------
 function Pop({ title, onClose, children, wide }) {
@@ -154,7 +155,11 @@ function Message({ m }) {
   );
 }
 
-export default function VideoChat({ item }) {
+export default function VideoChat({ item, kind = 'video' }) {
+  const car = kind === 'carousel';
+  const chatApi = car
+    ? { get: api.carouselChatGet, add: api.carouselChatNew, send: api.carouselChatSend }
+    : { get: api.chatGet, add: api.chatNew, send: api.chatSend };
   const [chat, setChat] = useState({ session: null, messages: [], jobId: null });
   const [logs, setLogs] = useState([]);
   const [text, setText] = useState('');
@@ -165,7 +170,7 @@ export default function VideoChat({ item }) {
   const endRef = useRef(null);
   const taRef = useRef(null);
 
-  const load = () => api.chatGet(item.id).then(setChat);
+  const load = () => chatApi.get(item.id).then(setChat);
   useEffect(() => {
     load();
     const off = api.onChat((id) => id === item.id && load());
@@ -185,7 +190,7 @@ export default function VideoChat({ item }) {
 
   const working = !!chat.jobId;
   const first = !chat.session && !chat.messages.some((m) => m.role === 'user');
-  const context = buildChatContext(item);
+  const context = car ? buildCarouselChatContext(item) : buildChatContext(item);
   const insert = (snippet) => {
     setText((t) => (t.trim() ? `${t.trimEnd()}\n${snippet}` : snippet));
     setPop(null);
@@ -198,12 +203,12 @@ export default function VideoChat({ item }) {
     const a = await api.authStatus();
     if (!a.loggedIn) { setNeedLogin(true); setSending(false); return; }
     setNeedLogin(false);
-    await api.chatSend({ id: item.id, text: msg, context: first ? context : null });
+    await chatApi.send({ id: item.id, text: msg, context: first ? context : null });
     setText(''); setSending(false);
     load();
   };
 
-  const TOOLS = [
+  const TOOLS = car ? [] : [
     { id: 'subs', label: 'Subtítulos', icon: Type },
     { id: 'efectos', label: 'Efectos', icon: Sparkles, cat: 'efectos', ref: 'Efecto' },
     { id: 'transiciones', label: 'Transiciones', icon: Shuffle, cat: 'transiciones', ref: 'Transición' },
@@ -219,7 +224,7 @@ export default function VideoChat({ item }) {
         <span>Opus 5.5 · {chat.session ? 'Claude recuerda toda la conversación' : 'conversación nueva'}</span>
         {chat.messages.length > 0 && (
           <button className="ml-auto flex items-center gap-1 hover:text-white" disabled={working}
-            onClick={async () => { if (confirm('¿Empezar una conversación nueva? La actual se archiva.')) { await api.chatNew(item.id); load(); } }}>
+            onClick={async () => { if (confirm('¿Empezar una conversación nueva? La actual se archiva.')) { await chatApi.add(item.id); load(); } }}>
             <MessageSquarePlus size={13} /> Nueva conversación
           </button>
         )}
@@ -229,8 +234,9 @@ export default function VideoChat({ item }) {
         <div className="flex flex-col gap-3 pb-2">
           {chat.messages.length === 0 && (
             <div className="rounded-xl border border-dashed border-line p-4 text-sm text-zinc-300">
-              Pídele cambios a Claude como en un chat: «sube los subtítulos», «pon el efecto de shake en el 20», «quita la última frase»…
-              Cada vez que cambie el vídeo se guarda la versión anterior.
+              {car
+                ? 'Pídele cambios a Claude como en un chat: «otra versión del gancho», «letra más grande en la 3», «añade una diapositiva con el precio»… Cada vez que cambie el carrusel se guarda la versión anterior.'
+                : 'Pídele cambios a Claude como en un chat: «sube los subtítulos», «pon el efecto de shake en el 20», «quita la última frase»… Cada vez que cambie el vídeo se guarda la versión anterior.'}
               <button className="mt-2 flex items-center gap-1 text-xs text-muted hover:text-white" onClick={() => setShowCtx(!showCtx)}>
                 <ChevronDown size={12} className={`transition ${showCtx ? '' : '-rotate-90'}`} /> Ver el contexto que irá con el primer mensaje
               </button>
@@ -242,7 +248,7 @@ export default function VideoChat({ item }) {
             <div className="flex gap-2.5">
               <div className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-gradient-to-br from-accent to-[#ff7a59] text-[10px] font-bold">C</div>
               <div className="min-w-0 rounded-2xl rounded-tl-sm bg-white/[.06] px-3.5 py-2 text-[13px]">
-                <div className="flex items-center gap-2 text-zinc-200"><Loader2 size={14} className="animate-spin text-accent" /> Trabajando en el vídeo…</div>
+                <div className="flex items-center gap-2 text-zinc-200"><Loader2 size={14} className="animate-spin text-accent" /> {car ? 'Trabajando en el carrusel…' : 'Trabajando en el vídeo…'}</div>
                 {logs.map((l, i) => <div key={i} className="mt-1 truncate font-mono text-[11px] text-muted">› {l}</div>)}
               </div>
             </div>
@@ -253,7 +259,7 @@ export default function VideoChat({ item }) {
 
       {/* sugerencias rápidas */}
       <div className="mb-2 flex gap-1.5 overflow-x-auto pb-1">
-        {CHANGE_CHIPS.map((c) => (
+        {(car ? CAROUSEL_CHIPS : CHANGE_CHIPS).map((c) => (
           <button key={c} onClick={() => insert(c)} className="shrink-0 rounded-full border border-line bg-card px-2.5 py-1 text-xs text-zinc-300 hover:border-white/20">{c}</button>
         ))}
       </div>
@@ -285,7 +291,7 @@ export default function VideoChat({ item }) {
           </button>
         </div>
       </div>
-      {first && text.trim() && <p className="mt-1.5 text-[11px] text-muted">El primer mensaje va con el contexto del vídeo delante; los siguientes se envían tal cual.</p>}
+      {first && text.trim() && <p className="mt-1.5 text-[11px] text-muted">El primer mensaje va con el contexto {car ? 'del carrusel' : 'del vídeo'} delante; los siguientes se envían tal cual.</p>}
     </div>
   );
 }

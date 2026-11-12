@@ -1,0 +1,44 @@
+/* Base para diapositivas de carrusel de TikTok (1080x1920). Enlázalo desde slides/NN.html con
+   <link rel="stylesheet" href="../../../tools/carruseles/base.css">  */
+@font-face { font-family: "TikTok Sans"; src: url("../../../engine/fonts/TikTokSans.ttf"); font-weight: 300 900; }
+@font-face { font-family: "Montserrat Black"; src: url("../../../engine/fonts/Montserrat-Black.ttf"); }
+@font-face { font-family: "Montserrat ExtraBold"; src: url("../../../engine/fonts/Montserrat-ExtraBold.ttf"); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { font-family: "TikTok Sans", "Segoe UI", sans-serif; color: #fff; background: #000; position: relative; -webkit-font-smoothing: antialiased; }
+
+/* Zona segura: TikTok tapa arriba (pestañas), abajo (descripción, carrito, música) y la derecha (botones). */
+.safe { position: absolute; left: 64px; right: 150px; top: 200px; bottom: 470px; }
+
+/* Foto a pantalla completa */
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scrim-top { position: absolute; inset: 0 0 auto 0; height: 55%; background: linear-gradient(rgba(0,0,0,.55), transparent); }
+.scrim-bottom { position: absolute; inset: auto 0 0 0; height: 55%; background: linear-gradient(transparent, rgba(0,0,0,.6)); }
+
+/* Texto nativo de TikTok: cajas por línea (como el editor de texto de TikTok) */
+.tt { display: inline; font-weight: 700; font-size: 58px; line-height: 1.32; padding: 6px 16px; border-radius: 12px;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.tt.white { background: #fff; color: #000; }
+.tt.black { background: rgba(0,0,0,.82); color: #fff; }
+.tt.red { background: #fe2c55; color: #fff; }
+.tt.plain { background: none; text-shadow: 0 2px 8px rgba(0,0,0,.7), 0 0 2px rgba(0,0,0,.8); }
+
+/* Titular grande */
+.h1 { font-weight: 900; font-size: 104px; line-height: .98; letter-spacing: -.02em; }
+.h2 { font-weight: 800; font-size: 72px; line-height: 1.05; letter-spacing: -.01em; }
+.body { font-weight: 500; font-size: 46px; line-height: 1.3; }
+.num { font-weight: 900; font-size: 220px; line-height: .8; letter-spacing: -.04em; }
+.outline { -webkit-text-stroke: 10px rgba(0,0,0,.85); paint-order: stroke fill; }
+
+/* Precio / oferta */
+.price { font-weight: 900; font-size: 150px; letter-spacing: -.03em; }
+.strike { text-decoration: line-through; text-decoration-thickness: 8px; opacity: .7; }
+.badge { display: inline-block; font-weight: 900; font-size: 48px; padding: 10px 26px; border-radius: 999px; background: #fe2c55; color: #fff; }
+
+/* CTA del carrito naranja de TikTok Shop */
+.cart { display: inline-flex; align-items: center; gap: 18px; font-weight: 800; font-size: 50px; padding: 18px 34px;
+        border-radius: 999px; background: #ff7a1a; color: #fff; }
+
+/* Tarjeta tipo captura (notas, chat, comentario) */
+.card { background: #fff; color: #111; border-radius: 36px; padding: 48px 52px; box-shadow: 0 30px 80px rgba(0,0,0,.35); }

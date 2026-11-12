@@ -1,0 +1,104 @@
+{
+  "updated": "2026-11-12",
+  "notes": "Formatos de carrusel (post de fotos) que más se usan en TikTok Shop. TikTok admite de 2 a 35 fotos; lo que mejor retiene son 5-8. Los carruseles con producto anclado (carrito naranja) se crean desde la app de TikTok con «Fotos» y se enlaza el producto al publicar. Lo que más funciona: que parezca nativo (captura, nota, foto real) antes que un diseño de agencia; valor real antes del producto; una sola idea por diapositiva.",
+  "sources": [
+    "https://www.affiversemedia.com/?p=110819",
+    "https://lindseygamble.com/blog/tiktok-shop-expands-to-shoppable-photos",
+    "https://nestscale.com/blog/tiktok-photo-carousel-ideas.html",
+    "https://www.glossy.co/fashion/what-works-to-drive-sales-on-tiktok-shop-has-changed-creators-say/",
+    "https://www.decktopus.com/blog/tiktok-carousel-guide",
+    "https://skills.sh/maxxyart/viral-tiktok-skills/hook-notes-carousel"
+  ],
+  "formats": [
+    {
+      "id": "problema-solucion",
+      "name": "Problema → solución",
+      "slides": "5-7",
+      "emoji": "🧩",
+      "hook": "«Si te pasa ___, mira esto» / «Llevaba años con ___ hasta que…»",
+      "structure": ["Gancho con el dolor concreto (foto real del problema)", "Por qué pasa (1 dato fácil)", "Lo que probé y no funcionó", "El producto en uso (foto real)", "Resultado / detalle que convence", "CTA: «está en el carrito naranja 🧡»"],
+      "look": "Foto real a pantalla completa + texto en cajas blancas o negras estilo TikTok (TikTok Sans)."
+    },
+    {
+      "id": "antes-despues",
+      "name": "Antes / después",
+      "slides": "3-6",
+      "emoji": "✨",
+      "hook": "«Día 1 vs día 30 usando ___»",
+      "structure": ["Antes (con fecha o «día 1»)", "Qué cambié (el producto, sin parecer anuncio)", "Proceso / detalle", "Después", "CTA con el enlace del carrito"],
+      "look": "Dos fotos comparables (misma luz y encuadre), etiqueta grande ANTES / DESPUÉS."
+    },
+    {
+      "id": "favoritos-lista",
+      "name": "Lista: cosas que no sabías que necesitabas",
+      "slides": "6-9",
+      "emoji": "🛒",
+      "hook": "«5 cosas de TikTok Shop que me han cambiado la casa (la 3 es top)»",
+      "structure": ["Gancho con número + teaser «(la 3…)»", "Producto 1", "Producto 2", "Producto 3 = el que vendes (el mejor)", "Producto 4", "Producto 5", "CTA: guarda el post"],
+      "look": "Una foto de producto por diapositiva, número grande arriba y 1 línea de beneficio."
+    },
+    {
+      "id": "resena-honesta",
+      "name": "Reseña honesta (pros y contras)",
+      "slides": "5-7",
+      "emoji": "⭐",
+      "hook": "«Lo he probado 30 días: lo bueno y lo malo de ___»",
+      "structure": ["Gancho + foto del producto en la mano", "Lo bueno 1", "Lo bueno 2", "Lo malo (honesto, genera confianza)", "Para quién sí / para quién no", "Veredicto + precio + carrito"],
+      "look": "Fotos caseras con texto tipo sticker; iconos ✅ ❌."
+    },
+    {
+      "id": "notas-iphone",
+      "name": "Gancho + nota del iPhone (1+1)",
+      "slides": "2",
+      "emoji": "📝",
+      "hook": "«llevo 2 años haciendo ___ y estas son las 5 cosas que de verdad funcionan (la 3 me rompió)»",
+      "structure": ["Foto lifestyle real con el gancho en minúsculas, primera persona, sin mencionar el producto", "Captura de Notas de iOS: fecha, título y 5 puntos: 1-3 valor real, 4 el producto como hábito personal, 5 CTA de comunidad («guárdalo para…»)"],
+      "look": "Skill .claude/skills/hook-notes-carousel (MIT). Parece una captura, no un diseño."
+    },
+    {
+      "id": "comparativa-dupe",
+      "name": "Comparativa / dupe",
+      "slides": "4-6",
+      "emoji": "⚖️",
+      "hook": "«El de 60 € vs el de 15 € de TikTok Shop»",
+      "structure": ["Los dos productos juntos", "Diferencia 1", "Diferencia 2", "Precio (tachado vs oferta)", "Veredicto + carrito"],
+      "look": "Pantalla partida en dos, etiquetas de precio grandes."
+    },
+    {
+      "id": "tutorial-pasos",
+      "name": "Tutorial paso a paso",
+      "slides": "5-8",
+      "emoji": "👣",
+      "hook": "«Cómo ___ en 3 pasos (sin ___)»",
+      "structure": ["Resultado final primero", "Paso 1", "Paso 2", "Paso 3", "Truco extra", "Producto usado + carrito"],
+      "look": "Fotos del proceso con número de paso grande en una esquina."
+    },
+    {
+      "id": "captura-chat",
+      "name": "Captura de chat / reseña",
+      "slides": "3-5",
+      "emoji": "💬",
+      "hook": "«Mi amiga me preguntó qué uso para ___…»",
+      "structure": ["Captura de chat o comentario con la pregunta", "La respuesta (el producto)", "Foto real del producto", "CTA"],
+      "look": "Capturas dibujadas en HTML (WhatsApp / iMessage / comentario de TikTok) con texto inventado por ti, nunca reseñas falsas de clientes reales."
+    },
+    {
+      "id": "oferta-precio",
+      "name": "Oferta / precio",
+      "slides": "3-5",
+      "emoji": "🏷️",
+      "hook": "«Corre: ___ está a mitad de precio en TikTok Shop»",
+      "structure": ["Producto + precio tachado", "Qué incluye", "Por qué merece la pena", "Hasta cuándo / CTA carrito"],
+      "look": "Colores fuertes, precio enorme, sello de % de descuento. Solo con precios reales."
+    },
+    {
+      "id": "photo-dump",
+      "name": "Photo dump nativo",
+      "slides": "6-10",
+      "emoji": "📸",
+      "hook": "«mi rutina de mañana con ___ 🤍» (texto pequeño)",
+      "structure": ["Foto bonita con texto corto", "Fotos de la rutina/uso sin apenas texto", "El producto aparece de forma natural en 2-3 fotos", "Última: el producto con 1 línea + carrito"],
+      "look": "Fotos reales, texto mínimo blanco con sombra, estética casual. Lo más nativo de TikTok."
+    }
+  ]
+}

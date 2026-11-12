@@ -40,6 +40,7 @@ CÓMO TRABAJAR EN ESTA CONVERSACIÓN
 - Haz los cambios en el proyecto de trabajo (build.py / EDL / receta) y vuelve a renderizar desde el material limpio; si no hay proyecto, rehaz desde el original o, para algo pequeño, trabaja sobre final.mp4.
 - Cambia SOLO lo que se pide; lo demás queda igual.
 - Si existe ${dir}/timeline.json (el editor manual de la app), ES la fuente de verdad: haz los cambios en ese JSON (formato en engine/TIMELINE.md) y renderiza con «python engine/timeline.py render ${item.id}»; luego copia ${dir}/editor/render.mp4 a ${dir}/final.mp4. Así el editor manual y tú trabajáis sobre lo mismo.
+- Si te piden la descripción, los hashtags o un gancho mejor, sigue .claude/skills/tiktok-hooks/SKILL.md y guarda la descripción en ${dir}/caption.txt.
 - Cuando cambies el vídeo: sustituye ${dir}/final.mp4, regenera ${dir}/thumb.jpg (ffmpeg -ss 1, scale=540:-1) y ${dir}/final-movil.mp4 (720p), actualiza meta.json (duration_out, cuts, transcript, project) y comprueba el render (fotogramas de los cortes y transcripción).
 - Subtítulos: dicen exactamente lo que se dice, con tildes y nombres bien escritos. Si el usuario te da el texto corregido, respétalo palabra por palabra y mantén los tiempos.
 - Canciones en tendencia de TikTok (copyright): nunca las metas en el vídeo; se añaden desde TikTok al publicar.
@@ -64,6 +65,8 @@ export const CHANGE_CHIPS = [
   'Corrige un error en los subtítulos (explícalo abajo)',
   'Cambia la canción (dime cuál abajo)',
   'Quita la última frase',
+  'Gancho más fuerte en los 3 primeros segundos',
+  'Escribe la descripción y los hashtags para TikTok',
 ];
 
 // Prompt para cambiar un vídeo que ya está editado. Lo que devuelve es lo que se envía, tal cual.
@@ -140,7 +143,7 @@ function videosBlock({ inputs, input, title, id, mode, length }) {
     out.push(`
 MONTAJE CON VARIOS VÍDEOS
 - ${mode === 'libre' ? 'Decide tú el orden y qué partes usar de cada vídeo para contar la historia mejor (gancho fuerte al principio).' : 'Júntalos en el orden de la lista; dentro de cada uno quédate con lo bueno.'}
-- Analiza TODOS: transcribe cada vídeo con voz por separado (Whisper large-v3, language=es, timestamps por palabra) y mira fotogramas de cada uno (también de los que no tienen voz) para saber qué hay.
+- Analiza TODOS con lo que ya hay en prep.json (transcripción por vídeo y hoja de fotogramas de cada uno, también de los que no tienen voz) para saber qué hay en cada uno.
 - Los vídeos «Principal» llevan la voz y el hilo. Los «B-roll» van ENCIMA de la voz para ilustrar lo que se dice (pista "broll" de timeline.json, la voz sigue debajo) o como planos propios sin su audio ("mute": true). Si es «Que decida Claude», elige tú.
 - Material horizontal (pantallas, vídeos apaisados): "fit": "blur" para que se vea entero sobre fondo desenfocado, o recorta con zoom/cx/cy si el sujeto cabe en 9:16.
 - Iguala el sonido entre vídeos ("gain_db" por plano) para que no haya saltos de volumen, y que las uniones entre vídeos tengan transición o corte en un golpe de voz.
@@ -150,11 +153,27 @@ MONTAJE CON VARIOS VÍDEOS
     out.push(`
 VÍDEO LARGO
 - ${LENGTHS[length] || LENGTHS.corto}
-${long ? `- Transcribe por trozos para que ningún comando pase de 25 minutos: extrae el audio (ffmpeg -vn -ac 1 -ar 16000), pártelo en bloques de 5 min (-ss/-t) y transcribe cada bloque en un comando aparte, guardando cada JSON; luego suma el desfase de cada bloque a sus tiempos. Así no se pierde nada si un comando se corta.
+${long ? `- La transcripción completa ya está en prep.json (si faltara, transcribe por bloques de 5 min, cada uno en un comando aparte, y suma el desfase de cada bloque).
 - Haz primero un mapa del contenido (temas con sus tiempos) y elige los fragmentos con más gancho antes de cortar fino.
 - Los planos de timeline.json pueden apuntar a cualquier segundo del original ("in"/"out"); solo se renderiza lo elegido.` : ''}`.trimEnd());
   }
   return out.join('\n');
+}
+
+// Análisis previo que hace la app ANTES de llamar a Claude (engine/prep.py, sin gastar Claude)
+function prepBlock({ id, isSkill, multi }) {
+  const w = `library/edited/${id}/work`;
+  return `
+ANÁLISIS PREVIO (ya hecho por la app antes de llamarte; NO lo repitas)
+- ${w}/prep.json: por cada vídeo, duración, tamaño, fps, palabras con tiempos (Whisper large-v3-turbo, español), frases, silencios (silencedetect -40 dB / 0.08 s) y hoja de fotogramas (${w}/sheet_N.jpg, mírala para saber qué hay en el vídeo).
+- Transcripción en formato whisper por vídeo: el campo "transcript" de cada entrada de prep.json (sirve tal cual para engine/edit.py --transcript).${isSkill ? `
+- La ingesta de la skill video-edit YA está hecha en work/reels/${id}/ (sources.json, words_cN.json, transcript.txt, work/sheets.jpg): NO ejecutes ingest.py; sigue desde el paso siguiente de la skill.` : ''}
+- Si prep.json no existe (el análisis falló), haz tú la transcripción como diga el estilo.
+- Revisa la transcripción con criterio (nombres de marca, números, tildes) en vez de volver a transcribir.
+
+VELOCIDAD (el usuario cronometra cada edición)
+- Ve directo: lee solo lo que necesitas, no repitas análisis ni renders de prueba completos; comprueba cortes con fotogramas sueltos y renderiza el vídeo final una vez (como mucho una corrección).
+- Encadena comandos en un mismo Bash cuando no dependan de mirar el resultado.`;
 }
 
 // Bloque de la referencia «quiero que quede así»
@@ -193,15 +212,16 @@ export function buildPrompt(s) {
 - Audio en ESPAÑOL: sus scripts de transcripción ya usan Whisper large-v3 con language=es. Nunca uses modelos ".en".${multi ? '\n- Varios vídeos: pásaselos todos a la ingesta de la skill (admite varios clips) o usa su análisis por vídeo y monta en timeline.json con "src" por plano.' : ''}`
     : multi
     ? `Estilo «${recipe.name}» → receta library/tools/recipes/${recipe.id}.json (toma de ahí subtítulos, zooms y ritmo)${refSkill ? `\nSkill del estilo (léela entera y síguela): ${refSkill}` : ''}
-Con varios vídeos no uses engine/edit.py (solo admite uno): transcribe cada vídeo con Whisper large-v3 (--language es --word_timestamps True), decide los cortes con silencedetect y la energía, y escribe directamente timeline.json.`
+Con varios vídeos no uses engine/edit.py (solo admite uno): usa las transcripciones y silencios de prep.json, decide los cortes con la energía alrededor de cada corte y escribe directamente timeline.json.`
     : `Estilo «${recipe.name}» → receta library/tools/recipes/${recipe.id}.json${refSkill ? `\nSkill del estilo (léela entera y síguela): ${refSkill}` : ''}
 Proceso:
-1. Transcribe: whisper "${input}" --model large-v3 --language es --word_timestamps True --output_format json --output_dir library/edited/${id}/work
-2. Revisa la transcripción y prepara un JSON de correcciones {"palabra_mal_en_minusculas":"Palabra bien"}.
-3. python engine/edit.py --input "${input}" --recipe library/tools/recipes/${recipe.id}.json --id ${id} --title "${title}" --transcript library/edited/${id}/work/<nombre>.json --corrections '<json>'
-4. Lo que el motor no haga (música, sonidos, efectos, transiciones especiales) añádelo después con ffmpeg sobre ese resultado.`;
+1. La transcripción ya está hecha (ver ANÁLISIS PREVIO): revísala y prepara un JSON de correcciones {"palabra_mal_en_minusculas":"Palabra bien"}.
+2. python engine/edit.py --input "${input}" --recipe library/tools/recipes/${recipe.id}.json --id ${id} --title "${title}" --transcript <el "transcript" de prep.json> --corrections '<json>'
+3. Lo que el motor no haga (música, sonidos, efectos, transiciones especiales) añádelo después con ffmpeg sobre ese resultado.`;
 
-  const cap = captions && captions.id !== recipe.id
+  const cap = captions?.id === 'none'
+    ? 'SIN SUBTÍTULOS: el usuario no quiere subtítulos. No pongas subtítulos ni palabras de lo que se dice en pantalla (en timeline.json, sin pista de subtítulos ni palabras detrás de la cabeza). Los textos de gancho o stickers solo si el estilo los pide y aportan.'
+    : captions && captions.id !== recipe.id
     ? `Usa el estilo de subtítulos «${captions.name}» (library/tools/recipes/${captions.id}.json → "captions"${captions.data.captions_notes ? `; notas: ${captions.data.captions_notes}` : ''}).`
     : `Los del estilo elegido${r.captions_notes ? `: ${r.captions_notes}` : '.'}`;
 
@@ -213,6 +233,7 @@ Proceso:
   return `Eres el editor de vídeo de la app "Marc Edits". ${multi ? 'Monta estos vídeos en un único vídeo vertical (9:16) para TikTok.' : 'Edita este vídeo vertical (9:16) para TikTok.'}
 
 ${videosBlock({ inputs, input, title, id, mode, length })}
+${prepBlock({ id, isSkill, multi })}
 ${referenceBlock(reference)}
 
 ESTILO${reference ? ' BASE' : ''}
@@ -236,10 +257,16 @@ ${list(effects, 'Elígelos tú (library/tools/efectos/, lee sus notas). ' + CHOO
 INDICACIONES
 ${tips.length ? tips.join('\n') : '- Ninguna extra.'}
 
+GANCHO Y RETENCIÓN (skill tiktok-hooks: .claude/skills/tiktok-hooks/SKILL.md, léela)
+- Primer fotograma = la frase más fuerte o la tensión: nada de saludos, respiraciones ni intro antes de la primera palabra.
+- Texto de gancho en pantalla en los 0-3 s: 3-7 palabras, DISTINTO de lo que se dice (se ve sin sonido); elige la fórmula de references/hook-formulas.md que mejor encaje. Nunca inventes cifras.
+- Sin tramos muertos de más de 3-4 s sin cambio visual (punch-in, B-roll, texto) y final en seco tras la última palabra para que el bucle enganche.
+
 ENTREGA
 - El vídeo final va en library/edited/${id}/final.mp4 (1080x1920, 30 fps) y una copia para móvil en library/edited/${id}/final-movil.mp4 (720p).
 - Miniatura: library/edited/${id}/thumb.jpg (ffmpeg -ss 1, scale=540:-1).
 - library/edited/${id}/meta.json con: id, title, source, recipe ("${recipe.name}"), duration_in, duration_out, cuts (número de planos), created (ISO), transcript (texto final)${multi ? ', sources (la lista de vídeos de entrada)' : ''}${reference ? `, reference ("${reference.id}")` : ''} y project (la carpeta de trabajo con el build/EDL para poder hacer cambios después, p. ej. work/reels/${id}).
+- Descripción para TikTok en library/edited/${id}/caption.txt (reglas de la skill tiktok-hooks: 1-3 líneas, 3-5 hashtags al final y una línea «Sonido: …» con una canción de library/tools/tendencias.json que encaje).
 - Guion limpio en library/scripts/${id}.md ("# ${title}" y luego hook / desarrollo / CTA).
 - Render final con el motor de la app (así el editor manual lo abre entero y se puede retocar): escribe library/edited/${id}/timeline.json (formato en engine/TIMELINE.md: planos, textos, stickers, efectos, música, sonidos y, si hay recorte de la persona, cutout con su sig) y ejecuta «python engine/timeline.py render ${id}»; copia library/edited/${id}/editor/render.mp4 a final.mp4. Ejemplo de reel terminado: library/edited/embutido-reel-pro-2026-11-09/timeline.json. Si usas la skill video-edit, aprovecha su análisis, sus cortes y su recorte (subject.webm), pero el resultado final sale de timeline.json.
 - Antes de entregar, comprueba el render final: fotogramas de cada corte y una transcripción del vídeo final para confirmar que no sobra ni falta ninguna palabra.

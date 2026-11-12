@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Clapperboard, FolderOpen, Trash2, Plus, Loader2, Scissors, Timer, MoreVertical, Sparkles, SlidersHorizontal,
-  History, Info, MessageSquare, SquarePen, Repeat, Volume2, VolumeX, Send, Check, RotateCcw, LogIn, Pencil, AlertTriangle, Play,
+  History, Info, MessageSquare, Clock, Copy, SquarePen, Repeat, Volume2, VolumeX, Send, Check, RotateCcw, LogIn, Pencil, AlertTriangle, Play,
 } from 'lucide-react';
-import { api, media, fmtDur, fmtDate, useLibrary } from '../lib.js';
+import { api, media, fmtDur, fmtDate, fmtClock, useElapsed, useLibrary } from '../lib.js';
 import { Header, Empty, Badge } from '../components/ui.jsx';
 import VideoChat from '../components/VideoChat.jsx';
 
@@ -105,14 +105,43 @@ const Stat = ({ label, value }) => (
     <div className="font-display text-lg font-semibold">{value}</div>
   </div>
 );
+// Descripción para TikTok (caption.txt): la escribe Claude al editar; se puede retocar y copiar
+function CaptionBox({ item }) {
+  const [text, setText] = useState(item.caption || '');
+  const [copied, setCopied] = useState(false);
+  useEffect(() => setText(item.caption || ''), [item.caption]);
+  if (!item.caption && !text) {
+    return <div className="rounded-lg border border-dashed border-line p-3 text-xs text-muted">Sin descripción para TikTok. Pídesela a Claude en la conversación: «Escribe la descripción y los hashtags para TikTok».</div>;
+  }
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="text-xs font-medium text-muted">Descripción para TikTok</div>
+      <textarea className="field h-28 resize-none text-[13px]" value={text} onChange={(e) => setText(e.target.value)}
+        onBlur={() => text !== item.caption && api.saveEditedCaption({ id: item.id, caption: text })} />
+      <button className="btn-ghost self-start py-1.5 text-xs" onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); }}>
+        {copied ? <Check size={13} /> : <Copy size={13} />} {copied ? 'Copiada' : 'Copiar descripción'}
+      </button>
+    </div>
+  );
+}
+
 function InfoTab({ item }) {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pr-1">
+      <CaptionBox item={item} />
       <div className="grid grid-cols-3 gap-2">
         <Stat label="Original" value={fmtDur(item.duration_in)} />
         <Stat label="Final" value={fmtDur(item.duration_out)} />
         <Stat label="Planos" value={item.cuts ?? '—'} />
       </div>
+      {item.timing?.seconds != null && (
+        <div className="grid grid-cols-3 gap-2">
+          <Stat label="Tiempo de edición" value={fmtClock(item.timing.seconds)} />
+          <Stat label="Análisis (sin Claude)" value={fmtClock(item.timing.steps?.analisis)} />
+          <Stat label="Claude" value={fmtClock(item.timing.steps?.claude)} />
+        </div>
+      )}
+      {item.lastChange?.seconds != null && <div className="text-sm"><span className="text-muted">Último cambio: </span>{fmtClock(item.lastChange.seconds)}</div>}
       <div className="text-sm"><span className="text-muted">Estilo: </span>{item.recipe}</div>
       {item.transcript && (
         <div className="rounded-lg border border-line bg-ink p-3 text-sm leading-relaxed text-zinc-300 select-text">{item.transcript}</div>
@@ -197,6 +226,18 @@ function VideoWindow({ item, initialTab, onClose, onDeleted, onEditor }) {
   );
 }
 
+// ---------- cronómetro en vivo mientras se edita ----------
+function LiveClock({ it }) {
+  const started = it.timing?.started ? Date.parse(it.timing.started) : null;
+  const secs = useElapsed(started, true);
+  return (
+    <span className="flex flex-col items-center gap-1.5">
+      <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin text-accent" /> {it.ready ? 'Cambiando…' : 'Editando…'}</span>
+      {started && !it.ready && <span className="font-mono text-xs tabular-nums text-muted">{fmtClock(secs)}</span>}
+    </span>
+  );
+}
+
 // ---------- menú de opciones de cada tarjeta ----------
 function CardMenu({ it, onOpen, onDeleted, onEditor }) {
   const [open, setOpen] = useState(false);
@@ -271,7 +312,7 @@ export default function Edited({ onNew, onEditor }) {
                       </span>
                     </span>
                   ) : (
-                    <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin text-accent" /> {it.ready ? 'Cambiando…' : 'Editando…'}</span>
+                    <LiveClock it={it} />
                   )}
                 </div>
               )}
@@ -281,6 +322,7 @@ export default function Edited({ onNew, onEditor }) {
                   <div className="absolute bottom-2 left-2 flex gap-1">
                     <Badge tone="dark"><Timer size={11} /> {fmtDur(it.duration_out)}</Badge>
                     {it.cuts != null && <Badge tone="dark"><Scissors size={11} /> {it.cuts}</Badge>}
+                    {it.timing?.seconds != null && <Badge tone="dark" title="Tiempo de edición"><Clock size={11} /> {fmtClock(it.timing.seconds)}</Badge>}
                     {it.versions?.length > 0 && <Badge tone="dark"><History size={11} /> {it.versions.length}</Badge>}
                   </div>
                 </>

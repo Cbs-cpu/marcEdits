@@ -1,0 +1,55 @@
+{
+  "id": "pack-de-embutido-iberico-2026-11-12",
+  "title": "Pack de embutido ibérico",
+  "format": "problema-solucion",
+  "reference": null,
+  "size": [
+    1080,
+    1920
+  ],
+  "product": {
+    "name": "Pack de embutido ibérico",
+    "price": "",
+    "notes": "Lomo, chorizo y salchichón ibéricos en sobres loncheados. Ideal para regalar o para tener en casa."
+  },
+  "slides": [
+    {
+      "n": 1,
+      "job": "gancho",
+      "text": "Si te pillan visitas y no tienes nada que sacar, mira esto 👇",
+      "html": "slides/01.html"
+    },
+    {
+      "n": 2,
+      "job": "por qué pasa",
+      "text": "Por qué me pasaba 😩 / El embutido que te cortan en la charcutería se reseca en pocos días en la nevera. / Así que o lo comes ya… o cuando vienen visitas no te queda nada.",
+      "html": "slides/02.html"
+    },
+    {
+      "n": 3,
+      "job": "lo que no funcionó",
+      "text": "Lo que probé y no funcionó / ✗ Comprar la pieza entera: loncharla en casa nunca queda fino / ✗ Ir a la charcutería cada vez: imposible con prisas / ✗ Tirar de patatas y aceitunas: queda pobre",
+      "html": "slides/03.html"
+    },
+    {
+      "n": 4,
+      "job": "producto en uso",
+      "text": "Ahora siempre tengo sobres ya loncheados: lomo, chorizo y salchichón ibéricos",
+      "html": "slides/04.html"
+    },
+    {
+      "n": 5,
+      "job": "resultado",
+      "text": "Abres el sobre, lo pones en un plato y tabla lista 🙌 / Y para regalar, de lujo",
+      "html": "slides/05.html"
+    },
+    {
+      "n": 6,
+      "job": "cta",
+      "text": "Lomo, chorizo y salchichón ibéricos siempre en casa / Está en el carrito naranja 🧡",
+      "html": "slides/06.html"
+    }
+  ],
+  "caption": "Se acabó lo de no tener nada que sacar cuando vienen visitas 🥓 #embutidoiberico #tiktokshop #ibericos #ideasregalo #picoteo",
+  "style": "Ilustración de dibujos animados (SVG en assets/toons.js): chorizo, lomo y salchichón con cara; sin fotos del vídeo"
+}

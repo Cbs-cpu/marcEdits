@@ -29,7 +29,7 @@ if (-not (Tiene 'claude')) { npm install -g @anthropic-ai/claude-code; RecargarP
 claude --version
 
 Paso '3/7 Whisper (transcripción en español)'
-python -m pip install --upgrade openai-whisper
+python -m pip install --upgrade openai-whisper gallery-dl   # gallery-dl: descargar carruseles (posts de fotos) de TikTok
 
 Paso '4/7 Skill video-edit: entorno de Python, HyperFrames y efectos de sonido'
 python .claude\skills\video-edit\scripts\setup.py

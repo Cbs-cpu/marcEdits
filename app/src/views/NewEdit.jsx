@@ -7,19 +7,15 @@ import { buildPrompt, SUGGESTIONS, ROLES } from '../prompt.js';
 
 // Editar vídeo paso a paso: cada respuesta se va apilando como una conversación y al final
 // se enseña el prompt exacto que recibirá Claude (editable) antes de enviarlo.
-const STEPS = ['video', 'referencia', 'estilo', 'subtitulos', 'transiciones', 'musica', 'efectos', 'sugerencias', 'prompt', 'revision'];
+// Pocas preguntas: lo demás (transiciones, efectos, sonidos) lo decide Claude; se puede fijar en «Más opciones»
+const STEPS = ['video', 'referencia', 'estilo', 'musica', 'indicaciones', 'revision'];
 
 const Q = {
   video: '¿Qué vídeos editamos? (uno o varios para juntarlos)',
   referencia: '¿Quieres que quede como algún vídeo?',
-  estilo: '¿Qué estilo base sigo?',
-  subtitulos: '¿Qué subtítulos?',
-  transiciones: '¿Alguna transición en concreto? (si no, elige Claude)',
+  estilo: '¿Qué estilo y qué subtítulos?',
   musica: '¿Música de fondo?',
-  sonidos: '¿Qué sonidos?',
-  efectos: '¿Algún efecto en concreto? (si no, elige Claude)',
-  sugerencias: '¿Qué indicaciones le doy?',
-  prompt: '¿Algo más que quieras decirle?',
+  indicaciones: '¿Alguna indicación? (lo demás lo decide Claude)',
   revision: 'Esto es exactamente lo que va a recibir Claude.',
 };
 
@@ -77,14 +73,15 @@ export default function NewEdit({ initial, onClose, onStarted }) {
   const [files, setFiles] = useState([]);
   const [mode, setMode] = useState('orden');      // varios vídeos: 'orden' (el de la lista) | 'libre' (lo decide Claude)
   const [length, setLength] = useState(null);     // vídeos largos: corto | medio | largo | todo
-  const [title, setTitle] = useState(window.__MARC_TEST_FILE ? 'Prueba' : '');
+  const [title, setTitle] = useState(window.__MARC_TEST_FILE ? 'Embutido ibérico · prueba 0.6' : '');
   // referencia «quiero que quede así»: id de library/references (o null)
   const [refId, setRefId] = useState(initial.refId || null);
   const [refAnalyse, setRefAnalyse] = useState(true);
   const [refUrl, setRefUrl] = useState('');
   const [refErr, setRefErr] = useState(null);
   const [recipeId, setRecipeId] = useState(initial.recipeId || 'skill-video-edit');
-  const [captionsId, setCaptionsId] = useState(null); // null = los del estilo
+  const [captionsId, setCaptionsId] = useState(null); // null = los del estilo · 'none' = sin subtítulos
+  const [more, setMore] = useState(false);
   const [transitions, setTransitions] = useState([]);
   const [song, setSong] = useState(null);
   const [songVolume, setSongVolume] = useState('suave');
@@ -101,7 +98,7 @@ export default function NewEdit({ initial, onClose, onStarted }) {
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [step]);
 
   const recipe = recipes?.find((r) => r.id === recipeId);
-  const captions = recipes?.find((r) => r.id === captionsId) || recipe;
+  const captions = captionsId === 'none' ? { id: 'none', name: 'Sin subtítulos', data: {} } : recipes?.find((r) => r.id === captionsId) || recipe;
   const byFile = (cat, files) => tools[cat].filter((t) => files.includes(t.file));
   const toggle = (setter) => (k) => setter((l) => (l.includes(k) ? l.filter((x) => x !== k) : [...l, k]));
   const addFiles = async (paths) => {
@@ -167,7 +164,8 @@ export default function NewEdit({ initial, onClose, onStarted }) {
     setSending(true);
     const a = await api.authStatus();
     if (!a.loggedIn) { setNeedLogin(true); setSending(false); return; }
-    await api.runEdit({ id: prep.id, title, recipe: recipe?.name || recipeId, prompt });
+    // con la skill video-edit, el análisis previo deja hecha su ingesta en work/reels/<id>
+    await api.runEdit({ id: prep.id, title, recipe: recipe?.name || recipeId, prompt, skillProject: recipe?.data?.skill === 'video-edit' ? `work/reels/${prep.id}` : null });
     onStarted();
   };
 
@@ -177,14 +175,9 @@ export default function NewEdit({ initial, onClose, onStarted }) {
     video: files.length === 1 ? `${files[0].name}${title ? ` · «${title}»` : ''}`
       : `${files.length} vídeos (${fmtDur(totalDur)})${mode === 'libre' ? ' · orden libre' : ' · en este orden'}${title ? ` · «${title}»` : ''}`,
     referencia: !ref ? 'Ninguna' : `${ref.title}${ref.skill ? ' · skill ya analizada' : refAnalyse ? ' · analizar y guardar como skill' : ''}`,
-    estilo: recipe?.name,
-    subtitulos: captionsId && captionsId !== recipeId ? captions?.name : 'Los del estilo',
-    transiciones: transitions.length ? names('transiciones', transitions) : 'Que elija Claude',
+    estilo: `${recipe?.name} · ${captionsId === 'none' ? 'sin subtítulos' : captionsId && captionsId !== recipeId ? `subtítulos ${captions?.name}` : 'sus subtítulos'}${transitions.length ? ` · ${names('transiciones', transitions)}` : ''}${effects.length ? ` · ${names('efectos', effects)}` : ''}`,
     musica: !song ? 'Sin música' : song.startsWith('trend:') ? `${songObj(song)?.title} (se añade en TikTok)` : `${songObj(song)?.name} · volumen ${songVolume.replace('_', ' ')}`,
-    sonidos: sounds.length ? names('sonidos', sounds) : 'Los del estilo',
-    efectos: effects.length ? names('efectos', effects) : 'Que elija Claude',
-    sugerencias: `${suggestions.length} indicaciones`,
-    prompt: extra.trim() || 'Nada más',
+    indicaciones: `${suggestions.length} indicaciones${extra.trim() ? ` · «${extra.trim().slice(0, 60)}${extra.trim().length > 60 ? '…' : ''}»` : ''}`,
   };
 
   // ---- controles del paso actual ----
@@ -290,40 +283,53 @@ export default function NewEdit({ initial, onClose, onStarted }) {
       </div>
     ),
     estilo: (
-      <div className="grid grid-cols-4 gap-3">
-        {recipes?.map((r) => {
-          const th = refs?.find((x) => `ref-${x.id}` === r.id)?.thumb || (r.data.skill === 'video-edit' ? 'library/edited/embutido-iberico-skill-2026-11-08/thumb.jpg' : null);
-          const on = recipeId === r.id;
-          return (
-            <button key={r.id} onClick={() => setRecipeId(r.id)}
-              className={`relative overflow-hidden rounded-xl border-2 text-left transition ${on ? 'border-accent' : 'border-transparent hover:border-white/15'}`}>
-              {th ? <img src={media(th)} className="aspect-[9/16] w-full object-cover" /> : <CaptionPreview cap={r.data.captions} className="rounded-none" />}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2 pt-6 text-xs font-medium">
-                {r.fromReference && <Bookmark size={11} className="mr-1 inline" />}{r.name}
-              </div>
-              {on && <div className="absolute right-1.5 top-1.5 grid size-5 place-items-center rounded-full bg-accent"><Check size={12} /></div>}
+      <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-4 gap-3">
+          {recipes?.map((r) => {
+            const th = refs?.find((x) => `ref-${x.id}` === r.id)?.thumb || (r.data.skill === 'video-edit' ? 'library/edited/embutido-iberico-skill-2026-11-08/thumb.jpg' : null);
+            const on = recipeId === r.id;
+            return (
+              <button key={r.id} onClick={() => setRecipeId(r.id)}
+                className={`relative overflow-hidden rounded-xl border-2 text-left transition ${on ? 'border-accent' : 'border-transparent hover:border-white/15'}`}>
+                {th ? <img src={media(th)} className="aspect-[9/16] w-full object-cover" /> : <CaptionPreview cap={r.data.captions} className="rounded-none" />}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2 pt-6 text-xs font-medium">
+                  {r.fromReference && <Bookmark size={11} className="mr-1 inline" />}{r.name}
+                </div>
+                {on && <div className="absolute right-1.5 top-1.5 grid size-5 place-items-center rounded-full bg-accent"><Check size={12} /></div>}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="text-xs font-medium text-muted">Subtítulos</div>
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setCaptionsId(null)}
+              className={`rounded-full border px-3 py-1.5 text-sm transition ${!captionsId || captionsId === recipeId ? 'border-accent/70 bg-accent/15 text-white' : 'border-line bg-card text-zinc-300 hover:border-white/20'}`}>Los del estilo</button>
+            {recipes?.filter((r) => r.id !== recipeId).map((r) => (
+              <button key={r.id} onClick={() => setCaptionsId(r.id)} title={r.data.captions_notes || ''}
+                className={`rounded-full border px-3 py-1.5 text-sm transition ${captionsId === r.id ? 'border-accent/70 bg-accent/15 text-white' : 'border-line bg-card text-zinc-300 hover:border-white/20'}`}>{r.name}</button>
+            ))}
+            <button onClick={() => setCaptionsId('none')}
+              className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition ${captionsId === 'none' ? 'border-accent/70 bg-accent/15 text-white' : 'border-line bg-card text-zinc-300 hover:border-white/20'}`}>
+              <Ban size={13} /> Sin subtítulos
             </button>
-          );
-        })}
+          </div>
+        </div>
+        <div>
+          <button className="flex items-center gap-1.5 text-xs text-muted hover:text-white" onClick={() => setMore(!more)}>
+            <ChevronRight size={13} className={`transition ${more ? 'rotate-90' : ''}`} /> Más opciones: transiciones y efectos concretos (si no, los elige Claude)
+          </button>
+          {more && (
+            <div className="mt-2 flex flex-col gap-2 rounded-xl border border-line bg-ink p-3">
+              <div className="text-xs text-muted">Transiciones</div>
+              <Chips items={tools.transiciones.map((t) => ({ key: t.file, label: t.name, notes: t.notes }))} selected={transitions} onToggle={toggle(setTransitions)} />
+              <div className="mt-1 text-xs text-muted">Efectos</div>
+              <Chips items={tools.efectos.map((t) => ({ key: t.file, label: t.name, notes: t.notes }))} selected={effects} onToggle={toggle(setEffects)} />
+            </div>
+          )}
+        </div>
       </div>
     ),
-    subtitulos: (
-      <div className="grid grid-cols-4 gap-3">
-        {recipes?.map((r) => {
-          const on = (captionsId || recipeId) === r.id;
-          return (
-            <button key={r.id} onClick={() => setCaptionsId(r.id === recipeId ? null : r.id)}
-              className={`relative overflow-hidden rounded-xl border-2 transition ${on ? 'border-accent' : 'border-transparent hover:border-white/15'}`}>
-              <CaptionPreview cap={r.data.captions} className="rounded-none" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2 pt-6 text-left text-xs font-medium">
-                {r.id === recipeId ? 'Los del estilo' : r.name}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    ),
-    transiciones: <Chips items={tools.transiciones.map((t) => ({ key: t.file, label: t.name, notes: t.notes }))} selected={transitions} onToggle={toggle(setTransitions)} />,
     musica: (
       <div className="flex flex-col gap-3">
         <Chips multi={false} selected={song || '__none'} onToggle={(k) => setSong(k === '__none' ? null : k)}
@@ -341,9 +347,7 @@ export default function NewEdit({ initial, onClose, onStarted }) {
         )}
       </div>
     ),
-    sonidos: <Chips items={tools.sonidos.map((t) => ({ key: t.file, label: t.name, notes: t.notes }))} selected={sounds} onToggle={toggle(setSounds)} />,
-    efectos: <Chips items={tools.efectos.map((t) => ({ key: t.file, label: t.name, notes: t.notes }))} selected={effects} onToggle={toggle(setEffects)} />,
-    sugerencias: (
+    indicaciones: (
       <div className="flex flex-col gap-1.5">
         {SUGGESTIONS.map((s) => {
           const on = suggestions.includes(s.id);
@@ -358,17 +362,15 @@ export default function NewEdit({ initial, onClose, onStarted }) {
             </button>
           );
         })}
+        <textarea className="field mt-1.5 h-24 resize-none" value={extra} onChange={(e) => setExtra(e.target.value)}
+          placeholder="Algo más (opcional). Ej. La marca se escribe «Esamagna». Corta la última frase. Pon la canción solo en el final." />
       </div>
-    ),
-    prompt: (
-      <textarea className="field h-28 resize-none" autoFocus value={extra} onChange={(e) => setExtra(e.target.value)}
-        placeholder="Ej. La marca se escribe «Esamagna». Corta la última frase. Pon la canción solo en el final." />
     ),
     revision: (
       <div className="flex flex-col gap-3">
         <textarea className="field h-[46vh] resize-none font-mono text-[12px] leading-relaxed" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
         <div className="flex items-center gap-3 text-xs text-muted">
-          <span>Modelo: <b className="text-zinc-300">Opus 5.5</b> · tu suscripción de Claude</span>
+          <span>Modelo: <b className="text-zinc-300">Opus 5.5</b> · tu suscripción de Claude · primero la app analiza el vídeo en tu PC (transcripción y silencios) y luego edita Claude</span>
           {needLogin && (
             <span className="ml-auto flex items-center gap-2 text-amber-200">
               Claude no tiene la sesión iniciada.

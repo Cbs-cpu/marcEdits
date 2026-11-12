@@ -35,11 +35,18 @@ function initDirs() {
     recipes: path.join(LIB, 'tools', 'recipes'),
     inputs: path.join(ROOT, 'inputs'),
     skills: path.join(ROOT, '.claude', 'skills'),
+    carousels: path.join(LIB, 'carousels'),
+    carouselRefs: path.join(LIB, 'carousel-refs'),
+    carruseles: path.join(LIB, 'tools', 'carruseles'),
   };
   for (const c of TOOL_CATS) DIRS[c] = path.join(LIB, 'tools', c);
   Object.values(DIRS).forEach((d) => fs.mkdirSync(d, { recursive: true }));
 }
 if (ROOT) initDirs();
+
+// Memoria: tope al montón de JavaScript de la interfaz y sin servicios de Chromium que la app no usa
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=768');
+app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,MediaSessionService,Translate,AutofillServerCommunication');
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'media', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, bypassCSP: true } },
@@ -97,6 +104,7 @@ function listEdited() {
       v: mtime(video),
       dir: rel(dir),
       prompt: exists(path.join(dir, 'prompt.txt')) ? fs.readFileSync(path.join(dir, 'prompt.txt'), 'utf8') : null,
+      caption: exists(path.join(dir, 'caption.txt')) ? fs.readFileSync(path.join(dir, 'caption.txt'), 'utf8') : '',
       versions: listVersions(dir),
     };
   }).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
@@ -151,13 +159,40 @@ async function toolStatus() {
   return names.map((n, i) => ({ name: n, path: res[i] }));
 }
 
+// ---------- ajustes de la app (userData/settings.json) ----------
+// effort: 'medium' (Rápido, por defecto) | 'high' (Máxima calidad): nivel de esfuerzo de Claude en las ediciones
+const SETTINGS_FILE = path.join(app.getPath('userData'), 'settings.json');
+const DEFAULT_SETTINGS = { effort: 'medium', whisperUrl: '', whisperKey: '' };
+const getSettings = () => ({ ...DEFAULT_SETTINGS, ...readJSON(SETTINGS_FILE, {}) });
+ipcMain.handle('settings:get', () => getSettings());
+ipcMain.handle('settings:set', (_e, patch) => {
+  const s = { ...getSettings(), ...patch };
+  fs.mkdirSync(path.dirname(SETTINGS_FILE), { recursive: true });
+  writeJSON(SETTINGS_FILE, s);
+  return s;
+});
+
+// Python de la skill video-edit (tiene faster-whisper); si no existe, el del sistema
+function skillPython() {
+  const p = readJSON(path.join(ROOT, '.claude', 'skills', 'video-edit', '.platform.json'), {}).python;
+  if (p && exists(p)) return p;
+  const local = path.join(ROOT, '.claude', 'skills', 'video-edit', '.venv', 'Scripts', 'python.exe');
+  return exists(local) ? local : 'python';
+}
+
 // ---------- trabajos (procesos en segundo plano) ----------
-function runJob({ kind, title, cmd, args, parser, onDone }) {
-  const id = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+// Varios procesos pueden formar UN trabajo (p. ej. análisis previo → Claude): se pasa `jobId` para seguir en la
+// misma tarjeta y `keepOpen` para que el primer paso no la cierre.
+function runJob({ kind, title, cmd, args, parser, onDone, jobId, keepOpen }) {
+  const id = jobId || `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+  const s = getSettings();
   const env = {
     ...process.env, PYTHONIOENCODING: 'utf8', PYTHONUTF8: '1',
     // comandos largos de Claude (cutout en CPU, render): hasta 30 min en primer plano
     BASH_DEFAULT_TIMEOUT_MS: '1800000', BASH_MAX_TIMEOUT_MS: '3600000',
+    // la skill video-edit transcribe con el modelo rápido (mismo texto en español, 2,5x más rápido)
+    VE_WHISPER_MODEL: process.env.VE_WHISPER_MODEL || readJSON(path.join(ROOT, 'library', '.cache', 'hw.json'), {}).model || 'large-v3-turbo',
+    ...(s.whisperUrl ? { MARC_WHISPER_URL: s.whisperUrl, MARC_WHISPER_KEY: s.whisperKey || '' } : {}),
   };
   // Garantiza que Claude Code use la suscripción (login de claude.ai) y no una API key
   delete env.ANTHROPIC_API_KEY;
@@ -165,9 +200,10 @@ function runJob({ kind, title, cmd, args, parser, onDone }) {
     cwd: ROOT, env, shell: false, windowsHide: true,
     windowsVerbatimArguments: cmd === 'cmd.exe',
   });
-  const job = { id, kind, title, status: 'running', started: Date.now() };
+  const prev = jobs.get(id);
+  const job = { id, kind, title, status: 'running', started: prev?.started || Date.now() };
   jobs.set(id, { ...job, child });
-  send('job:event', { ...job, type: 'start' });
+  if (!prev) send('job:event', { ...job, type: 'start' });
 
   const emit = (text, level = 'log') => text && send('job:event', { id, type: 'log', level, text });
   let buf = '';
@@ -185,9 +221,12 @@ function runJob({ kind, title, cmd, args, parser, onDone }) {
   child.on('close', (code) => {
     if (buf) (parser ? parser(buf, emit) : emit(buf));
     const status = code === 0 ? 'done' : 'error';
-    try { onDone && onDone(code); } catch (e) { emit(e.message, 'error'); }
-    jobs.delete(id);
-    send('job:event', { id, type: 'end', status, code });
+    const cancelled = jobs.get(id)?.cancelled;
+    if (!(keepOpen && !cancelled)) {
+      jobs.delete(id);
+      send('job:event', { id, type: 'end', status, code, seconds: Math.round((Date.now() - job.started) / 1000) });
+    }
+    try { onDone && onDone(cancelled ? 1 : code); } catch (e) { emit(e.message, 'error'); }
   });
   return id;
 }
@@ -254,10 +293,12 @@ const RUN_RULES = `
 - Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.
 - No hay nadie para responder preguntas: decide tú y sigue hasta el final.`;
 
-function runClaude({ kind, title, prompt, onDone, resume, extraTools, onEvent }) {
+function runClaude({ kind, title, prompt, onDone, resume, extraTools, onEvent, jobId, effort }) {
   const args = [
     '-p', prompt,
     '--model', CLAUDE_MODEL,
+    // Rápido (medium) por defecto: Opus 5.5 piensa menos entre pasos y la edición tarda bastante menos
+    '--effort', effort || getSettings().effort || 'medium',
     '--output-format', 'stream-json', '--verbose',
     '--permission-mode', 'acceptEdits',
     '--allowedTools', ['Bash,Read,Write,Edit,Glob,Grep,Skill,Agent', ...(extraTools || [])].join(','),
@@ -267,8 +308,13 @@ function runClaude({ kind, title, prompt, onDone, resume, extraTools, onEvent })
   const parser = onEvent
     ? (line, emit) => { claudeParser(line, emit); try { onEvent(JSON.parse(line)); } catch {} }
     : claudeParser;
-  return runJobShellSafe({ kind, title, cmd: 'claude', args, parser, onDone });
+  return runJobShellSafe({ kind, title, cmd: 'claude', args, parser, onDone, jobId });
 }
+
+// Cronómetro: segundos entre dos marcas ISO / ms
+const secsSince = (t0) => Math.round((Date.now() - (typeof t0 === 'number' ? t0 : Date.parse(t0))) / 1000);
+const isoNow = () => new Date().toISOString().slice(0, 19);
+const fmtSecs = (s) => (s >= 60 ? `${Math.floor(s / 60)} min ${s % 60} s` : `${s} s`);
 
 // En Windows, claude es un .cmd: hay que lanzarlo a través de cmd.exe con los argumentos bien escapados
 function runJobShellSafe(opts) {
@@ -321,6 +367,8 @@ ipcMain.handle('lib:list', async (_e, section) => {
   if (section === 'scripts') return listScripts();
   if (section === 'recipes') return listRecipes();
   if (section === 'tools') return toolStatus();
+  if (section === 'carousels') return listCarousels();
+  if (section === 'carouselRefs') return listCarouselRefs();
   return [];
 });
 
@@ -426,11 +474,13 @@ ipcMain.handle('edited:revise', (_e, { id, prompt, desc }) => {
   delete m0.lastError;
   writeJSON(mp, { ...m0, status: 'processing' });
   send('lib:changed', 'edited');
+  const t0 = Date.now();
   return runClaude({
     kind: 'edit', title: `Cambiando · ${m0.title || id}`, prompt,
     onDone: async () => {
       const m = readJSON(mp, {});
       delete m.status;
+      m.lastChange = { seconds: secsSince(t0), at: isoNow() };
       if (mtime(final) === before) m.lastError = 'Claude no ha cambiado el vídeo. Sigue la versión anterior.';
       else delete m.lastError;
       writeJSON(mp, m);
@@ -538,6 +588,7 @@ ipcMain.handle('chat:send', (_e, { id, text, context }) => {
   send('lib:changed', 'edited');
 
   let reply = '', session = c.session;
+  const t0 = Date.now();
   const jobId = runClaude({
     kind: 'chat', title: `Conversación · ${readJSON(mp, {}).title || id}`, prompt, resume: c.session,
     onEvent: (ev) => {
@@ -553,9 +604,11 @@ ipcMain.handle('chat:send', (_e, { id, text, context }) => {
     onDone: async (code) => {
       chatJobs.delete(id);
       const changed = mtime(final) !== before;
-      const m = readJSON(mp, {}); delete m.status; writeJSON(mp, m);
+      const m = readJSON(mp, {}); delete m.status;
+      if (changed) m.lastChange = { seconds: secsSince(t0), at: isoNow() };
+      writeJSON(mp, m);
       if (changed) {
-        addHistory(dir, { type: 'claude', desc: text.slice(0, 140), backup });
+        addHistory(dir, { type: 'claude', desc: text.slice(0, 140), backup, seconds: secsSince(t0) });
         await refreshOutputs(dir);
       } else {
         // sin cambios en el vídeo: la copia de seguridad sobra
@@ -564,7 +617,8 @@ ipcMain.handle('chat:send', (_e, { id, text, context }) => {
       }
       if (reply) chatPush(dir, { role: 'assistant', text: reply });
       else if (code !== 0) chatPush(dir, { role: 'event', text: 'Claude no ha podido terminar. Mira el panel de tareas para ver qué ha pasado.' });
-      if (changed) chatPush(dir, { role: 'event', text: `Vídeo actualizado. La versión anterior quedó como ${backup}.` });
+      if (changed) chatPush(dir, { role: 'event', text: `Vídeo actualizado en ${fmtSecs(secsSince(t0))}. La versión anterior quedó como ${backup}.` });
+      else chatPush(dir, { role: 'event', text: `Claude ha tardado ${fmtSecs(secsSince(t0))}.` });
       send('lib:changed', 'edited');
     },
   });
@@ -731,6 +785,7 @@ ipcMain.handle('editor:render', (_e, { id, timeline }) => {
   });
 });
 
+ipcMain.handle('edited:saveCaption', (_e, { id, caption }) => { fs.writeFileSync(path.join(DIRS.edited, id, 'caption.txt'), caption, 'utf8'); return true; });
 ipcMain.handle('edited:rename', (_e, { id, title }) => {
   const mp = path.join(DIRS.edited, id, 'meta.json');
   writeJSON(mp, { ...readJSON(mp, {}), title });
@@ -832,28 +887,240 @@ ipcMain.handle('edit:discard', (_e, id) => {
   prepared.delete(id);
   return true;
 });
-ipcMain.handle('edit:run', (_e, { id, title, recipe, prompt }) => {
+// Edición nueva en DOS pasos dentro del mismo trabajo (una sola tarjeta y un cronómetro):
+//  1) engine/prep.py (sin Claude): transcripción rápida, silencios, hoja de fotogramas → work/prep.json
+//  2) Claude con el prompt revisado, que ya no tiene que transcribir
+// meta.timing = { started, finished, seconds, steps: { analisis, claude } }
+ipcMain.handle('edit:run', (_e, { id, title, recipe, prompt, skillProject }) => {
   const p = prepared.get(id);
   if (!p) throw new Error('Vídeo no preparado');
   prepared.delete(id);
   const outDir = path.join(DIRS.edited, id);
-  writeJSON(path.join(outDir, 'meta.json'), {
+  const mp = path.join(outDir, 'meta.json');
+  const t0 = Date.now();
+  writeJSON(mp, {
     id, title: title || id, source: rel(p.inputAbs), ...(p.inputs.length > 1 ? { sources: p.inputs.map((x) => x.path) } : {}),
     recipe, status: 'processing',
-    created: new Date().toISOString().slice(0, 19),
+    created: isoNow(),
+    timing: { started: isoNow(), steps: {} },
   });
   fs.writeFileSync(path.join(outDir, 'prompt.txt'), prompt, 'utf8');   // queda guardado lo que se envió
   send('lib:changed', 'edited');
-  return runClaude({
-    kind: 'edit', title: `Editando · ${title || id}`, prompt,
-    onDone: () => {
-      const mp = path.join(outDir, 'meta.json');
-      const m = readJSON(mp, {});
-      if (!exists(path.join(outDir, 'final.mp4'))) writeJSON(mp, { ...m, status: 'error' });
-      else if (m.status) { delete m.status; writeJSON(mp, m); }
-      send('lib:changed', 'edited');
+  const jobTitle = `Editando · ${title || id}`;
+  const setTiming = (patch) => { const m = readJSON(mp, {}); m.timing = { ...(m.timing || {}), ...patch, steps: { ...(m.timing?.steps || {}), ...(patch.steps || {}) } }; writeJSON(mp, m); return m; };
+  const finish = (code) => {
+    const m = setTiming({ finished: isoNow(), seconds: secsSince(t0) });
+    if (!exists(path.join(outDir, 'final.mp4'))) m.status = 'error';
+    else delete m.status;
+    writeJSON(mp, m);
+    send('lib:changed', 'edited');
+  };
+  const startClaude = (jobId) => {
+    const t1 = Date.now();
+    return runClaude({
+      kind: 'edit', title: jobTitle, prompt, jobId,
+      onDone: (code) => { setTiming({ steps: { claude: secsSince(t1) } }); finish(code); },
+    });
+  };
+  // 1) análisis previo; si falla, Claude lo hace por su cuenta (el prompt lo contempla)
+  const jobId = runJob({
+    kind: 'edit', title: jobTitle, keepOpen: true,
+    cmd: skillPython(),
+    args: ['engine/prep.py', id, ...p.inputs.map((x) => x.path), ...(skillProject ? ['--skill-project', skillProject] : [])],
+    parser: (l, emit) => emit(l.replace(/^\[prep\]\s*/, ''), l.startsWith('[prep]') ? 'tool' : 'dim'),
+    onDone: (code) => {
+      setTiming({ steps: { analisis: secsSince(t0) } });
+      if (code !== 0 && !jobs.has(jobId)) return finish(1);   // cancelado
+      if (code !== 0) send('job:event', { id: jobId, type: 'log', level: 'dim', text: 'El análisis previo ha fallado; Claude lo hará por su cuenta.' });
+      startClaude(jobId);
     },
   });
+  return jobId;
+});
+
+// ---------- carruseles (posts de fotos para TikTok Shop) ----------
+// library/carousels/<id>/{carousel.json, assets/, slides/NN.html|png, thumb.jpg, contact.jpg, meta.json, prompt.txt, chat.json}
+// library/carousel-refs/<id>/{01.jpg…, meta.json, source.json, analysis.md}
+const IMG_EXT = ['.jpg', '.jpeg', '.png', '.webp'];
+const slidesOf = (dir) => (exists(path.join(dir, 'slides'))
+  ? fs.readdirSync(path.join(dir, 'slides')).filter((f) => /^\d+\.png$/.test(f)).sort().map((f) => rel(path.join(dir, 'slides', f)))
+  : []);
+const newest = (files) => Math.max(0, ...files.map((f) => mtime(path.join(ROOT, f))));
+
+function listCarousels() {
+  return listDirs(DIRS.carousels).map((id) => {
+    const dir = path.join(DIRS.carousels, id);
+    const meta = readJSON(path.join(dir, 'meta.json'), { id, title: id });
+    const slides = slidesOf(dir);
+    return {
+      ...meta, id, slides, ready: slides.length > 0, busy: meta.status === 'processing', v: newest(slides),
+      thumb: exists(path.join(dir, 'thumb.jpg')) ? rel(path.join(dir, 'thumb.jpg')) : slides[0] || null,
+      caption: exists(path.join(dir, 'caption.txt')) ? fs.readFileSync(path.join(dir, 'caption.txt'), 'utf8') : meta.caption || '',
+      prompt: exists(path.join(dir, 'prompt.txt')) ? fs.readFileSync(path.join(dir, 'prompt.txt'), 'utf8') : null,
+      dir: rel(dir),
+    };
+  }).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+}
+function listCarouselRefs() {
+  return listDirs(DIRS.carouselRefs).map((id) => {
+    const dir = path.join(DIRS.carouselRefs, id);
+    const meta = readJSON(path.join(dir, 'meta.json'), { id, title: id });
+    const images = fs.readdirSync(dir).filter((f) => /^\d+\.(jpe?g|png|webp)$/i.test(f)).sort().map((f) => rel(path.join(dir, f)));
+    const analysis = path.join(dir, 'analysis.md');
+    return {
+      ...meta, id, images, thumb: images[0] || null, dir: rel(dir), busy: meta.status === 'processing',
+      source: readJSON(path.join(dir, 'source.json'), null),
+      analysis: exists(analysis) ? fs.readFileSync(analysis, 'utf8') : null,
+      skill: exists(path.join(DIRS.skills, `carrusel-${id}`, 'SKILL.md')) ? rel(path.join(DIRS.skills, `carrusel-${id}`, 'SKILL.md')) : null,
+    };
+  }).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+}
+ipcMain.handle('carousel:formats', () => readJSON(path.join(DIRS.carruseles, 'formatos.json'), { formats: [] }));
+ipcMain.handle('dialog:pickImages', async () => {
+  const r = await dialog.showOpenDialog(win, { properties: ['openFile', 'multiSelections'], filters: [{ name: 'Imágenes', extensions: ['jpg', 'jpeg', 'png', 'webp'] }] });
+  return r.canceled ? [] : r.filePaths;
+});
+
+// Copia imágenes numeradas (01.jpg, 02.png…) a una carpeta
+async function copyImages(list, dir, start = 1) {
+  fs.mkdirSync(dir, { recursive: true });
+  const out = [];
+  for (const [i, f] of list.filter((x) => IMG_EXT.includes(path.extname(x).toLowerCase())).entries()) {
+    const name = `${String(start + i).padStart(2, '0')}${path.extname(f).toLowerCase()}`;
+    await fs.promises.copyFile(f, path.join(dir, name));
+    out.push(rel(path.join(dir, name)));
+  }
+  return out;
+}
+
+// Referencias de carrusel: desde capturas/imágenes o desde un enlace de TikTok (gallery-dl)
+ipcMain.handle('carouselRefs:add', async (_e, { url, files, title }) => {
+  const base = url ? slugify((url.match(/@([\w.]+)\/(?:photo|video)\/(\d+)/) || []).slice(1).join('-') || title || 'carrusel')
+    : slugify(title || path.basename(files[0], path.extname(files[0])));
+  const id = uniqueId(DIRS.carouselRefs, base);
+  const dir = path.join(DIRS.carouselRefs, id);
+  fs.mkdirSync(dir, { recursive: true });
+  const meta = { id, title: title || id, url: url || null, created: isoNow() };
+  if (files?.length) {
+    await copyImages(files, dir);
+    writeJSON(path.join(dir, 'meta.json'), meta);
+    send('lib:changed', 'carouselRefs');
+    return { id };
+  }
+  writeJSON(path.join(dir, 'meta.json'), { ...meta, status: 'processing' });
+  send('lib:changed', 'carouselRefs');
+  const jobId = runJob({
+    kind: 'reference', title: 'Descargando carrusel de referencia', cmd: 'python', args: ['engine/carousel.py', 'fetch', id, url],
+    parser: (l, emit) => emit(l.replace(/^\[carrusel\]\s*/, ''), l.startsWith('[carrusel]') ? 'tool' : 'dim'),
+    onDone: (code) => {
+      const src = readJSON(path.join(dir, 'source.json'), {});
+      const ok = code === 0 && fs.readdirSync(dir).some((f) => /^\d+\.jpg$/.test(f));
+      if (!ok) fs.rmSync(dir, { recursive: true, force: true });
+      else writeJSON(path.join(dir, 'meta.json'), { ...meta, title: title || (src.desc || '').split('#')[0].trim().slice(0, 60) || id, author: src.author || null });
+      send('lib:changed', 'carouselRefs');
+    },
+  });
+  return { id, jobId };
+});
+ipcMain.handle('carouselRefs:delete', async (_e, id) => { await shell.trashItem(path.join(DIRS.carouselRefs, id)); send('lib:changed', 'carouselRefs'); return true; });
+
+// Crear carrusel en dos fases, como los vídeos: preparar (id + copiar fotos) → revisar el prompt → enviar
+ipcMain.handle('carousel:prepare', async (_e, { title, photos }) => {
+  const id = uniqueId(DIRS.carousels, `${slugify(title || 'carrusel')}-${today()}`);
+  const dir = path.join(DIRS.carousels, id);
+  fs.mkdirSync(path.join(dir, 'slides'), { recursive: true });
+  const assets = await copyImages(photos || [], path.join(dir, 'assets'));
+  prepared.set(`car:${id}`, { dir });
+  return { id, assets, dir: rel(dir) };
+});
+ipcMain.handle('carousel:discard', (_e, id) => {
+  if (!prepared.has(`car:${id}`)) return false;
+  fs.rmSync(path.join(DIRS.carousels, id), { recursive: true, force: true });
+  prepared.delete(`car:${id}`);
+  return true;
+});
+ipcMain.handle('carousel:run', (_e, { id, title, format, reference, product, prompt }) => {
+  prepared.delete(`car:${id}`);
+  const dir = path.join(DIRS.carousels, id);
+  const mp = path.join(dir, 'meta.json');
+  const t0 = Date.now();
+  writeJSON(mp, { id, title: title || id, format, reference: reference || null, product: product || null, status: 'processing',
+    created: isoNow(), timing: { started: isoNow() } });
+  fs.writeFileSync(path.join(dir, 'prompt.txt'), prompt, 'utf8');
+  send('lib:changed', 'carousels');
+  return runClaude({
+    kind: 'carousel', title: `Creando carrusel · ${title || id}`, prompt,
+    onDone: () => {
+      const m = readJSON(mp, {});
+      m.timing = { ...(m.timing || {}), finished: isoNow(), seconds: secsSince(t0) };
+      if (!slidesOf(dir).length) m.status = 'error'; else delete m.status;
+      writeJSON(mp, m);
+      send('lib:changed', 'carousels');
+    },
+  });
+});
+ipcMain.handle('carousel:delete', async (_e, id) => { await shell.trashItem(path.join(DIRS.carousels, id)); send('lib:changed', 'carousels'); return true; });
+ipcMain.handle('carousel:saveCaption', (_e, { id, caption }) => { fs.writeFileSync(path.join(DIRS.carousels, id, 'caption.txt'), caption, 'utf8'); return true; });
+
+// Conversación por carrusel (misma idea que la de vídeos). Antes de cada cambio se guarda versions/vN/ con las diapositivas.
+function backupSlides(dir) {
+  const vroot = path.join(dir, 'versions');
+  fs.mkdirSync(vroot, { recursive: true });
+  const n = listDirs(vroot).filter((d) => /^v\d+$/.test(d)).length + 1;
+  fs.cpSync(path.join(dir, 'slides'), path.join(vroot, `v${n}`), { recursive: true });
+  return `v${n}`;
+}
+ipcMain.handle('carousel:chatGet', (_e, id) => ({ ...readChat(path.join(DIRS.carousels, id)), jobId: chatJobs.get(`car:${id}`) || null }));
+ipcMain.handle('carousel:chatNew', (_e, id) => {
+  const dir = path.join(DIRS.carousels, id);
+  const c = readChat(dir);
+  if (c.messages.length) writeJSON(path.join(dir, `chat-${Date.now()}.json`), c);
+  writeJSON(chatFile(dir), { session: null, messages: [] });
+  send('chat:changed', id);
+  return true;
+});
+ipcMain.handle('carousel:chatSend', (_e, { id, text, context }) => {
+  const key = `car:${id}`;
+  if (chatJobs.has(key)) throw new Error('Claude ya está trabajando en este carrusel');
+  const dir = path.join(DIRS.carousels, id);
+  const mp = path.join(dir, 'meta.json');
+  const c = readChat(dir);
+  const first = !c.session;
+  if (first && context) chatPush(dir, { role: 'context', text: context });
+  chatPush(dir, { role: 'user', text });
+  const prompt = first && context ? `${context}\n\nMENSAJE DEL USUARIO\n${text}` : text;
+  const before = newest(slidesOf(dir));
+  const backup = backupSlides(dir);
+  writeJSON(mp, { ...readJSON(mp, {}), status: 'processing' });
+  send('lib:changed', 'carousels');
+  let reply = '', session = c.session;
+  const t0 = Date.now();
+  const jobId = runClaude({
+    kind: 'chat', title: `Carrusel · ${readJSON(mp, {}).title || id}`, prompt, resume: c.session,
+    onEvent: (ev) => {
+      if (ev.session_id && ev.session_id !== session) {
+        session = ev.session_id;
+        const cc = readChat(dir); cc.session = session; writeJSON(chatFile(dir), cc);
+      }
+      if (ev.type === 'assistant') for (const b of ev.message?.content || []) if (b.type === 'text' && b.text.trim()) reply = b.text.trim();
+      if (ev.type === 'result' && typeof ev.result === 'string' && ev.result.trim()) reply = ev.result.trim();
+    },
+    onDone: (code) => {
+      chatJobs.delete(key);
+      const changed = newest(slidesOf(dir)) !== before;
+      const m = readJSON(mp, {}); delete m.status;
+      if (changed) m.lastChange = { seconds: secsSince(t0), at: isoNow() };
+      writeJSON(mp, m);
+      if (!changed) fs.rmSync(path.join(dir, 'versions', backup), { recursive: true, force: true });
+      if (reply) chatPush(dir, { role: 'assistant', text: reply });
+      else if (code !== 0) chatPush(dir, { role: 'event', text: 'Claude no ha podido terminar. Mira el panel de tareas.' });
+      chatPush(dir, { role: 'event', text: changed ? `Carrusel actualizado en ${fmtSecs(secsSince(t0))}. Lo anterior quedó en versions/${backup}.` : `Claude ha tardado ${fmtSecs(secsSince(t0))}.` });
+      send('lib:changed', 'carousels');
+    },
+  });
+  chatJobs.set(key, jobId);
+  send('chat:changed', id);
+  return jobId;
 });
 
 // ---------- herramientas: carpetas de transiciones, canciones, sonidos y efectos ----------
@@ -917,6 +1184,7 @@ ipcMain.handle('tools:openDir', (_e, cat) => shell.openPath(DIRS[cat]));
 ipcMain.handle('job:cancel', (_e, id) => {
   const j = jobs.get(id);
   if (j) {
+    j.cancelled = true;
     if (process.platform === 'win32') execFile('taskkill', ['/pid', String(j.child.pid), '/T', '/F'], { windowsHide: true }, () => {});
     else j.child.kill('SIGTERM');
   }
@@ -931,7 +1199,8 @@ function createWindow() {
     icon: path.join(__dirname, '..', 'build', 'icon.png'),
     titleBarStyle: 'hidden',
     titleBarOverlay: { color: '#0b0b0f', symbolColor: '#a1a1aa', height: 36 },
-    webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: false },
+    // spellcheck desactivado (carga diccionarios en RAM); backgroundThrottling: si la ventana no se ve, gasta menos CPU
+    webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: false, spellcheck: false, backgroundThrottling: true },
   });
   if (process.env.VITE_DEV_SERVER_URL) win.loadURL(process.env.VITE_DEV_SERVER_URL);
   else win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
@@ -946,9 +1215,31 @@ function createWindow() {
       const js = (code) => win.webContents.executeJavaScript(code);
       const click = (txt) => js(`[...document.querySelectorAll('button')].find(b => b.textContent.trim() === ${JSON.stringify(txt)})?.click()`);
       const shot = async (name) => { await wait(1200); fs.writeFileSync(path.join(out, `${slugify(name)}.png`), (await win.webContents.capturePage()).toPNG()); };
-      for (const v of ['Vídeos editados', 'Guiones', 'Referencias']) { await click(v); await shot(v); }
-      await click('Herramientas');
-      for (const t of ['Subtítulos', 'Transiciones', 'Canciones', 'Sonidos', 'Efectos']) { await click(t); await shot(`tools-${t}`); }
+      const clickHas = (txt) => js(`[...document.querySelectorAll('button')].find(b => b.textContent.includes(${JSON.stringify(txt)}))?.click()`);
+      // espera a que no quede ningún trabajo en marcha (pruebas de edición real), con capturas cada minuto
+      const waitJobs = async (name, maxMin = 45) => {
+        await wait(3000);
+        for (let m = 0; jobs.size && m < maxMin * 6; m++) { await wait(10000); if (m % 6 === 0) await shot(`${name}-${String(m / 6).padStart(2, '0')}min`); }
+      };
+      if (!process.env.MARC_ONLY_CAROUSEL) {
+        for (const v of ['Vídeos editados', 'Guiones', 'Referencias']) { await click(v); await shot(v); }
+        await click('Herramientas');
+        for (const t of ['Subtítulos', 'Transiciones', 'Canciones', 'Sonidos', 'Efectos']) { await click(t); await shot(`tools-${t}`); }
+      }
+      // pestaña Carruseles
+      await clickHas('Carruseles'); await wait(600);
+      for (const v of ['Mis carruseles', 'Referencias', 'Formatos en tendencia']) { await click(v); await shot(`car-${v}`); }
+      if (process.env.MARC_TEST_CAROUSEL) {
+        await js(`window.__MARC_TEST_IMAGES = ${JSON.stringify(process.env.MARC_TEST_CAROUSEL.split('|'))}; window.__MARC_TEST_PRODUCT = ${process.env.MARC_TEST_PRODUCT || 'null'}`);
+        await clickHas('Crear carrusel'); await wait(1500);
+        for (let i = 0; i < 3; i++) { await shot(`car-wizard-${i}`); await click('Seguir'); await wait(1200); }
+        await wait(1500);
+        fs.writeFileSync(path.join(out, 'car-prompt.txt'), await js(`document.querySelector('textarea')?.value || ''`), 'utf8');
+        await shot('car-wizard-revision');
+        if (process.env.MARC_TEST_SEND) { await clickHas('Enviar a Claude'); await waitJobs('car-run'); await click('Mis carruseles'); await shot('car-hecho'); }
+        else { await js(`document.querySelector('.btn-icon.ml-auto')?.click()`); await wait(800); }
+      }
+      await clickHas('Vídeos'); await wait(600);
       if (process.env.MARC_TEST_EDITOR) {
         await click('Editor'); await wait(800);
         await js(`[...document.querySelectorAll('button')].find(b => b.textContent.includes(${JSON.stringify(process.env.MARC_TEST_EDITOR)}))?.click()`);
@@ -1001,8 +1292,13 @@ function createWindow() {
         await wait(800);
         fs.writeFileSync(path.join(out, 'prompt.txt'), await js(`document.querySelector('textarea')?.value || ''`), 'utf8');
         await shot('wizard-revision');
-        await js(`document.querySelector('.btn-icon.ml-auto')?.click()`);   // cerrar: descarta el vídeo preparado
-        await wait(800);
+        if (process.env.MARC_TEST_SEND) {
+          await clickHas('Enviar a Claude'); await waitJobs('edit-run', 75);
+          await click('Vídeos editados'); await shot('edit-hecho');
+        } else {
+          await js(`document.querySelector('.btn-icon.ml-auto')?.click()`);   // cerrar: descarta el vídeo preparado
+          await wait(800);
+        }
       }
       app.quit();
     });

@@ -18,6 +18,8 @@ library/edited/*/versions/
 library/edited/*/editor/*
 !library/edited/*/editor/media/
 library/edited/*/work/
+library/carousels/*/versions/
+library/carousel-refs/*/_dl/
 
 # --- intermedios de los proyectos de la skill (se regeneran) ---
 work/reels/*/work/

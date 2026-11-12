@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Loader2, CheckCircle2, XCircle, Square, X } from 'lucide-react';
-import { api } from '../lib.js';
+import { ChevronDown, Loader2, CheckCircle2, XCircle, Square, X, Timer } from 'lucide-react';
+import { api, fmtClock, useElapsed } from '../lib.js';
 
 const LEVEL = {
   claude: 'text-zinc-100',
@@ -17,6 +17,8 @@ function JobCard({ job, onToggle, onDismiss }) {
   const Icon = job.status === 'running' ? Loader2 : job.status === 'done' ? CheckCircle2 : XCircle;
   const color = job.status === 'running' ? 'text-accent animate-spin' : job.status === 'done' ? 'text-emerald-400' : 'text-red-400';
   const last = job.logs[job.logs.length - 1];
+  const live = useElapsed(job.started, job.status === 'running');
+  const secs = job.status === 'running' ? live : job.seconds ?? (job.ended && job.started ? (job.ended - job.started) / 1000 : null);
   return (
     <div className="fadein overflow-hidden rounded-xl border border-line bg-panel/95 shadow-2xl backdrop-blur">
       <div className="flex cursor-pointer items-center gap-2.5 px-3 py-2.5" onClick={onToggle}>
@@ -25,6 +27,12 @@ function JobCard({ job, onToggle, onDismiss }) {
           <div className="truncate text-sm font-medium">{job.title}</div>
           {!job.open && last && <div className="truncate text-xs text-muted">{last.text}</div>}
         </div>
+        {secs != null && (
+          <span className={`flex items-center gap-1 rounded-md px-1.5 py-0.5 font-mono text-[11px] tabular-nums ${job.status === 'running' ? 'bg-accent/15 text-[#ff8aa1]' : 'bg-white/[.06] text-muted'}`}
+            title="Tiempo desde que empezó">
+            <Timer size={11} /> {fmtClock(secs)}
+          </span>
+        )}
         {job.status === 'running' ? (
           <button className="btn-icon size-7" title="Cancelar" onClick={(e) => { e.stopPropagation(); api.cancelJob(job.id); }}>
             <Square size={13} />

@@ -1,0 +1,25 @@
+{
+  "session": "b3922839-6cc6-4338-a98f-3def5d28fa69",
+  "messages": [
+    {
+      "at": "2026-11-12T13:29:45",
+      "role": "context",
+      "text": "Eres el diseñador de carruseles de la app \"Marc Edits\". Vamos a tener una conversación sobre un carrusel de TikTok que ya está hecho: el usuario te irá pidiendo cambios y preguntas, mensaje a mensaje.\n\nCARRUSEL\n- Título: Pack de embutido ibérico\n- Carpeta: library/carousels/pack-de-embutido-iberico-2026-11-12/ (carousel.json, slides/NN.html → NN.png, assets/, caption.txt, prompt.txt con el encargo original)\n- Skill: .claude/skills/tiktok-carousel/SKILL.md · formato: engine/CAROUSEL.md\n- Antes de cada mensaje la app guarda las diapositivas actuales en library/carousels/pack-de-embutido-iberico-2026-11-12/versions/.\n\nCÓMO TRABAJAR\n- Responde en español, corto: qué has hecho o qué propones. Si es una pregunta, contesta sin tocar nada.\n- Cambia SOLO lo que se pide: edita el HTML de esas diapositivas y renderiza con «python engine/carousel.py render pack-de-embutido-iberico-2026-11-12 --only N» (o sin --only si cambias varias). Mira el PNG resultante antes de responder.\n- Mantén carousel.json, caption.txt y meta.json al día.\n\nREGLAS DE EJECUCIÓN\n- Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.\n- No hay nadie para responder preguntas: decide tú y sigue hasta el final."
+    },
+    {
+      "at": "2026-11-12T13:29:45",
+      "role": "user",
+      "text": "Vale pero no uses imagenes del video usa muñecos animados para el carrousel"
+    },
+    {
+      "at": "2026-11-12T13:33:37",
+      "role": "assistant",
+      "text": "Ya está: he quitado las fotos del vídeo de las 6 diapositivas y ahora todo son muñecos animados. Los textos no cambian.\n\n- **1 (gancho):** una persona agobiada, con un «¡DING DONG!» encima, delante de la nevera vacía, donde solo queda un chorizo arrugado y triste.\n- **2:** la nota «Por qué me pasaba», con el chorizo reseco y un calendario lleno de cruces.\n- **3:** la nota «Lo que probé», con un bol de patatas y dos aceitunas con cara de «meh».\n- **4:** chorizo, lomo y salchichón muy contentos, cada uno saliendo de su sobre.\n- **5:** la tabla con las lonchas puestas, los muñecos celebrando y una caja de regalo.\n- **6 (CTA):** los tres saludando con corazones y el botón del carrito naranja.\n\nCada diapositiva tiene un fondo de color distinto y los dibujos van fuera de las zonas que tapa TikTok. Las he renderizado todas y las he revisado. En `carousel.json` he añadido una nota con el estilo nuevo, y las fotos originales siguen guardadas en `assets/`."
+    },
+    {
+      "at": "2026-11-12T13:33:37",
+      "role": "event",
+      "text": "Carrusel actualizado en 3 min 52 s. Lo anterior quedó en versions/v1."
+    }
+  ]
+}

@@ -14,7 +14,8 @@ The app launches `claude -p` in this folder. Speak to the user in Spanish.
   If it has a `"skill"` field (e.g. `skill-video-edit.json`), it means "edit by following that skill" instead of the engine.
 - `.claude/skills/ref-<id>/SKILL.md`: skills generated with the "Save as skill" button on a reference.
 - `.claude/skills/video-edit/`: skill by @tenfoldmarc (Bold / Cool girl / Cool dude, HyperFrames). Adapted for Spanish:
-  `ingest.py` and `transcribe_cut.py` use Whisper `large-v3` with `language=es` (never `.en` models).
+  `ingest.py` and `transcribe_cut.py` use Whisper with `language=es` (never `.en` models); the app sets
+  `VE_WHISPER_MODEL=large-v3-turbo` (same Spanish text, 2.5x faster than `large-v3`).
   Its projects live in `work/reels/<slug>/`.
 - `inputs/`: copies of the raw videos (the originals are never touched).
 - `library/tools/{transiciones,canciones,sonidos,efectos}/`: the user's tool folders. Media files carry a `<file>.meta.json`
@@ -27,6 +28,24 @@ The app launches `claude -p` in this folder. Speak to the user in Spanish.
 - Manual editor: `library/edited/<id>/timeline.json` (format in `engine/TIMELINE.md`) + `python engine/timeline.py import|render <id>`.
   If a video has `timeline.json`, it is the source of truth: Claude's changes go there and get rendered with timeline.py.
 - Per-video conversation: `library/edited/<id>/chat.json` (the Claude session is resumed with `--resume`).
+- Before Claude is called, the app runs `engine/prep.py` (no Claude): faster-whisper transcription (`large-v3-turbo`
+  int8 on CPU, `large-v3` if CUDA works, `small` on low-RAM PCs; hardware profile cached in `library/.cache/hw.json`),
+  silences and contact sheets → `library/edited/<id>/work/prep.json`. With the video-edit skill it also writes the
+  skill's ingest files into `work/reels/<id>/`, so `ingest.py` must NOT be run again. `MARC_WHISPER_URL` sends only the
+  audio to our own transcription server (OpenAI-compatible API) instead.
+- Each video/carousel stores a timer in `meta.json` → `timing { started, finished, seconds, steps }`; changes store
+  `lastChange.seconds`. Claude runs with `--effort medium` (app setting "Rápido") or `high` ("Máx. calidad").
+- Carousels (TikTok Shop photo posts): `library/carousels/<id>/` (`carousel.json`, `assets/`, `slides/NN.html` →
+  `NN.png` 1080x1920, `contact.jpg`, `caption.txt`, `meta.json`, `chat.json`). Render with
+  `python engine/carousel.py render <id> [--only N]` (Edge/Chrome headless). Format: `engine/CAROUSEL.md`.
+  Skill: `.claude/skills/tiktok-carousel/` (+ `reference-carousel-adapter`, `hook-notes-carousel`, MIT, by maxxyart;
+  in the app never ask for intermediate approvals). Reference carousels: `library/carousel-refs/<id>/01.jpg…`
+  (`python engine/carousel.py fetch <id> <url>` uses gallery-dl). Trending formats: `library/tools/carruseles/formatos.json`.
+  Never invent reviews, numbers or prices on slides.
+- `.claude/skills/tiktok-hooks/`: 3-second hook formulas, retention rules and TikTok caption rules (knowledge from
+  sergebulaev/tiktok-skills, MIT; its Publora/Apify publishing code is deliberately NOT included). Every new edit
+  writes `library/edited/<id>/caption.txt` (shown in the video's Info tab).
+- Product spec (accounts, subscriptions, own server): `docs/SPEC.md` — nothing marked "Futuro" is built without approval.
 - Trending TikTok songs: `library/tools/tendencias.json` (list only; copyrighted, never downloaded or put in the
   video: the user adds them from TikTok when publishing).
 
