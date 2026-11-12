@@ -1,0 +1,442 @@
+[
+ {
+  "text": "Este",
+  "start": 0.0,
+  "end": 0.38
+ },
+ {
+  "text": "es",
+  "start": 0.38,
+  "end": 0.5
+ },
+ {
+  "text": "el",
+  "start": 0.5,
+  "end": 0.64
+ },
+ {
+  "text": "desayuno",
+  "start": 0.64,
+  "end": 1.18
+ },
+ {
+  "text": "para",
+  "start": 1.18,
+  "end": 1.36
+ },
+ {
+  "text": "ponerse",
+  "start": 1.36,
+  "end": 1.92
+ },
+ {
+  "text": "realmente",
+  "start": 1.92,
+  "end": 2.42
+ },
+ {
+  "text": "fuerte,",
+  "start": 2.42,
+  "end": 3.26
+ },
+ {
+  "text": "es",
+  "start": 3.44,
+  "end": 3.9
+ },
+ {
+  "text": "esto",
+  "start": 3.9,
+  "end": 4.38
+ },
+ {
+  "text": "de",
+  "start": 4.38,
+  "end": 4.58
+ },
+ {
+  "text": "aqu\u00ed,",
+  "start": 4.58,
+  "end": 4.9
+ },
+ {
+  "text": "te",
+  "start": 5.12,
+  "end": 5.42
+ },
+ {
+  "text": "va",
+  "start": 5.42,
+  "end": 5.56
+ },
+ {
+  "text": "a",
+  "start": 5.56,
+  "end": 5.6
+ },
+ {
+  "text": "aportar",
+  "start": 5.6,
+  "end": 5.88
+ },
+ {
+  "text": "una",
+  "start": 5.88,
+  "end": 5.98
+ },
+ {
+  "text": "gran",
+  "start": 5.98,
+  "end": 6.16
+ },
+ {
+  "text": "fuente",
+  "start": 6.16,
+  "end": 6.52
+ },
+ {
+  "text": "de",
+  "start": 6.52,
+  "end": 6.6
+ },
+ {
+  "text": "energ\u00eda,",
+  "start": 6.6,
+  "end": 6.9
+ },
+ {
+  "text": "adem\u00e1s",
+  "start": 7.14,
+  "end": 7.54
+ },
+ {
+  "text": "de",
+  "start": 7.54,
+  "end": 7.74
+ },
+ {
+  "text": "un",
+  "start": 7.74,
+  "end": 7.82
+ },
+ {
+  "text": "gran",
+  "start": 7.82,
+  "end": 7.96
+ },
+ {
+  "text": "porcentaje",
+  "start": 7.96,
+  "end": 8.42
+ },
+ {
+  "text": "de",
+  "start": 8.42,
+  "end": 8.54
+ },
+ {
+  "text": "prote\u00edna",
+  "start": 8.54,
+  "end": 8.98
+ },
+ {
+  "text": "Lo",
+  "start": 8.98,
+  "end": 9.62
+ },
+ {
+  "text": "vas",
+  "start": 9.62,
+  "end": 9.88
+ },
+ {
+  "text": "a",
+  "start": 9.88,
+  "end": 10.02
+ },
+ {
+  "text": "tener",
+  "start": 10.02,
+  "end": 10.22
+ },
+ {
+  "text": "en",
+  "start": 10.22,
+  "end": 10.36
+ },
+ {
+  "text": "un",
+  "start": 10.36,
+  "end": 10.42
+ },
+ {
+  "text": "mont\u00f3n",
+  "start": 10.42,
+  "end": 10.66
+ },
+ {
+  "text": "de",
+  "start": 10.66,
+  "end": 10.8
+ },
+ {
+  "text": "sabores,",
+  "start": 10.8,
+  "end": 11.18
+ },
+ {
+  "text": "pero",
+  "start": 11.2,
+  "end": 11.4
+ },
+ {
+  "text": "s\u00ed",
+  "start": 11.4,
+  "end": 11.58
+ },
+ {
+  "text": "que",
+  "start": 11.58,
+  "end": 11.68
+ },
+ {
+  "text": "tiene",
+  "start": 11.68,
+  "end": 11.88
+ },
+ {
+  "text": "algo",
+  "start": 11.88,
+  "end": 12.06
+ },
+ {
+  "text": "malo,",
+  "start": 12.06,
+  "end": 12.46
+ },
+ {
+  "text": "cada",
+  "start": 12.48,
+  "end": 12.64
+ },
+ {
+  "text": "vez",
+  "start": 12.64,
+  "end": 12.86
+ },
+ {
+  "text": "que",
+  "start": 12.86,
+  "end": 13.02
+ },
+ {
+  "text": "sale",
+  "start": 13.02,
+  "end": 13.18
+ },
+ {
+  "text": "stock",
+  "start": 13.18,
+  "end": 13.38
+ },
+ {
+  "text": "se",
+  "start": 13.38,
+  "end": 13.62
+ },
+ {
+  "text": "agotan,",
+  "start": 13.62,
+  "end": 14.06
+ },
+ {
+  "text": "pero",
+  "start": 14.08,
+  "end": 14.2
+ },
+ {
+  "text": "justo",
+  "start": 14.2,
+  "end": 14.4
+ },
+ {
+  "text": "ahora",
+  "start": 14.4,
+  "end": 14.64
+ },
+ {
+  "text": "vas",
+  "start": 14.64,
+  "end": 14.84
+ },
+ {
+  "text": "a",
+  "start": 14.84,
+  "end": 14.96
+ },
+ {
+  "text": "estar",
+  "start": 14.96,
+  "end": 15.12
+ },
+ {
+  "text": "de",
+  "start": 15.12,
+  "end": 15.24
+ },
+ {
+  "text": "suerte,",
+  "start": 15.24,
+  "end": 15.6
+ },
+ {
+  "text": "acaban",
+  "start": 15.66,
+  "end": 15.98
+ },
+ {
+  "text": "de",
+  "start": 15.98,
+  "end": 16.04
+ },
+ {
+  "text": "reponer",
+  "start": 16.04,
+  "end": 16.36
+ },
+ {
+  "text": "nuevos",
+  "start": 16.36,
+  "end": 16.62
+ },
+ {
+  "text": "stocks",
+  "start": 16.62,
+  "end": 16.9
+ },
+ {
+  "text": "Simplemente",
+  "start": 16.9,
+  "end": 17.48
+ },
+ {
+  "text": "si",
+  "start": 17.48,
+  "end": 17.56
+ },
+ {
+  "text": "te",
+  "start": 17.56,
+  "end": 17.64
+ },
+ {
+  "text": "parece",
+  "start": 17.64,
+  "end": 17.84
+ },
+ {
+  "text": "un",
+  "start": 17.84,
+  "end": 17.98
+ },
+ {
+  "text": "carrito",
+  "start": 17.98,
+  "end": 18.22
+ },
+ {
+  "text": "verde",
+  "start": 18.22,
+  "end": 18.38
+ },
+ {
+  "text": "aqu\u00ed",
+  "start": 18.38,
+  "end": 18.56
+ },
+ {
+  "text": "abajo,",
+  "start": 18.56,
+  "end": 18.74
+ },
+ {
+  "text": "accede",
+  "start": 18.86,
+  "end": 19.18
+ },
+ {
+  "text": "corriendo,",
+  "start": 19.18,
+  "end": 19.52
+ },
+ {
+  "text": "selecciona",
+  "start": 19.52,
+  "end": 19.86
+ },
+ {
+  "text": "tu",
+  "start": 19.86,
+  "end": 19.98
+ },
+ {
+  "text": "sabor",
+  "start": 19.98,
+  "end": 20.14
+ },
+ {
+  "text": "favorito",
+  "start": 20.14,
+  "end": 20.58
+ },
+ {
+  "text": "y",
+  "start": 20.58,
+  "end": 20.66
+ },
+ {
+  "text": "si",
+  "start": 20.66,
+  "end": 20.78
+ },
+ {
+  "text": "pillas",
+  "start": 20.78,
+  "end": 21.1
+ },
+ {
+  "text": "m\u00e1s",
+  "start": 21.1,
+  "end": 21.22
+ },
+ {
+  "text": "de",
+  "start": 21.22,
+  "end": 21.32
+ },
+ {
+  "text": "una",
+  "start": 21.32,
+  "end": 21.52
+ },
+ {
+  "text": "tienes",
+  "start": 21.52,
+  "end": 21.72
+ },
+ {
+  "text": "env\u00edo",
+  "start": 21.72,
+  "end": 22.14
+ },
+ {
+  "text": "gratis,",
+  "start": 22.14,
+  "end": 22.44
+ },
+ {
+  "text": "bro",
+  "start": 22.44,
+  "end": 22.52
+ }
+]

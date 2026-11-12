@@ -1,0 +1,4 @@
+{
+  "name": "Blur a foco",
+  "notes": "Al empezar una sección: blur 18px + brillo 1.35 → nítido en 0.45 s (power3.out)."
+}

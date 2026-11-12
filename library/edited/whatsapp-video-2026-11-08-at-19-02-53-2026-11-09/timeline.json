@@ -1,0 +1,408 @@
+{
+ "source": "inputs/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09.mp4",
+ "clips": [
+  {
+   "in": 2.57,
+   "out": 5.86,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false
+  },
+  {
+   "in": 7.04,
+   "out": 10.64,
+   "zoom": 1.14,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  },
+  {
+   "in": 11.18,
+   "out": 14.87,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  },
+  {
+   "in": 15.11,
+   "out": 18.9,
+   "zoom": 1.14,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  },
+  {
+   "in": 22.2,
+   "out": 27.47,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  },
+  {
+   "in": 29.4,
+   "out": 33.96,
+   "zoom": 1.14,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  },
+  {
+   "in": 33.96,
+   "out": 35.42,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": true
+  }
+ ],
+ "captions": [
+  {
+   "start": 0.06,
+   "end": 0.67,
+   "text": "aunque parezca que",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 0.67,
+   "end": 1.29,
+   "text": "te esté engañando",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 1.29,
+   "end": 1.79,
+   "text": "con esto no",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 1.79,
+   "end": 2.31,
+   "text": "me dedico a",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 2.31,
+   "end": 3.41,
+   "text": "la charcutería y",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 3.41,
+   "end": 3.61,
+   "text": "es que yo",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 3.61,
+   "end": 4.01,
+   "text": "no sé en",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 4.01,
+   "end": 4.49,
+   "text": "qué momento me",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 4.49,
+   "end": 5.13,
+   "text": "he encontrado con",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 5.13,
+   "end": 5.87,
+   "text": "todo este embutido",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 5.87,
+   "end": 6.43,
+   "text": "ibérico en mi",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 6.43,
+   "end": 7.19,
+   "text": "casa lo único",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 7.19,
+   "end": 7.63,
+   "text": "que hice fue",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 7.63,
+   "end": 8.31,
+   "text": "pedir un pack",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 8.31,
+   "end": 8.99,
+   "text": "para poder tener",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 8.99,
+   "end": 9.85,
+   "text": "embutido para todo",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 9.85,
+   "end": 10.63,
+   "text": "el invierno pero",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 10.63,
+   "end": 11.25,
+   "text": "yo pensaba que",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 11.25,
+   "end": 11.89,
+   "text": "me llegarían 4",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 11.89,
+   "end": 12.75,
+   "text": "o 5 paquetes",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 12.75,
+   "end": 13.21,
+   "text": "y es que",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 13.21,
+   "end": 13.79,
+   "text": "me han llegado",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 13.79,
+   "end": 14.57,
+   "text": "20 y es",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 14.57,
+   "end": 14.95,
+   "text": "que la empresa",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 14.95,
+   "end": 15.67,
+   "text": "esa magna ha",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 15.67,
+   "end": 16.57,
+   "text": "lanzado unos packs",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 16.57,
+   "end": 17.71,
+   "text": "exclusivos limitados que",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 17.71,
+   "end": 18.11,
+   "text": "van a durar",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 18.11,
+   "end": 19.67,
+   "text": "muy poco, evidentemente",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 19.7,
+   "end": 19.98,
+   "text": "si a ti",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 19.98,
+   "end": 20.64,
+   "text": "te sigue apareciendo",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 20.64,
+   "end": 21.2,
+   "text": "un carrito verde",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 21.2,
+   "end": 22.1,
+   "text": "aquí abajo accede",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 22.1,
+   "end": 22.92,
+   "text": "corriendo que significa",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 22.92,
+   "end": 23.78,
+   "text": "que todavía quedan",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 23.78,
+   "end": 24.56,
+   "text": "las últimas unidades",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  },
+  {
+   "start": 24.56,
+   "end": 25.69,
+   "text": "disponibles para ti",
+   "size": 94,
+   "color": "#FFFFFF",
+   "top": 1180,
+   "back": false
+  }
+ ],
+ "voice": {
+  "gain_db": 0
+ },
+ "music": null,
+ "sfx": [],
+ "cutout": null,
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920
+}

@@ -1,0 +1,24 @@
+{
+  "updated": "2026-11-09",
+  "sources": [
+    "https://tokchart.com/tiktok-trending-songs",
+    "https://tokchart.com/tiktok-trending-songs/united-states",
+    "https://www.revid.ai/viral-tiktok-songs",
+    "https://open.spotify.com/playlist/5A9JcnhwoJbRkUKuUEzsOu"
+  ],
+  "songs": [
+    { "title": "Rechazame", "artist": "Prince Royce", "notes": "Nº1 mundial en Tokchart (2 nov), +38k vídeos/día." },
+    { "title": "Dame Hombro", "artist": "Kevin Wai, Bulin 47, Breyco En Producidera", "notes": "Trend de baile con rebote de hombros, sigue fuerte en varios rankings." },
+    { "title": "BbY WOW", "artist": "Rusowsky, KAROL G, Judeline", "notes": "Top 10 mundial y en subida (+77% en 7 días). Muy escuchada en España." },
+    { "title": "Mil y una Noches", "artist": "Maki", "notes": "Top 10 mundial, +70% en 7 días." },
+    { "title": "Bonito, Bonito", "artist": "Thiago Navarro Music", "notes": "Top 3 mundial en Tokchart." },
+    { "title": "Housewife", "artist": "Tate McRae", "notes": "La más constante en todos los rankings de noviembre." },
+    { "title": "Ramalama (Bang Bang)", "artist": "Róisín Murphy", "notes": "Nº1 en EE. UU. (3 nov)." },
+    { "title": "Doja", "artist": "Central Cee", "notes": "Top 3 en EE. UU." },
+    { "title": "Paper Moon Static", "artist": "nedizini", "notes": "Una de las más reutilizadas de los últimos 30 días." },
+    { "title": "Self Aware", "artist": "Temper City", "notes": "Nº1 de los sonidos más usados esta semana (Revid, 8 nov)." },
+    { "title": "SOLEAO", "artist": "Myke Towers, Quevedo", "notes": "En las listas de TikTok España." },
+    { "title": "malibU", "artist": "Rusowsky", "notes": "En las listas de TikTok España." },
+    { "title": "All I Want for Christmas Is You", "artist": "Mariah Carey", "notes": "Temporada navideña: subiendo fuerte (+60% en 7 días)." }
+  ]
+}

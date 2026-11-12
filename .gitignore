@@ -1,0 +1,46 @@
+# --- dependencias (se reinstalan con instalar.ps1) ---
+app/node_modules/
+app/dist/
+app/release/
+app/electron/root.json
+.claude/skills/video-edit/.venv/
+.claude/skills/video-edit/.platform.json
+**/__pycache__/
+node_modules/
+
+# --- instalador (se publica aparte, en GitHub Releases) ---
+*.exe
+*.blockmap
+
+# --- archivos regenerables de los vídeos editados ---
+library/.cache/
+library/edited/*/versions/
+library/edited/*/editor/*
+!library/edited/*/editor/media/
+library/edited/*/work/
+
+# --- intermedios de los proyectos de la skill (se regeneran) ---
+work/reels/*/work/
+work/reels/*/renders/
+work/reels/*/.transcode-cache/
+work/reels/*/assets/aroll.mp4
+work/reels/*/frames/
+work/**/*.mov
+work/**/*.wav
+
+# --- varios ---
+.claude/settings.local.json
+*.log
+.DS_Store
+Thumbs.db
+
+# --- efectos de sonido de Pixabay (su licencia no permite redistribuirlos):
+#     instalar.ps1 los descarga con el setup de la skill y los copia a su sitio ---
+.claude/skills/video-edit/assets/template/assets/sfx/*.mp3
+library/tools/sonidos/whoosh-short.mp3
+library/tools/sonidos/pop.mp3
+library/tools/sonidos/sparkle.mp3
+library/tools/sonidos/click.mp3
+library/tools/sonidos/click-soft.mp3
+library/tools/sonidos/impact-bass-1.mp3
+work/reels/*/assets/sfx/*.mp3

@@ -1,0 +1,43 @@
+{
+  "name": "Básico TikTok",
+  "description": "Receta por defecto: corta silencios, zoom alterno en cada corte y subtítulos blancos en mayúsculas con la palabra activa en amarillo.",
+  "language": "es",
+  "whisper_model": "medium",
+  "cuts": {
+    "silence_gap": 0.35,
+    "pad_before": 0.06,
+    "pad_after": 0.12,
+    "max_shot": 4.5
+  },
+  "zoom": {
+    "enabled": true,
+    "pattern": [1.0, 1.14],
+    "anchor_y": 0.3
+  },
+  "captions": {
+    "font": "Montserrat Black",
+    "size": 84,
+    "uppercase": true,
+    "words_per_chunk": 3,
+    "max_chars": 16,
+    "primary": "#FFFFFF",
+    "highlight": "#FFE14D",
+    "highlight_active": true,
+    "outline": "#000000",
+    "outline_w": 7,
+    "shadow": 3,
+    "spacing": 1,
+    "pos_y": 0.66,
+    "pop": true
+  },
+  "audio": {
+    "loudnorm": true
+  },
+  "output": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "crf": 18
+  },
+  "corrections": {}
+}

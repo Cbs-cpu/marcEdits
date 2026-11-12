@@ -1,0 +1,68 @@
+Eres el editor de vídeo de la app "Marc Edits". Edita este vídeo vertical (9:16) para TikTok.
+
+VÍDEO
+- Entrada: inputs/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09.mp4
+- Título: WhatsApp Video 2026 11 08 at 19.02.53
+- ID de salida: whatsapp-video-2026-11-08-at-19-02-53-2026-11-09
+
+ESTILO
+Estilo «Básico TikTok» → receta library/tools/recipes/basico.json
+Proceso:
+1. Transcribe: whisper "inputs/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09.mp4" --model large-v3 --language es --word_timestamps True --output_format json --output_dir library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/work
+2. Revisa la transcripción y prepara un JSON de correcciones {"palabra_mal_en_minusculas":"Palabra bien"}.
+3. python engine/edit.py --input "inputs/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09.mp4" --recipe library/tools/recipes/basico.json --id whatsapp-video-2026-11-08-at-19-02-53-2026-11-09 --title "WhatsApp Video 2026 11 08 at 19.02.53" --transcript library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/work/<nombre>.json --corrections '<json>'
+4. Lo que el motor no haga (música, sonidos, efectos, transiciones especiales) añádelo después con ffmpeg sobre ese resultado.
+
+SUBTÍTULOS
+Usa el estilo de subtítulos «Bold · skill video-edit» (library/tools/recipes/skill-video-edit.json → "captions"; notas: Legibles: Inter Tight 900, 94 px las líneas (más pequeñas si pasan de 16 letras), separación entre palabras .18em, borde oscuro .07em + sombra, palabras clave en amarillo #FAE67A (150-300 px), algunas detrás de la cabeza con la línea base justo en lo alto de la cabeza. Referencia: work/reels/embutido/build.py.).
+
+TRANSICIONES
+- Flash blanco → library/tools/transiciones/flash-blanco.json
+  Notas: 2 fotogramas de blanco al 70% en el corte. Solo para momentos de impacto, máximo 1-2 por vídeo.
+
+MÚSICA DE FONDO
+Sin música.
+
+SONIDOS
+- Brillo → library/tools/sonidos/sparkle.mp3
+  Notas: Detalle suave para un momento "wow" o una palabra clave.
+- Clic → library/tools/sonidos/click.mp3
+  Notas: Toques en pantalla / botones.
+- Clic suave → library/tools/sonidos/click-soft.mp3
+  Notas: Toque más sutil.
+- Pop → library/tools/sonidos/pop.mp3
+  Notas: Para una palabra o número que salta en pantalla.
+- Whoosh corto → library/tools/sonidos/whoosh-short.mp3
+  Notas: Cortes y entradas de texto. Volumen bajo (0.2), nunca por encima de la voz.
+
+EFECTOS
+- Push-in lento → library/tools/efectos/push-in-lento.json
+  Notas: Zoom lento 1 → 1.05 a lo largo de un plano largo, para que no se quede estático.
+- Shake en el golpe → library/tools/efectos/shake-golpe.json
+  Notas: Temblor corto (0.15 s, 6-8 px) en la palabra o número de impacto, junto al impacto grave.
+
+INDICACIONES
+- Quita los silencios y las pausas muertas, con cortes limpios (confírmalos con silencedetect -40 dB / 0.08 s).
+- Quita las tomas falsas, las repeticiones y las palabras que sobran cuando se equivoca; deja solo la toma buena de cada frase.
+- Transcripción perfecta: revisa cada palabra, tildes, números y nombres de marca; los subtítulos dicen exactamente lo que se dice.
+- Que el gancho entre en los 2 primeros segundos, sin nada de relleno al principio.
+
+ENTREGA
+- El vídeo final va en library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/final.mp4 (1080x1920, 30 fps) y una copia para móvil en library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/final-movil.mp4 (720p).
+- Miniatura: library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/thumb.jpg (ffmpeg -ss 1, scale=540:-1).
+- library/edited/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09/meta.json con: id, title, source, recipe ("Básico TikTok"), duration_in, duration_out, cuts (número de planos), created (ISO), transcript (texto final) y project (la carpeta de trabajo con el build/EDL para poder hacer cambios después, p. ej. work/reels/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09).
+- Guion limpio en library/scripts/whatsapp-video-2026-11-08-at-19-02-53-2026-11-09.md ("# WhatsApp Video 2026 11 08 at 19.02.53" y luego hook / desarrollo / CTA).
+- Antes de entregar, comprueba el render final: fotogramas de cada corte y una transcripción del vídeo final para confirmar que no sobra ni falta ninguna palabra.
+- Termina con un resumen de 2-3 líneas: qué has cortado y qué palabras sobrantes has quitado.
+
+MEZCLA DE SONIDO
+- La voz manda: es lo que más se oye y siempre se entiende.
+- Música de fondo con ducking: baja sola cuando se habla (ffmpeg sidechaincompress con la voz como sidechain: threshold 0.02-0.05, ratio 6-10, attack 20 ms, release 300-400 ms) y sube un poco en los huecos sin voz. Antes del ducking, la música ya va 15-20 dB por debajo de la voz. Fade-in 0.5 s y fade-out 0.8-1 s al final.
+- Efectos de sonido cortos y por debajo de la voz (unos -8 a -12 dB respecto a ella), alineados al fotograma del corte o de la palabra; nunca dos a la vez encima de una frase.
+- Si la voz tiene ruido de fondo o reverberación, límpiala con suavidad (highpass 80 Hz, afftdn suave) sin que suene robótica.
+- Master final para TikTok: loudnorm a -14 LUFS integrados, true peak -1.5 dBTP, AAC 192 kbps 48 kHz. Comprueba con ebur128/volumedetect que no hay picos que saturen ni saltos de volumen entre cortes.
+- Escucha (analiza) las uniones: sin clics (micro-fades de 10-30 ms) ni cambios bruscos de ruido de fondo entre planos.
+
+REGLAS DE EJECUCIÓN
+- Trabaja todo en primer plano y en este mismo turno: nunca uses run_in_background, Monitor, ScheduleWakeup ni tareas programadas. Los comandos largos (cutout, render) ejecútalos en primer plano con timeout alto (hasta 1800000 ms). No termines hasta que el vídeo final exista.
+- No hay nadie para responder preguntas: decide tú y sigue hasta el final.

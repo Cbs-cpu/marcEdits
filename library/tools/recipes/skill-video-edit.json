@@ -1,0 +1,21 @@
+{
+  "name": "Bold · skill video-edit",
+  "description": "El estilo del vídeo del embutido: palabras en minúsculas que aparecen al decirlas, palabras clave grandes en amarillo y algunas detrás de la cabeza.",
+  "skill": "video-edit",
+  "look": "bold",
+  "language": "es",
+  "captions": {
+    "font": "Inter Tight",
+    "size": 94,
+    "uppercase": false,
+    "words_per_chunk": 1,
+    "primary": "#FFFFFF",
+    "highlight": "#FB7979",
+    "highlight_active": true,
+    "outline": "#0A0A0C",
+    "outline_w": 5,
+    "shadow": 5,
+    "pos_y": 0.56
+  },
+  "captions_notes": "Legibles: Inter Tight 900, 94 px las líneas (más pequeñas si pasan de 16 letras), separación entre palabras .18em, borde oscuro .07em + sombra, palabras clave en amarillo #FAE67A (150-300 px), algunas detrás de la cabeza con la línea base justo en lo alto de la cabeza. Referencia: work/reels/embutido/build.py."
+}

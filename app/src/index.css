@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0f;
+  --color-panel: #121218;
+  --color-card: #17171f;
+  --color-line: #26262f;
+  --color-muted: #8b8b98;
+  --color-accent: #fe2c55;
+  --color-cyan: #25f4ee;
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+}
+
+@font-face { font-family: "Montserrat Black"; src: url("media://f/engine%2Ffonts%2FMontserrat-Black.ttf"); }
+@font-face { font-family: "Montserrat ExtraBold"; src: url("media://f/engine%2Ffonts%2FMontserrat-ExtraBold.ttf"); }
+@font-face { font-family: "Inter Tight"; font-weight: 900; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FInterTight-900-normal.woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 800; font-style: normal; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FInterTight-800-normal.woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 600; font-style: normal; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FMontserrat-600-normal.woff2"); }
+@font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: normal; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FDMSerifDisplay-400-normal.woff2"); }
+@font-face { font-family: "Instrument Serif"; font-weight: 400; font-style: italic; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FInstrumentSerif-400-italic.woff2"); }
+@font-face { font-family: "Caveat"; font-weight: 600; font-style: normal; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FCaveat-600-normal.woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("media://f/.claude%2Fskills%2Fvideo-edit%2Fassets%2Ftemplate%2Fassets%2Ffonts%2FInter-600-normal.woff2"); }
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: #ececf1;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+input, textarea, select { user-select: text; }
+.drag { -webkit-app-region: drag; }
+.no-drag { -webkit-app-region: no-drag; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #2a2a34; border-radius: 10px; border: 3px solid var(--color-ink); }
+::-webkit-scrollbar-track { background: transparent; }
+
+@utility field {
+  @apply w-full rounded-lg border border-line bg-ink px-3 py-2 text-sm outline-none transition placeholder:text-muted/60 focus:border-accent/60;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition active:scale-[.98] disabled:pointer-events-none disabled:opacity-40;
+}
+@utility btn-primary { @apply btn bg-accent text-white hover:bg-[#ff4569]; }
+@utility btn-ghost { @apply btn border border-line bg-card text-zinc-200 hover:bg-[#1f1f29]; }
+@utility btn-icon { @apply inline-flex size-8 items-center justify-center rounded-md text-muted transition hover:bg-white/5 hover:text-white; }
+
+@keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.fadein { animation: fadein .18s ease-out; }
+
+/* subtítulos en la vista previa del editor (mismo estilo que el render Bold) */
+.cap-prev {
+  position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap;
+  font-family: "Inter Tight", "Segoe UI", sans-serif; font-weight: 900; letter-spacing: -.03em; word-spacing: .14em; line-height: .95;
+  -webkit-text-stroke: .07em rgba(10,10,12,.78); paint-order: stroke fill;
+  text-shadow: 0 8px 30px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.55);
+}

@@ -1,0 +1,72 @@
+[
+ {
+  "id": "hook",
+  "clip": "c1",
+  "src_in": 2.57,
+  "src_out": 5.86,
+  "zoom": 1.0,
+  "frame": 0,
+  "frames": 99,
+  "hard_cut": true
+ },
+ {
+  "id": "casa",
+  "clip": "c1",
+  "src_in": 7.04,
+  "src_out": 10.64,
+  "zoom": 1.14,
+  "frame": 99,
+  "frames": 108,
+  "hard_cut": true
+ },
+ {
+  "id": "pack",
+  "clip": "c1",
+  "src_in": 11.18,
+  "src_out": 14.87,
+  "zoom": 1.0,
+  "frame": 207,
+  "frames": 110,
+  "hard_cut": true
+ },
+ {
+  "id": "veinte",
+  "clip": "c1",
+  "src_in": 15.11,
+  "src_out": 18.9,
+  "zoom": 1.14,
+  "frame": 317,
+  "frames": 114,
+  "hard_cut": true
+ },
+ {
+  "id": "empresa",
+  "clip": "c1",
+  "src_in": 22.2,
+  "src_out": 27.47,
+  "zoom": 1.0,
+  "frame": 431,
+  "frames": 158,
+  "hard_cut": true
+ },
+ {
+  "id": "cta",
+  "clip": "c1",
+  "src_in": 29.4,
+  "src_out": 33.96,
+  "zoom": 1.14,
+  "frame": 589,
+  "frames": 137,
+  "hard_cut": false
+ },
+ {
+  "id": "cta2",
+  "clip": "c1",
+  "src_in": 33.96,
+  "src_out": 35.42,
+  "zoom": 1.0,
+  "frame": 726,
+  "frames": 45,
+  "hard_cut": true
+ }
+]

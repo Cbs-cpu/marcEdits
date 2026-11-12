@@ -1,0 +1,557 @@
+[
+ {
+  "text": "Aunque",
+  "start": 0.0,
+  "end": 0.2
+ },
+ {
+  "text": "parezca",
+  "start": 0.2,
+  "end": 0.58
+ },
+ {
+  "text": "que",
+  "start": 0.58,
+  "end": 0.66
+ },
+ {
+  "text": "te",
+  "start": 0.66,
+  "end": 0.78
+ },
+ {
+  "text": "est\u00e9",
+  "start": 0.78,
+  "end": 0.9
+ },
+ {
+  "text": "enga\u00f1ando",
+  "start": 0.9,
+  "end": 1.34
+ },
+ {
+  "text": "con",
+  "start": 1.34,
+  "end": 1.44
+ },
+ {
+  "text": "esto",
+  "start": 1.44,
+  "end": 1.66
+ },
+ {
+  "text": "no",
+  "start": 1.66,
+  "end": 1.8
+ },
+ {
+  "text": "me",
+  "start": 1.8,
+  "end": 1.94
+ },
+ {
+  "text": "dedico",
+  "start": 1.94,
+  "end": 2.3
+ },
+ {
+  "text": "a",
+  "start": 2.3,
+  "end": 2.32
+ },
+ {
+  "text": "la",
+  "start": 2.32,
+  "end": 2.4
+ },
+ {
+  "text": "charcuter\u00eda",
+  "start": 2.4,
+  "end": 3.12
+ },
+ {
+  "text": "y",
+  "start": 3.12,
+  "end": 3.34
+ },
+ {
+  "text": "es",
+  "start": 3.34,
+  "end": 3.46
+ },
+ {
+  "text": "que",
+  "start": 3.46,
+  "end": 3.54
+ },
+ {
+  "text": "yo",
+  "start": 3.54,
+  "end": 3.68
+ },
+ {
+  "text": "no",
+  "start": 3.68,
+  "end": 3.82
+ },
+ {
+  "text": "s\u00e9",
+  "start": 3.82,
+  "end": 3.9
+ },
+ {
+  "text": "en",
+  "start": 3.9,
+  "end": 4.02
+ },
+ {
+  "text": "qu\u00e9",
+  "start": 4.02,
+  "end": 4.04
+ },
+ {
+  "text": "momento",
+  "start": 4.04,
+  "end": 4.34
+ },
+ {
+  "text": "me",
+  "start": 4.34,
+  "end": 4.5
+ },
+ {
+  "text": "he",
+  "start": 4.5,
+  "end": 4.52
+ },
+ {
+  "text": "encontrado",
+  "start": 4.52,
+  "end": 4.94
+ },
+ {
+  "text": "con",
+  "start": 4.94,
+  "end": 5.14
+ },
+ {
+  "text": "todo",
+  "start": 5.14,
+  "end": 5.4
+ },
+ {
+  "text": "este",
+  "start": 5.4,
+  "end": 5.56
+ },
+ {
+  "text": "embutido",
+  "start": 5.56,
+  "end": 5.92
+ },
+ {
+  "text": "ib\u00e9rico",
+  "start": 5.92,
+  "end": 6.2
+ },
+ {
+  "text": "en",
+  "start": 6.2,
+  "end": 6.28
+ },
+ {
+  "text": "mi",
+  "start": 6.28,
+  "end": 6.42
+ },
+ {
+  "text": "casa,",
+  "start": 6.42,
+  "end": 6.66
+ },
+ {
+  "text": "lo",
+  "start": 6.82,
+  "end": 6.94
+ },
+ {
+  "text": "\u00fanico",
+  "start": 6.94,
+  "end": 7.2
+ },
+ {
+  "text": "que",
+  "start": 7.2,
+  "end": 7.36
+ },
+ {
+  "text": "hice",
+  "start": 7.36,
+  "end": 7.5
+ },
+ {
+  "text": "fue",
+  "start": 7.5,
+  "end": 7.66
+ },
+ {
+  "text": "pedir",
+  "start": 7.66,
+  "end": 7.9
+ },
+ {
+  "text": "un",
+  "start": 7.9,
+  "end": 8.1
+ },
+ {
+  "text": "pack",
+  "start": 8.1,
+  "end": 8.3
+ },
+ {
+  "text": "para",
+  "start": 8.3,
+  "end": 8.52
+ },
+ {
+  "text": "poder",
+  "start": 8.52,
+  "end": 8.78
+ },
+ {
+  "text": "tener",
+  "start": 8.78,
+  "end": 9.0
+ },
+ {
+  "text": "embutido",
+  "start": 9.0,
+  "end": 9.5
+ },
+ {
+  "text": "para",
+  "start": 9.5,
+  "end": 9.66
+ },
+ {
+  "text": "todo",
+  "start": 9.66,
+  "end": 9.84
+ },
+ {
+  "text": "el",
+  "start": 9.84,
+  "end": 9.98
+ },
+ {
+  "text": "invierno,",
+  "start": 9.98,
+  "end": 10.48
+ },
+ {
+  "text": "pero",
+  "start": 10.5,
+  "end": 10.66
+ },
+ {
+  "text": "yo",
+  "start": 10.66,
+  "end": 10.8
+ },
+ {
+  "text": "pensaba",
+  "start": 10.8,
+  "end": 11.16
+ },
+ {
+  "text": "que",
+  "start": 11.16,
+  "end": 11.28
+ },
+ {
+  "text": "me",
+  "start": 11.28,
+  "end": 11.34
+ },
+ {
+  "text": "llegar\u00edan",
+  "start": 11.34,
+  "end": 11.68
+ },
+ {
+  "text": "4",
+  "start": 11.68,
+  "end": 11.9
+ },
+ {
+  "text": "o",
+  "start": 11.9,
+  "end": 12.08
+ },
+ {
+  "text": "5",
+  "start": 12.08,
+  "end": 12.24
+ },
+ {
+  "text": "paquetes",
+  "start": 12.24,
+  "end": 12.82
+ },
+ {
+  "text": "y",
+  "start": 12.82,
+  "end": 13.02
+ },
+ {
+  "text": "es",
+  "start": 13.02,
+  "end": 13.18
+ },
+ {
+  "text": "que",
+  "start": 13.18,
+  "end": 13.24
+ },
+ {
+  "text": "me",
+  "start": 13.24,
+  "end": 13.38
+ },
+ {
+  "text": "han",
+  "start": 13.38,
+  "end": 13.48
+ },
+ {
+  "text": "llegado",
+  "start": 13.48,
+  "end": 13.86
+ },
+ {
+  "text": "20",
+  "start": 13.86,
+  "end": 14.02
+ },
+ {
+  "text": "y",
+  "start": 14.02,
+  "end": 14.42
+ },
+ {
+  "text": "es",
+  "start": 14.42,
+  "end": 14.6
+ },
+ {
+  "text": "que",
+  "start": 14.6,
+  "end": 14.68
+ },
+ {
+  "text": "la",
+  "start": 14.68,
+  "end": 14.78
+ },
+ {
+  "text": "empresa",
+  "start": 14.78,
+  "end": 15.04
+ },
+ {
+  "text": "Esa",
+  "start": 15.04,
+  "end": 15.32
+ },
+ {
+  "text": "Magna",
+  "start": 15.32,
+  "end": 15.56
+ },
+ {
+  "text": "ha",
+  "start": 15.56,
+  "end": 15.7
+ },
+ {
+  "text": "lanzado",
+  "start": 15.7,
+  "end": 16.12
+ },
+ {
+  "text": "unos",
+  "start": 16.12,
+  "end": 16.36
+ },
+ {
+  "text": "packs",
+  "start": 16.36,
+  "end": 16.58
+ },
+ {
+  "text": "exclusivos",
+  "start": 16.58,
+  "end": 17.16
+ },
+ {
+  "text": "limitados",
+  "start": 17.16,
+  "end": 17.6
+ },
+ {
+  "text": "que",
+  "start": 17.6,
+  "end": 17.76
+ },
+ {
+  "text": "van",
+  "start": 17.76,
+  "end": 17.84
+ },
+ {
+  "text": "a",
+  "start": 17.84,
+  "end": 17.92
+ },
+ {
+  "text": "durar",
+  "start": 17.92,
+  "end": 18.14
+ },
+ {
+  "text": "muy",
+  "start": 18.14,
+  "end": 18.26
+ },
+ {
+  "text": "poco,",
+  "start": 18.26,
+  "end": 18.48
+ },
+ {
+  "text": "evidentemente,",
+  "start": 18.62,
+  "end": 19.4
+ },
+ {
+  "text": "si",
+  "start": 19.4,
+  "end": 19.76
+ },
+ {
+  "text": "a",
+  "start": 19.76,
+  "end": 19.9
+ },
+ {
+  "text": "ti",
+  "start": 19.9,
+  "end": 20.02
+ },
+ {
+  "text": "te",
+  "start": 20.02,
+  "end": 20.1
+ },
+ {
+  "text": "sigue",
+  "start": 20.1,
+  "end": 20.26
+ },
+ {
+  "text": "apareciendo",
+  "start": 20.26,
+  "end": 20.7
+ },
+ {
+  "text": "un",
+  "start": 20.7,
+  "end": 20.8
+ },
+ {
+  "text": "carrito",
+  "start": 20.8,
+  "end": 21.02
+ },
+ {
+  "text": "verde",
+  "start": 21.02,
+  "end": 21.24
+ },
+ {
+  "text": "aqu\u00ed",
+  "start": 21.24,
+  "end": 21.46
+ },
+ {
+  "text": "abajo",
+  "start": 21.46,
+  "end": 21.66
+ },
+ {
+  "text": "accede",
+  "start": 21.66,
+  "end": 22.14
+ },
+ {
+  "text": "corriendo",
+  "start": 22.14,
+  "end": 22.52
+ },
+ {
+  "text": "que",
+  "start": 22.52,
+  "end": 22.66
+ },
+ {
+  "text": "significa",
+  "start": 22.66,
+  "end": 22.96
+ },
+ {
+  "text": "que",
+  "start": 22.96,
+  "end": 23.22
+ },
+ {
+  "text": "todav\u00eda",
+  "start": 23.22,
+  "end": 23.4
+ },
+ {
+  "text": "quedan",
+  "start": 23.4,
+  "end": 23.82
+ },
+ {
+  "text": "las",
+  "start": 23.82,
+  "end": 23.92
+ },
+ {
+  "text": "\u00faltimas",
+  "start": 23.92,
+  "end": 24.26
+ },
+ {
+  "text": "unidades",
+  "start": 24.26,
+  "end": 24.6
+ },
+ {
+  "text": "disponibles",
+  "start": 24.6,
+  "end": 25.14
+ },
+ {
+  "text": "para",
+  "start": 25.14,
+  "end": 25.34
+ },
+ {
+  "text": "ti",
+  "start": 25.34,
+  "end": 25.48
+ }
+]

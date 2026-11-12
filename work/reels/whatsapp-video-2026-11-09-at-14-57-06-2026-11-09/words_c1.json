@@ -1,0 +1,467 @@
+[
+ {
+  "text": "Este",
+  "start": 3.66,
+  "end": 4.24
+ },
+ {
+  "text": "es",
+  "start": 4.24,
+  "end": 4.52
+ },
+ {
+  "text": "el",
+  "start": 4.52,
+  "end": 4.66
+ },
+ {
+  "text": "desayuno",
+  "start": 4.66,
+  "end": 5.2
+ },
+ {
+  "text": "para",
+  "start": 5.2,
+  "end": 5.4
+ },
+ {
+  "text": "ponerse",
+  "start": 5.4,
+  "end": 5.94
+ },
+ {
+  "text": "realmente",
+  "start": 5.94,
+  "end": 6.44
+ },
+ {
+  "text": "fuerte.",
+  "start": 6.44,
+  "end": 7.28
+ },
+ {
+  "text": "Es",
+  "start": 14.8,
+  "end": 15.38
+ },
+ {
+  "text": "esto",
+  "start": 15.38,
+  "end": 15.96
+ },
+ {
+  "text": "de",
+  "start": 15.96,
+  "end": 16.14
+ },
+ {
+  "text": "aqu\u00ed,",
+  "start": 16.14,
+  "end": 16.48
+ },
+ {
+  "text": "te",
+  "start": 16.82,
+  "end": 18.1
+ },
+ {
+  "text": "va",
+  "start": 18.1,
+  "end": 18.28
+ },
+ {
+  "text": "a",
+  "start": 18.28,
+  "end": 18.32
+ },
+ {
+  "text": "aportar",
+  "start": 18.32,
+  "end": 18.6
+ },
+ {
+  "text": "una",
+  "start": 18.6,
+  "end": 18.68
+ },
+ {
+  "text": "gran",
+  "start": 18.68,
+  "end": 18.86
+ },
+ {
+  "text": "fuente",
+  "start": 18.86,
+  "end": 19.16
+ },
+ {
+  "text": "de",
+  "start": 19.16,
+  "end": 19.32
+ },
+ {
+  "text": "energ\u00eda,",
+  "start": 19.32,
+  "end": 19.58
+ },
+ {
+  "text": "adem\u00e1s",
+  "start": 19.84,
+  "end": 21.74
+ },
+ {
+  "text": "de",
+  "start": 21.74,
+  "end": 21.96
+ },
+ {
+  "text": "un",
+  "start": 21.96,
+  "end": 22.02
+ },
+ {
+  "text": "gran",
+  "start": 22.02,
+  "end": 22.18
+ },
+ {
+  "text": "porcentaje",
+  "start": 22.18,
+  "end": 22.6
+ },
+ {
+  "text": "de",
+  "start": 22.6,
+  "end": 22.74
+ },
+ {
+  "text": "prote\u00edna.",
+  "start": 22.74,
+  "end": 23.12
+ },
+ {
+  "text": "Lo",
+  "start": 26.46,
+  "end": 26.9
+ },
+ {
+  "text": "vas",
+  "start": 26.9,
+  "end": 27.1
+ },
+ {
+  "text": "a",
+  "start": 27.1,
+  "end": 27.26
+ },
+ {
+  "text": "tener",
+  "start": 27.26,
+  "end": 27.46
+ },
+ {
+  "text": "en",
+  "start": 27.46,
+  "end": 27.58
+ },
+ {
+  "text": "un",
+  "start": 27.58,
+  "end": 27.66
+ },
+ {
+  "text": "mont\u00f3n",
+  "start": 27.66,
+  "end": 27.88
+ },
+ {
+  "text": "de",
+  "start": 27.88,
+  "end": 28.04
+ },
+ {
+  "text": "sabores,",
+  "start": 28.04,
+  "end": 28.44
+ },
+ {
+  "text": "pero",
+  "start": 28.44,
+  "end": 30.32
+ },
+ {
+  "text": "s\u00ed",
+  "start": 30.32,
+  "end": 30.54
+ },
+ {
+  "text": "que",
+  "start": 30.54,
+  "end": 30.64
+ },
+ {
+  "text": "tiene",
+  "start": 30.64,
+  "end": 30.84
+ },
+ {
+  "text": "algo",
+  "start": 30.84,
+  "end": 31.02
+ },
+ {
+  "text": "malo.",
+  "start": 31.02,
+  "end": 31.4
+ },
+ {
+  "text": "Cada",
+  "start": 31.66,
+  "end": 32.1
+ },
+ {
+  "text": "vez",
+  "start": 32.1,
+  "end": 32.34
+ },
+ {
+  "text": "que",
+  "start": 32.34,
+  "end": 32.52
+ },
+ {
+  "text": "sale",
+  "start": 32.52,
+  "end": 32.66
+ },
+ {
+  "text": "stock",
+  "start": 32.66,
+  "end": 32.86
+ },
+ {
+  "text": "se",
+  "start": 32.86,
+  "end": 33.1
+ },
+ {
+  "text": "agotan",
+  "start": 33.1,
+  "end": 33.52
+ },
+ {
+  "text": "o",
+  "start": 33.52,
+  "end": 33.98
+ },
+ {
+  "text": "se",
+  "start": 33.98,
+  "end": 34.12
+ },
+ {
+  "text": "encantan,",
+  "start": 34.12,
+  "end": 34.7
+ },
+ {
+  "text": "pero",
+  "start": 34.7,
+  "end": 34.9
+ },
+ {
+  "text": "justo",
+  "start": 34.9,
+  "end": 35.14
+ },
+ {
+  "text": "ahora",
+  "start": 35.14,
+  "end": 35.36
+ },
+ {
+  "text": "vas",
+  "start": 35.36,
+  "end": 35.56
+ },
+ {
+  "text": "a",
+  "start": 35.56,
+  "end": 35.68
+ },
+ {
+  "text": "estar",
+  "start": 35.68,
+  "end": 35.82
+ },
+ {
+  "text": "de",
+  "start": 35.82,
+  "end": 35.98
+ },
+ {
+  "text": "suerte.",
+  "start": 35.98,
+  "end": 36.26
+ },
+ {
+  "text": "Acaban",
+  "start": 36.46,
+  "end": 36.88
+ },
+ {
+  "text": "de",
+  "start": 36.88,
+  "end": 37.0
+ },
+ {
+  "text": "reponer",
+  "start": 37.0,
+  "end": 37.32
+ },
+ {
+  "text": "nuevos",
+  "start": 37.32,
+  "end": 37.56
+ },
+ {
+  "text": "stock.",
+  "start": 37.56,
+  "end": 37.86
+ },
+ {
+  "text": "Simplemente",
+  "start": 38.56,
+  "end": 39.0
+ },
+ {
+  "text": "si",
+  "start": 39.0,
+  "end": 39.1
+ },
+ {
+  "text": "te",
+  "start": 39.1,
+  "end": 39.18
+ },
+ {
+  "text": "aparece",
+  "start": 39.18,
+  "end": 39.42
+ },
+ {
+  "text": "un",
+  "start": 39.42,
+  "end": 39.62
+ },
+ {
+  "text": "enlace",
+  "start": 39.62,
+  "end": 41.26
+ },
+ {
+  "text": "verde",
+  "start": 41.26,
+  "end": 41.5
+ },
+ {
+  "text": "aqu\u00ed",
+  "start": 41.5,
+  "end": 41.72
+ },
+ {
+  "text": "abajo,",
+  "start": 41.72,
+  "end": 41.94
+ },
+ {
+  "text": "accede",
+  "start": 42.12,
+  "end": 42.56
+ },
+ {
+  "text": "corriendo",
+  "start": 42.56,
+  "end": 42.98
+ },
+ {
+  "text": "y",
+  "start": 42.98,
+  "end": 44.16
+ },
+ {
+  "text": "selecciona",
+  "start": 44.16,
+  "end": 46.88
+ },
+ {
+  "text": "tu",
+  "start": 46.88,
+  "end": 47.02
+ },
+ {
+  "text": "usador",
+  "start": 47.02,
+  "end": 47.14
+ },
+ {
+  "text": "favorito.",
+  "start": 47.14,
+  "end": 47.44
+ },
+ {
+  "text": "Y",
+  "start": 51.2,
+  "end": 51.64
+ },
+ {
+  "text": "si",
+  "start": 51.64,
+  "end": 52.08
+ },
+ {
+  "text": "pillas",
+  "start": 52.08,
+  "end": 52.46
+ },
+ {
+  "text": "m\u00e1s",
+  "start": 52.46,
+  "end": 52.58
+ },
+ {
+  "text": "de",
+  "start": 52.58,
+  "end": 52.68
+ },
+ {
+  "text": "una.",
+  "start": 52.68,
+  "end": 52.88
+ },
+ {
+  "text": "Una",
+  "start": 52.88,
+  "end": 52.96
+ },
+ {
+  "text": "tienes",
+  "start": 52.96,
+  "end": 53.1
+ },
+ {
+  "text": "env\u00edo",
+  "start": 53.1,
+  "end": 53.5
+ },
+ {
+  "text": "gratis,",
+  "start": 53.5,
+  "end": 53.78
+ },
+ {
+  "text": "bro.",
+  "start": 53.78,
+  "end": 53.88
+ }
+]

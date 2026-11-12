@@ -1,0 +1,2 @@
+- [Idioma español](idioma-espanol.md) — always reply to the user in Spanish
+- [App Marc Edits](marc-edits-app.md) — Electron app for TikTok edits with Claude; preferences: Opus 5.5, executable, tools folders, guided flow
