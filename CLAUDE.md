@@ -56,6 +56,26 @@ The app launches `claude -p` in this folder. Speak to the user in Spanish.
   batched transcription, ffmpeg render (trim/concat, 12 ms audio fades, gradient PNG overlay, -14 LUFS, NVENC when
   available). Writes the same files as a normal edit (incl. timeline.json, so it opens in the manual editor) plus
   `work/express.json`. The full Claude flow stays for captions/effects/references.
+  "Editar vídeo" is ONLY express now (`app/src/views/QuickEdit.jsx`: videos, Zooms, Degradado, optional reference,
+  notes). Zooms (default on, `--no-zoom`): «push» = slow alternating in/out 6-10 % + small hit on each cut (1.035, every
+  third 1.08) — toned down after «se van demasiado»; «jump» = fixed scale per clip 1.0/1.16/1.06/1.22 (UGC style).
+  Scale is always ≥ 1 and cropped inside the frame: no black borders, no distortion.
+  Reference (`--ref <id>`): analysis.md + SKILL.md + recipe go into the single Claude call, which returns
+  `style {zoom: push|jump|none, strength, pause, hook_text}`. A reference that is not analysed yet is analysed first
+  (full Claude job, once) and then the express edit runs. Claude call uses `--effort medium` (consistent decisions).
+  Perfect cuts (`safe_cuts`): words that fall entirely in silence are moved to the real voice onset; every clip is
+  trimmed to real voice (−0.03/+0.05 s); pauses > 0.25 s inside a clip are split (keeps `pause`); a cut is only made
+  in silence or in the deepest valley between words (±0.12 s); otherwise the dropped neighbouring words are restored
+  (e.g. «Y es que» glued to the next phrase). Connectors are never treated as repetitions.
+  Transcription against repetitions: Whisper ALWAYS runs with `condition_on_previous_text=False` (with True it
+  «cleans up» the text and skips repeated takes, so nobody could remove them); voice without words (≥0.35 s) is
+  transcribed on its own and inserted (`fill_gaps`); words Claude drops in a block (2+ in a row) are never restored
+  by the cut, which falls in the energy valley instead; `repeats_left` drops the first take of any phrase still
+  repeated before rendering; and `final_check` listens to final.mp4 (large-v3 on GPU, better words) → `meta.transcript`
+  and `meta.check.repeated`.
+  Claude can ask for up to 2 images (`meta.needs[]`: `{n, t, dur, what, said, image}`; times on the final video).
+  The video window shows each request; attaching one copies it to `media/imagen-N.*` and runs
+  `express.py <id> --rerender` (ffmpeg only, ~5 s): rounded card with shadow over the lower half, 0.18 s fades.
 - Product spec (accounts, subscriptions, own server): `docs/SPEC.md` — nothing marked "Futuro" is built without approval.
 - Trending TikTok songs: `library/tools/tendencias.json` (list only; copyrighted, never downloaded or put in the
   video: the user adds them from TikTok when publishing).

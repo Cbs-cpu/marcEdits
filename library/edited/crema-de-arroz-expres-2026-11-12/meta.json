@@ -11,7 +11,28 @@
     "seconds": 22
   },
   "duration_in": 57.75,
-  "duration_out": 23.77,
+  "duration_out": 23.8,
   "cuts": 10,
-  "transcript": "este es el desayuno para ponerse realmente fuerte es esto de aquí te va a aportar una gran fuente de energía además de un gran porcentaje de proteína lo vas a tener en un montón de sabores pero sí que tiene algo malo cada vez que sale stock se agotan pero justo ahora vas a estar de suerte acaban de reponer nuevo stock simplemente si te aparece un carrito verde aquí abajo accede corriendo selecciona tu usador favorito y si pías más de una tienes envío gratis bro"
+  "transcript": "este es el desayuno para ponerse realmente fuerte es esto de aquí te va a aportar una gran fuente de energía además de un gran porcentaje de proteína lo vas a tener en un montón de sabores pero sí que tiene algo malo cada vez que sale stock se agotan pero justo ahora vas a estar de suerte acaban de reponer nuevo stock simplemente si te aparece un carrito verde aquí abajo accede corriendo selecciona tu usador favorito y si pías más de una tienes envío gratis bro",
+  "project": "library/edited/crema-de-arroz-expres-2026-11-12/timeline.json",
+  "lastChange": {
+    "seconds": 71,
+    "at": "2026-11-12T14:39:43"
+  },
+  "history": [
+    {
+      "at": "2026-11-12T14:37:21",
+      "type": "claude",
+      "desc": "Quiero que le metas zoom in y zoom out suaves para que sea más dinámico el video.",
+      "backup": "v1",
+      "seconds": 124
+    },
+    {
+      "at": "2026-11-12T14:39:43",
+      "type": "claude",
+      "desc": "quiero que sean mas dinamicos los zooms",
+      "backup": "v2",
+      "seconds": 71
+    }
+  ]
 }

@@ -235,8 +235,8 @@ export default function VideoChat({ item, kind = 'video' }) {
           {chat.messages.length === 0 && (
             <div className="rounded-xl border border-dashed border-line p-4 text-sm text-zinc-300">
               {car
-                ? 'Pídele cambios a Claude como en un chat: «otra versión del gancho», «letra más grande en la 3», «añade una diapositiva con el precio»… Cada vez que cambie el carrusel se guarda la versión anterior.'
-                : 'Pídele cambios a Claude como en un chat: «sube los subtítulos», «pon el efecto de shake en el 20», «quita la última frase»… Cada vez que cambie el vídeo se guarda la versión anterior.'}
+                ? 'Pide cambios como en un chat. Se guarda siempre la versión anterior.'
+                : 'Pide cambios como en un chat. Se guarda siempre la versión anterior.'}
               <button className="mt-2 flex items-center gap-1 text-xs text-muted hover:text-white" onClick={() => setShowCtx(!showCtx)}>
                 <ChevronDown size={12} className={`transition ${showCtx ? '' : '-rotate-90'}`} /> Ver el contexto que irá con el primer mensaje
               </button>
@@ -259,7 +259,7 @@ export default function VideoChat({ item, kind = 'video' }) {
 
       {/* sugerencias rápidas */}
       <div className="mb-2 flex gap-1.5 overflow-x-auto pb-1">
-        {(car ? CAROUSEL_CHIPS : CHANGE_CHIPS).map((c) => (
+        {(car ? CAROUSEL_CHIPS : item.express ? CHANGE_CHIPS.filter((c) => !/subt[ií]tulo/i.test(c)) : CHANGE_CHIPS).map((c) => (
           <button key={c} onClick={() => insert(c)} className="shrink-0 rounded-full border border-line bg-card px-2.5 py-1 text-xs text-zinc-300 hover:border-white/20">{c}</button>
         ))}
       </div>
@@ -274,7 +274,7 @@ export default function VideoChat({ item, kind = 'video' }) {
         )}
         <textarea ref={taRef} rows={3} value={text} onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
-          placeholder={working ? 'Claude está trabajando… puedes ir escribiendo el siguiente cambio' : 'Escribe qué quieres cambiar (Enter para enviar, Shift+Enter para salto de línea)'}
+          placeholder={working ? 'Claude está trabajando…' : '¿Qué cambiamos?'}
           className="block max-h-48 w-full resize-none bg-transparent px-3.5 pt-3 text-[13.5px] leading-relaxed outline-none placeholder:text-muted/60" />
         <div className="flex items-center gap-0.5 px-2 pb-2">
           {TOOLS.map(({ id, label, icon: Icon }) => (

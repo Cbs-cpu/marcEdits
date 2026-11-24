@@ -43,6 +43,9 @@ App de escritorio local para editar vídeos cortos verticales de TikTok en espa�
 | 0.5 | Varios vídeos por edición (orden fijo o libre, papel principal / B-roll), vídeos largos (duración objetivo, transcripción por trozos), paso de **referencia** en el asistente (enlace, archivo o skill; analizar y guardar como skill antes de editar); motor con `clips[].src`, `fit` (relleno / desenfocado / negro), volumen por plano y pista **B-roll**; editor con pestaña Vídeos, importar vídeos y pista B-roll. |
 | 0.6 | Inicio con dos pestañas **Vídeos / Carruseles**; carruseles para TikTok Shop (formatos en tendencia, referencias desde enlace o capturas, clonar, conversación con Claude, render HTML→PNG con Edge); **cronómetro** por vídeo y carrusel; análisis previo sin Claude (`engine/prep.py`, Whisper turbo: 35 s → 14 s por vídeo de 40 s); Claude en modo Rápido (`--effort medium`); formulario de 9 a 5 preguntas con **Sin subtítulos**; menos RAM (vistas bajo demanda, sin corrector ortográfico, tope de memoria); spec de cuentas y servidor propio en `docs/SPEC.md`. |
 | 0.7 | **Modo Exprés** (por defecto): edición completa en ~20 s (`engine/express.py`): Whisper turbo por GPU, Claude en una sola llamada sin herramientas, verificación de uniones y render directo con ffmpeg + degradado negro. Antes, el mismo vídeo tardaba 12:27 con el flujo completo. Skills `cut-video` (cortes) y `tiktok-hooks` (ganchos y descripción). |
+| 0.8 | Exprés: Claude pide las imágenes que harían falta («foto de los sabores»), el vídeo sale igual de rápido y al adjuntarla se monta en ~5 s. Interfaz con menos texto y animaciones más vivas (guía de Emil Kowalski). |
+| 0.8.1 | Exprés con **zooms** por defecto (casilla «Zooms»), copiados del vídeo que gustó: zoom lento alterno 12-18 % por plano y golpe de zoom al entrar en cada plano (fuerte uno de cada tres). ~26 s por vídeo. |
+| 0.9 | Solo modo Exprés (una pantalla). Cortes que nunca caen en plena voz (recupera palabras pegadas como «Y es que», corta en silencio o en el valle entre palabras, sin pausas > 0,25 s). Zooms más suaves (6-10 %) o «a saltos» según la referencia. Referencia en Exprés: si está analizada se aplica en ~20 s; si no, se analiza una vez. Degradado más suave. |
 
 ## Cómo funciona por dentro
 
@@ -54,7 +57,7 @@ App de escritorio local para editar vídeos cortos verticales de TikTok en espa�
   <id>` (HyperFrames + ffmpeg). Así el editor manual y Claude trabajan sobre lo mismo.
 - Antes de llamar a Claude, la app hace el análisis previo (`engine/prep.py`): transcripción, silencios y hojas de
   fotogramas. Así Claude no gasta turnos ni minutos en eso.
-- Cliente: quiere la app **mucho más rápida** y que funcione en cualquier PC, menos preguntas en el formulario, que
+- Cliente: solo quiere el **modo Exprés** (~20 s por vídeo) y cortes siempre perfectos; quiere la app **mucho más rápida** y que funcione en cualquier PC, menos preguntas en el formulario, que
   Claude decida más solo, y en el futuro cuentas con suscripción de pago y procesado en un servidor propio
   (`docs/SPEC.md`, pendiente de su aprobado).
 - Antes de cualquier cambio la app guarda la versión actual en `versions/vN.mp4`.

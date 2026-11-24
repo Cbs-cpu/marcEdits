@@ -4,13 +4,13 @@ Aplicación de escritorio (Windows) para editar vídeos verticales de TikTok en 
 **suscripción de Claude** (nunca una API key de pago). Corta silencios y tomas falsas, transcribe y subtitula,
 añade zooms, transiciones, música con ducking, efectos y stickers, y entrega el vídeo en 1080x1920 a -14 LUFS.
 
-Versión actual: **0.7.0**
+Versión actual: **0.9.0**
 
 ## Qué hace
 
 | Sección | Para qué |
 |---|---|
-| **Editar vídeo** | Asistente paso a paso: uno o **varios vídeos** (se juntan, en orden o como decida Claude), vídeos largos (elige la duración final), **referencia** de cómo debe quedar (enlace, vídeo descargado o skill ya analizada), estilo, subtítulos, transiciones, música, efectos e indicaciones. Al final enseña el prompt exacto que recibe Claude (Opus 5.5). |
+| **Editar vídeo** | **Modo Exprés** (~30-60 s): uno o varios vídeos, zooms, degradado, referencia opcional e indicaciones. Transcribe, Claude decide qué sobra (tomas falsas, repeticiones, muletillas), corta en los silencios, comprueba cada unión, escucha el vídeo final para confirmar que no queda nada repetido y escribe la descripción de TikTok. |
 | **Vídeos editados** | Reproductor, conversación con Claude por vídeo (cambios, subtítulos, efectos), ajustes rápidos, versiones anteriores. |
 | **Editor** | Editor manual tipo CapCut/Premiere: planos de varios vídeos, pista de **B-roll** encima de la voz, textos, stickers, efectos, música y sonidos, deshacer/rehacer, exportar. |
 | **Guiones** | Guiones guardados (gancho / desarrollo / CTA). |
@@ -42,13 +42,18 @@ Si la app pregunta por la carpeta del proyecto, elige esta carpeta (la que conti
 
 ## Demostración rápida (5 minutos)
 
-1. **Vídeos editados** → abre «Pack de embutido ibérico · Reel PRO»: el reel terminado (música, transiciones, stickers,
-   palabras detrás de la cabeza).
-2. **Editor** → abre ese mismo reel: mueve un texto en el visor, cambia el volumen de la música, añade un sticker
-   y pulsa **Exportar vídeo** (la versión anterior queda en *Versiones*).
-3. **Vídeos editados** → un vídeo → *Conversación*: pídele a Claude «subtítulos más grandes» y mira cómo lo cambia.
-4. **Editar vídeo** → arrastra dos vídeos, elige la referencia «Milloneti o Albañil» y revisa el prompt final
-   (enviarlo hace la edición real: unos 10-20 minutos según la duración).
+1. **Vídeos editados** → abre «Crema de arroz · cortes limpios» o «Embutido · estilo creatina»: vídeos terminados
+   (cortes, zooms, degradado; en *Info* está la descripción para TikTok).
+2. **Editar vídeo** → arrastra un vídeo grabado con el móvil y pulsa editar: en menos de un minuto sale montado, sin
+   silencios ni tomas repetidas.
+3. **Editor** → abre ese vídeo: mueve un corte, añade un texto o un sticker y pulsa **Exportar vídeo** (la versión
+   anterior queda en *Versiones*).
+4. **Vídeos editados** → un vídeo → *Conversación*: pídele a Claude un cambio («quita la última frase») y mira cómo
+   lo hace.
+5. **Carruseles** → sube fotos de un producto y elige un formato en tendencia.
+
+Los vídeos originales de iPhone (`.MOV`) no se suben al repositorio (algunos pasan del límite de 100 MB de GitHub):
+los vídeos terminados sí están, pero para volver a montar esos dos hay que copiar sus originales a `inputs/`.
 
 ## Estructura
 

@@ -9,8 +9,7 @@ export default function Formats({ onUse }) {
   useEffect(() => { api.carouselFormats().then(setData); }, []);
   return (
     <>
-      <Header title="Formatos en tendencia" subtitle={data?.updated ? `TikTok Shop · actualizado el ${data.updated}` : ''} />
-      {data?.notes && <p className="mb-6 max-w-3xl text-sm leading-relaxed text-zinc-400">{data.notes}</p>}
+      <Header title="Formatos en tendencia" subtitle={data?.updated ? `TikTok Shop · ${data.updated}` : ''} />
       <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
         {data?.formats?.map((f) => (
           <div key={f.id} className="fadein flex flex-col rounded-xl border border-line bg-card p-4">

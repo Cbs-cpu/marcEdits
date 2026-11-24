@@ -1,0 +1,29 @@
+{
+  "id": "whatsapp-video-2026-11-09-at-14-57-06-2026-11-12",
+  "title": "WhatsApp Video 2026 11 09 at 14.57.06",
+  "source": "inputs/whatsapp-video-2026-11-09-at-14-57-06-2026-11-12.mp4",
+  "recipe": "Exprés · cortes + zooms + degradado",
+  "created": "2026-11-12T15:09:34",
+  "express": true,
+  "timing": {
+    "started": "2026-11-12T15:09:34",
+    "finished": "2026-11-12T15:09:55",
+    "seconds": 21
+  },
+  "duration_in": 57.75,
+  "duration_out": 23.35,
+  "cuts": 10,
+  "zooms": true,
+  "transcript": "este es el desayuno para ponerse realmente fuerte es esto de aquí te va a aportar una gran fuente de energía además de un gran porcentaje de proteína lo vas a tener en un montón de sabores pero sí que tiene algo malo cada vez que sale stock se agotan pero justo ahora vas a estar de suerte acaban de reponer nuevo stock simplemente si te aparece un carrito verde aquí abajo accede corriendo selecciona tu usador favorito y si pías más de una tienes envío gratis bro",
+  "needs": [
+    {
+      "n": 1,
+      "t": 9.37,
+      "dur": 2.5,
+      "what": "Foto de todos los sabores disponibles",
+      "said": "lo vas a tener en un montón de sabores",
+      "image": null
+    }
+  ],
+  "reference": "whatsapp-video-2026-11-12-at-15-28-27"
+}

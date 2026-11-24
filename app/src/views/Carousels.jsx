@@ -139,11 +139,11 @@ export default function Carousels({ onNew }) {
   const current = items?.find((i) => i.id === open);
   return (
     <>
-      <Header title="Mis carruseles" subtitle="Posts de fotos para TikTok Shop, listos para subir">
+      <Header title="Mis carruseles" >
         <button className="btn-ghost" onClick={onNew}><Plus size={15} /> Nuevo</button>
       </Header>
       {items && items.length === 0 && (
-        <Empty icon={Images} title="Aún no hay carruseles" text="Sube las fotos de tu producto y elige un formato en tendencia o un carrusel para clonar.">
+        <Empty icon={Images} title="Aún no hay carruseles" text="">
           <button className="btn-primary" onClick={onNew}><Plus size={15} /> Crear carrusel</button>
         </Empty>
       )}

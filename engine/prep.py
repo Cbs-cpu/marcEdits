@@ -159,7 +159,7 @@ def transcribe_local(wav, hw, prompt):
         _model = WhisperModel(name, device=hw['device'], compute_type=hw['compute_type'], cpu_threads=hw['threads'])
         log(f'modelo {name} ({hw["device"]}) cargado en {time.time() - t:.1f}s')
     segs, _ = _model.transcribe(wav, word_timestamps=True, vad_filter=False, language='es', initial_prompt=prompt or None,
-                                beam_size=5)
+                                beam_size=5, condition_on_previous_text=False)
     out = []
     for s in segs:
         out.append({'start': round(s.start, 3), 'end': round(s.end, 3), 'text': s.text.strip(),

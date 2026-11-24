@@ -81,7 +81,8 @@ def main():
         wav = os.path.join(work, f'{cid}.wav')
         subprocess.run([FF, '-loglevel', 'error', '-y', '-i', f, '-vn', '-ac', '1', '-ar', '16000', wav], check=True)
         segs, _ = m.transcribe(wav, word_timestamps=True, vad_filter=False, language=os.environ.get('VE_LANG', 'es'),
-                              initial_prompt=os.environ.get('VE_PROMPT') or None)
+                              initial_prompt=os.environ.get('VE_PROMPT') or None,
+                              condition_on_previous_text=False)
         words = []
         lines.append(f'===== {cid}  {os.path.basename(f)}')
         for s in segs:

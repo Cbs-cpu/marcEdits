@@ -1,0 +1,78 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/embutido-estilo-creatina-2026-11-12.mp4",
+ "clips": [
+  {
+   "in": 2.58,
+   "out": 5.94,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 6.33,
+   "out": 10.76,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 11.19,
+   "out": 14.98,
+   "zoom": 1.06,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 15.11,
+   "out": 19.1,
+   "zoom": 1.22,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 22.57,
+   "out": 27.56,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 29.38,
+   "out": 35.48,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false
+ }
+}

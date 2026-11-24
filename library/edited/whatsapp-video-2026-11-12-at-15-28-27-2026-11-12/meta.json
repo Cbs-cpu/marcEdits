@@ -1,0 +1,29 @@
+{
+  "id": "whatsapp-video-2026-11-12-at-15-28-27-2026-11-12",
+  "title": "WhatsApp Video 2026 11 12 at 15.28.27",
+  "source": "inputs/whatsapp-video-2026-11-12-at-15-28-27-2026-11-12.mp4",
+  "recipe": "Exprés · cortes + zooms + degradado",
+  "created": "2026-11-12T15:07:52",
+  "express": true,
+  "timing": {
+    "started": "2026-11-12T15:07:52",
+    "finished": "2026-11-12T15:08:16",
+    "seconds": 24
+  },
+  "duration_in": 47.23,
+  "duration_out": 46.34,
+  "cuts": 4,
+  "zooms": true,
+  "transcript": "¿Cuál es el truco para que la creatina absorba lo mejor posible en tu cuerpo y de esta manera obtener los mayores beneficios? primero de todo es que la tomes con algo que la ayude a absorber en tu cuerpo, como por ejemplo un zumito. Y lo más importante es que sea una buena creatina. 100 % monohidrato con la mayor aprobación científica. Y muy importante que sea micronizada. Se va a disolver mejor en el agua y de esta manera va a absorber mucho mejor en tu cuerpo. Y por supuesto también es importante que no te timen. Ya que últimamente estoy viendo 300 gramos de creatina por 40 y 50 euros incluso. Pero yo te traigo la mejor de todas calidad -precio. Un kilo de creatina por menos de 20 euros. Y es que justo ahora la puedes conseguir por mucho menos. Porque se han juntado dos ofertas de TikTok, son más las de Food Delis. Y es que literalmente puedes tener creatina para un año por un precio absolutamente ridículo. Lo único malo es que como podrás comprender ya quedan muy pocas unidades. Pero si te aparece un carrito verde aquí abajo, te indica que todavía quedan las últimas unidades disponibles para ti, bro.",
+  "needs": [
+    {
+      "n": 1,
+      "t": 28.31,
+      "dur": 2.52,
+      "what": "Captura del precio de la creatina (1 kg) en TikTok Shop",
+      "said": "Un kilo de creatina por menos de 20 euros.",
+      "image": null
+    }
+  ],
+  "reference": "whatsapp-video-2026-11-12-at-15-28-27"
+}

@@ -1,0 +1,96 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/img-7240-2026-11-24.MOV",
+ "clips": [
+  {
+   "in": 3.41,
+   "out": 6.03,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none",
+   "pushin": true,
+   "pushin_amount": 0.081,
+   "pushin_ease": "power2.out"
+  },
+  {
+   "in": 10.77,
+   "out": 16.17,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": -0.115,
+   "pushin_ease": "power2.out"
+  },
+  {
+   "in": 16.67,
+   "out": 18.61,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": 0.073,
+   "pushin_ease": "power2.out"
+  },
+  {
+   "in": 19.41,
+   "out": 23.67,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "zoom",
+   "pushin": true,
+   "pushin_amount": -0.101,
+   "pushin_ease": "power2.out"
+  },
+  {
+   "in": 25.49,
+   "out": 27.23,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": 0.071,
+   "pushin_ease": "power2.out"
+  },
+  {
+   "in": 27.41,
+   "out": 33.59,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": -0.12,
+   "pushin_ease": "power2.out"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false
+ }
+}

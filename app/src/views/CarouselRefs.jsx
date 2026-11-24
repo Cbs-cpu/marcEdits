@@ -12,22 +12,22 @@ export default function CarouselRefs({ onClone }) {
   const current = items?.find((i) => i.id === open);
   const add = async (o) => {
     setErr(null);
-    try { await api.carouselRefAdd(o); setUrl(''); reload(); } catch { setErr('No se ha podido añadir. Prueba a subir capturas de las diapositivas.'); }
+    try { await api.carouselRefAdd(o); setUrl(''); reload(); } catch { setErr('No se ha podido añadir. Sube capturas.'); }
   };
   return (
     <>
-      <Header title="Referencias de carruseles" subtitle="Carruseles que funcionan, para clonarlos con tu producto" />
+      <Header title="Referencias"  />
       <div className="mb-6 flex gap-2">
         <div className="relative flex-1">
           <Link2 size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-          <input className="field pl-9" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Pega el enlace de un carrusel de TikTok (post de fotos)"
+          <input className="field pl-9" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Enlace de un carrusel de TikTok"
             onKeyDown={(e) => e.key === 'Enter' && url.trim() && add({ url: url.trim() })} />
         </div>
         <button className="btn-primary" disabled={!url.trim()} onClick={() => add({ url: url.trim() })}><Plus size={15} /> Añadir</button>
         <button className="btn-ghost" onClick={async () => { const f = await api.pickImages(); if (f.length) add({ files: f }); }}><FolderOpen size={15} /> Subir capturas</button>
       </div>
       {err && <p className="-mt-4 mb-4 text-xs text-red-300">{err}</p>}
-      {items && items.length === 0 && <Empty icon={Bookmark} title="Sin referencias" text="Pega el enlace de un carrusel que te guste o sube capturas de sus diapositivas, en orden." />}
+      {items && items.length === 0 && <Empty icon={Bookmark} title="Sin referencias" text="" />}
       <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
         {items?.map((it) => (
           <div key={it.id} role="button" onClick={() => !it.busy && setOpen(it.id)}

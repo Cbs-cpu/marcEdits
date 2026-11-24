@@ -1,0 +1,105 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/crema-de-arroz-sabores-2026-11-12.mp4",
+ "clips": [
+  {
+   "in": 4.01,
+   "out": 7.8,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 18.07,
+   "out": 20.16,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 21.47,
+   "out": 23.46,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 26.55,
+   "out": 28.76,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 30.25,
+   "out": 31.58,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 32.01,
+   "out": 33.78,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 34.75,
+   "out": 36.5,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 36.63,
+   "out": 38.12,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 48.37,
+   "out": 54.14,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false
+ }
+}

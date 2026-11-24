@@ -1,0 +1,27 @@
+{
+  "id": "crema-de-arroz-sabores-2026-11-12",
+  "title": "Crema de arroz · sabores",
+  "source": "inputs/crema-de-arroz-sabores-2026-11-12.mp4",
+  "recipe": "Exprés · cortes + degradado",
+  "created": "2026-11-12T14:32:39",
+  "express": true,
+  "timing": {
+    "started": "2026-11-12T14:32:39",
+    "finished": "2026-11-12T14:32:58",
+    "seconds": 19
+  },
+  "duration_in": 57.75,
+  "duration_out": 22.19,
+  "cuts": 9,
+  "transcript": "este es el desayuno para ponerse realmente fuerte te va a aportar una gran fuente de energía además de un gran porcentaje de proteína lo vas a tener en un montón de sabores pero sí que tiene algo malo cada vez que sale stock se agotan pero justo ahora vas a estar de suerte acaban de reponer nuevo stock simplemente si te aparece un carrito verde aquí abajo accede corriendo selecciona tu usador favorito y si pías más de una tienes envío gratis bro",
+  "needs": [
+    {
+      "n": 1,
+      "t": 7.9,
+      "dur": 2.52,
+      "what": "Foto de todos los sabores de la crema de arroz",
+      "said": "lo vas a tener en un montón de sabores",
+      "image": null
+    }
+  ]
+}

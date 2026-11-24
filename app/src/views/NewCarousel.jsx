@@ -6,10 +6,10 @@ import { buildCarouselPrompt, TONES, CAROUSEL_TIPS } from '../carouselPrompt.js'
 // Crear carrusel: producto → en qué se basa (formato o referencia a clonar) → detalles → prompt exacto
 const STEPS = ['producto', 'base', 'detalles', 'revision'];
 const Q = {
-  producto: '¿Qué producto vendemos? (sube sus fotos)',
-  base: '¿En qué nos basamos? Un formato en tendencia o un carrusel que quieras clonar',
-  detalles: '¿Algún detalle?',
-  revision: 'Esto es exactamente lo que va a recibir Claude.',
+  producto: '¿Qué vendemos?',
+  base: '¿Formato o carrusel a clonar?',
+  detalles: 'Detalles',
+  revision: 'Esto es lo que recibe Claude.',
 };
 
 function Bubble({ who, children, onEdit }) {
@@ -77,10 +77,10 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
   const addRef = async ({ url, files }) => {
     setRefErr(null);
     try { const r = await api.carouselRefAdd(url ? { url } : { files }); await reloadRefs(); setRefId(r.id); setFormatId(null); setRefUrl(''); }
-    catch { setRefErr('No se ha podido añadir. Prueba a subir capturas de las diapositivas.'); }
+    catch { setRefErr('No se ha podido añadir. Sube capturas.'); }
   };
   // si la descarga del enlace falla, la referencia desaparece
-  useEffect(() => { if (refs && refId && !ref) { setRefId(null); setRefErr('No se han podido bajar las fotos de ese enlace. Sube capturas de las diapositivas.'); } }, [refs]);
+  useEffect(() => { if (refs && refId && !ref) { setRefId(null); setRefErr('No se ha podido descargar. Sube capturas.'); } }, [refs]);
 
   const goReview = async () => {
     setBusy(true);
@@ -133,21 +133,21 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
           onDrop={(e) => { e.preventDefault(); setDrag(false); addPhotos([...e.dataTransfer.files].map((f) => api.pathForFile(f))); }}
           onClick={async () => addPhotos(await api.pickImages())}
           className={`grid cursor-pointer place-items-center rounded-xl border-2 border-dashed px-4 text-center transition ${photos.length ? 'py-4' : 'py-8'} ${drag ? 'border-accent bg-accent/5' : 'border-line hover:border-white/20'}`}>
-          <div className="flex items-center gap-2 text-sm text-muted"><ImagePlus size={18} /> {photos.length ? 'Añadir más fotos' : 'Arrastra fotos del producto o haz clic (recomendado: 3-8 fotos reales)'}</div>
+          <div className="flex items-center gap-2 text-sm text-muted"><ImagePlus size={18} /> {photos.length ? 'Añadir más fotos' : 'Arrastra fotos del producto'}</div>
         </div>
         <div className="grid grid-cols-[1fr_160px] gap-2">
-          <input className="field" value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })} placeholder="Producto (p. ej. Sérum de vitamina C)" />
+          <input className="field" value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })} placeholder="Producto" />
           <input className="field" value={product.price} onChange={(e) => setProduct({ ...product, price: e.target.value })} placeholder="Precio (opcional)" />
         </div>
         <textarea className="field h-20 resize-none" value={product.notes} onChange={(e) => setProduct({ ...product, notes: e.target.value })}
-          placeholder="Lo que hay que saber (opcional): para qué sirve, a quién va dirigido, lo que lo hace especial, oferta…" />
-        <input className="field" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título del carrusel (opcional)" />
+          placeholder="Qué lo hace especial (opcional)" />
+        <input className="field" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título (opcional)" />
       </div>
     ),
     base: (
       <div className="flex flex-col gap-4">
         <div>
-          <div className="mb-2 text-xs font-medium text-muted">Formatos en tendencia en TikTok Shop</div>
+          <div className="mb-2 text-xs font-medium text-muted">En tendencia</div>
           <div className="grid grid-cols-2 gap-2">
             {formats.map((f) => {
               const on = !refId && formatId === f.id;
@@ -162,7 +162,7 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
           </div>
         </div>
         <div>
-          <div className="mb-2 text-xs font-medium text-muted">…o clona un carrusel</div>
+          <div className="mb-2 text-xs font-medium text-muted">O clona uno</div>
           <div className="grid grid-cols-6 gap-2">
             {refs?.map((r) => {
               const on = refId === r.id;
@@ -181,7 +181,7 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
           <div className="mt-2 flex gap-2">
             <div className="relative flex-1">
               <Link2 size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input className="field pl-9" value={refUrl} onChange={(e) => setRefUrl(e.target.value)} placeholder="Pega el enlace de un carrusel de TikTok"
+              <input className="field pl-9" value={refUrl} onChange={(e) => setRefUrl(e.target.value)} placeholder="Enlace de TikTok"
                 onKeyDown={(e) => { if (e.key === 'Enter' && refUrl.trim()) addRef({ url: refUrl.trim() }); }} />
             </div>
             <button className="btn-ghost" disabled={!refUrl.trim()} onClick={() => addRef({ url: refUrl.trim() })}><Plus size={14} /> Añadir</button>
@@ -215,14 +215,14 @@ export default function NewCarousel({ initial, onClose, onStarted }) {
           })}
         </div>
         <textarea className="field h-20 resize-none" value={extra} onChange={(e) => setExtra(e.target.value)}
-          placeholder="Algo más (opcional): «que hable una chica de 25 años», «la oferta acaba el domingo», «colores de la marca: verde y crema»…" />
+          placeholder="Algo más (opcional)" />
       </div>
     ),
     revision: (
       <div className="flex flex-col gap-3">
         <textarea className="field h-[46vh] resize-none font-mono text-[12px] leading-relaxed" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
         <div className="flex items-center gap-3 text-xs text-muted">
-          <span>Modelo: <b className="text-zinc-300">Opus 5.5</b> · tu suscripción de Claude · las diapositivas se renderizan en tu PC (~1,5 s cada una)</span>
+          <span>Modelo: <b className="text-zinc-300">Opus 5.5</b> · tu suscripción</span>
           {needLogin && (
             <span className="ml-auto flex items-center gap-2 text-amber-200">
               Claude no tiene la sesión iniciada.

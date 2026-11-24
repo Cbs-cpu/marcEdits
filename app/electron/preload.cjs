@@ -15,6 +15,8 @@ contextBridge.exposeInMainWorld('api', {
   restoreEdited: (o) => ipcRenderer.invoke('edited:restore', o),
   renameEdited: (o) => ipcRenderer.invoke('edited:rename', o),
   saveEditedCaption: (o) => ipcRenderer.invoke('edited:saveCaption', o),
+  attachImage: (o) => ipcRenderer.invoke('edited:attachImage', o),
+  skipImage: (o) => ipcRenderer.invoke('edited:skipImage', o),
   chatGet: (id) => ipcRenderer.invoke('chat:get', id),
   chatNew: (id) => ipcRenderer.invoke('chat:new', id),
   chatSend: (o) => ipcRenderer.invoke('chat:send', o),

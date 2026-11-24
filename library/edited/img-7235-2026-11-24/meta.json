@@ -1,0 +1,37 @@
+{
+  "id": "img-7235-2026-11-24",
+  "title": "IMG 7235",
+  "source": "inputs/img-7235-2026-11-24.MOV",
+  "recipe": "Exprés · cortes + zooms + degradado",
+  "created": "2026-11-24T14:46:16",
+  "express": true,
+  "timing": {
+    "started": "2026-11-24T14:46:16",
+    "finished": "2026-11-24T14:47:10",
+    "seconds": 53
+  },
+  "duration_in": 86.44,
+  "duration_out": 33.16,
+  "cuts": 14,
+  "zooms": true,
+  "transcript": "dios mirar qué textura y es que esto de aquí es esto de aquí el alimento que va a ayudar a ponerte realmente fuerte ya que te va a aportar una gran fuente de energía además de un gran porcentaje de proteína lo vas a tener en un montón de sabores distintos y es que encima ahora vas a estar de suerte porque aparte de que casi nunca hay stock ahora la gente se lo está comprando a este precio yo no sé cuánto va a durar esta oferta le queda muy poco tiempo pero si te sigue apareciendo un cartón naranja aquí abajo simplemente tenéis que acceder, seleccionar tu usador freito y a ponerse realmente fuerte, bro",
+  "needs": [
+    {
+      "n": 1,
+      "t": 12.11,
+      "dur": 3.13,
+      "what": "Foto de todos los sabores disponibles",
+      "said": "lo vas a tener en un montón de sabores distintos",
+      "image": null
+    },
+    {
+      "n": 2,
+      "t": 20.03,
+      "dur": 2.78,
+      "what": "Captura del precio con la oferta actual",
+      "said": "ahora la gente se lo está comprando a este precio",
+      "image": null
+    }
+  ],
+  "status": "processing"
+}

@@ -12,7 +12,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "none",
+   "pushin": true,
+   "pushin_amount": 0.176,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 15.27,
@@ -21,7 +24,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": -0.135,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 18.07,
@@ -30,7 +36,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": 0.142,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 21.47,
@@ -39,7 +48,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "zoom",
+   "pushin": true,
+   "pushin_amount": -0.138,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 26.55,
@@ -48,7 +60,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": 0.144,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 30.25,
@@ -57,7 +72,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": -0.127,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 32.01,
@@ -66,7 +84,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "zoom",
+   "pushin": true,
+   "pushin_amount": 0.135,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 34.75,
@@ -75,7 +96,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": -0.135,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 36.63,
@@ -84,7 +108,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "punch",
+   "pushin": true,
+   "pushin_amount": 0.128,
+   "pushin_ease": "power2.out"
   },
   {
    "in": 48.37,
@@ -93,7 +120,10 @@
    "cx": 0.5,
    "cy": 0.35,
    "punch": false,
-   "transition": "none"
+   "transition": "zoom",
+   "pushin": true,
+   "pushin_amount": -0.18,
+   "pushin_ease": "power2.out"
   }
  ],
  "captions": [],

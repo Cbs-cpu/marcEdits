@@ -1,0 +1,114 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/whatsapp-video-2026-11-09-at-14-57-06-2026-11-12.mp4",
+ "clips": [
+  {
+   "in": 4.03,
+   "out": 7.72,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 15.29,
+   "out": 16.99,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 18.09,
+   "out": 20.13,
+   "zoom": 1.06,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 21.49,
+   "out": 23.43,
+   "zoom": 1.22,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 26.6,
+   "out": 28.76,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 30.27,
+   "out": 31.57,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 32.03,
+   "out": 33.78,
+   "zoom": 1.06,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 34.81,
+   "out": 36.5,
+   "zoom": 1.22,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 36.65,
+   "out": 38.01,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 48.39,
+   "out": 54.11,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false
+ }
+}

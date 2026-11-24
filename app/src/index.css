@@ -43,14 +43,24 @@ input, textarea, select { user-select: text; }
   @apply w-full rounded-lg border border-line bg-ink px-3 py-2 text-sm outline-none transition placeholder:text-muted/60 focus:border-accent/60;
 }
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition active:scale-[.98] disabled:pointer-events-none disabled:opacity-40;
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium active:scale-[.97] disabled:pointer-events-none disabled:opacity-40;
+  transition: transform 160ms var(--ease-out), background-color 150ms ease, border-color 150ms ease, color 150ms ease, opacity 150ms ease;
 }
 @utility btn-primary { @apply btn bg-accent text-white hover:bg-[#ff4569]; }
 @utility btn-ghost { @apply btn border border-line bg-card text-zinc-200 hover:bg-[#1f1f29]; }
-@utility btn-icon { @apply inline-flex size-8 items-center justify-center rounded-md text-muted transition hover:bg-white/5 hover:text-white; }
+@utility btn-icon { @apply inline-flex size-8 items-center justify-center rounded-md text-muted hover:bg-white/5 hover:text-white active:scale-[.94]; transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease; }
 
-@keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-.fadein { animation: fadein .18s ease-out; }
+/* Curvas con fuerza (las de CSS se quedan cortas) */
+:root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); }
+
+@keyframes fadein { from { opacity: 0; transform: translateY(4px) scale(.995); } to { opacity: 1; transform: none; } }
+.fadein { animation: fadein 200ms var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fadein { animation: fadein-soft 150ms ease; }
+  *, *::before, *::after { transition-duration: 0ms !important; scroll-behavior: auto !important; }
+}
+@keyframes fadein-soft { from { opacity: 0; } to { opacity: 1; } }
 
 /* subtítulos en la vista previa del editor (mismo estilo que el render Bold) */
 .cap-prev {

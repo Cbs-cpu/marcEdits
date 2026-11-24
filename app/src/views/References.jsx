@@ -29,7 +29,7 @@ function Detail({ item, busy, onClose, onSkill, onUse, onDeleted }) {
               )}
             </>
           ) : (
-            <p className="text-sm text-muted">Claude analiza cortes, subtítulos, ritmo y guion y lo guarda como skill.</p>
+            <p className="text-sm text-muted">Claude la analiza y la guarda como estilo.</p>
           )}
           <div className="mt-auto flex flex-wrap gap-2">
             {item.skill ? (
@@ -90,7 +90,7 @@ export default function References({ onUse }) {
       <div className="mb-6 flex gap-2">
         <div className="relative flex-1">
           <Link2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-          <input className="field pl-9" placeholder="Pega un enlace de TikTok, Instagram o YouTube…" value={url}
+          <input className="field pl-9" placeholder="Enlace de TikTok, Instagram o YouTube" value={url}
             onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && add()} />
         </div>
         <button className="btn-primary" onClick={add} disabled={!url.trim()}>Añadir</button>

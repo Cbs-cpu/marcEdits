@@ -1,0 +1,28 @@
+{
+  "id": "img-7240-2026-11-24",
+  "title": "IMG 7240",
+  "source": "inputs/img-7240-2026-11-24.MOV",
+  "recipe": "Exprés · cortes + zooms + degradado",
+  "created": "2026-11-24T14:49:23",
+  "express": true,
+  "timing": {
+    "started": "2026-11-24T14:49:23",
+    "finished": "2026-11-24T14:49:49",
+    "seconds": 26
+  },
+  "duration_in": 35.95,
+  "duration_out": 22.14,
+  "cuts": 6,
+  "zooms": true,
+  "transcript": "¿Sabéis si los de Big van a chapar el negocio? ¿cómo es posible que la mejor proteína del mercado con el mayor porcentaje de pureza esté a este precio? Aquí con su sellito que lo verifica. ¿Con sabor a cacaulátricas que literalmente la vas a querer tomar todos los días? No tiene ningún sentido. Si te sigue apareciendo un carrito naranja aquí abajo, accede corriendo antes de que se agoten las últimas unidades a este precio.",
+  "needs": [
+    {
+      "n": 1,
+      "t": 6.89,
+      "dur": 1.6,
+      "what": "Captura del precio de la proteína en la tienda",
+      "said": "esté a este precio?",
+      "image": null
+    }
+  ]
+}

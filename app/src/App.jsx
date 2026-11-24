@@ -8,7 +8,7 @@ const Edited = lazy(() => import('./views/Edited.jsx'));
 const Scripts = lazy(() => import('./views/Scripts.jsx'));
 const Tools = lazy(() => import('./views/Tools.jsx'));
 const References = lazy(() => import('./views/References.jsx'));
-const NewEdit = lazy(() => import('./views/NewEdit.jsx'));
+const QuickEdit = lazy(() => import('./views/QuickEdit.jsx'));
 const Editor = lazy(() => import('./views/Editor.jsx'));
 const Carousels = lazy(() => import('./views/Carousels.jsx'));
 const CarouselRefs = lazy(() => import('./views/CarouselRefs.jsx'));
@@ -134,7 +134,7 @@ export default function App() {
             <div className="mb-1 font-semibold text-amber-200">Claude no tiene la sesión iniciada</div>
             {auth.pending
               ? 'Termina el inicio de sesión en el navegador y vuelve aquí.'
-              : 'Sin sesión no se puede editar con Claude ni guardar skills.'}
+              : 'Hace falta para editar.'}
             <button className="btn-primary mt-2.5 w-full py-1.5 text-xs" onClick={login}>
               <LogIn size={14} /> Iniciar sesión en Claude
             </button>
@@ -148,7 +148,7 @@ export default function App() {
             </span>
           )}
           {settings && (
-            <div className="rounded-lg border border-line bg-ink p-1" title="Cuánto piensa Claude entre paso y paso. Rápido tarda bastante menos; Máxima calidad, para vídeos complicados.">
+            <div className="rounded-lg border border-line bg-ink p-1" title="Rápido: tarda mucho menos. Máx. calidad: para vídeos complicados.">
               <div className="grid grid-cols-2 gap-1">
                 {[['medium', 'Rápido', Zap], ['high', 'Máx. calidad', Gem]].map(([k, l, Icon]) => (
                   <button key={k} onClick={() => setEffort(k)}
@@ -181,7 +181,7 @@ export default function App() {
 
       <Suspense fallback={null}>
         {newEdit && (
-          <NewEdit
+          <QuickEdit
             initial={newEdit}
             onClose={() => setNewEdit(null)}
             onStarted={() => { setNewEdit(null); setView('edited'); }}

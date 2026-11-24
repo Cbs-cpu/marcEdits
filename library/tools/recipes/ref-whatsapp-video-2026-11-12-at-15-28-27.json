@@ -1,0 +1,45 @@
+{
+  "name": "Ref · Creatina UGC a cámara",
+  "description": "Vídeo de producto UGC hablado a cámara (selfie en casa): voz continua sin aire muerto, cortes en cada final de frase (~4 s por plano) alternando plano medio y primer plano, sin música ni efectos. La referencia no lleva subtítulos; aquí van discretos (blancos, sin resaltado) para retención.",
+  "language": "es",
+  "whisper_model": "medium",
+  "cuts": {
+    "silence_gap": 0.12,
+    "pad_before": 0.03,
+    "pad_after": 0.06,
+    "max_shot": 4.2
+  },
+  "zoom": {
+    "enabled": true,
+    "pattern": [1.0, 1.22, 1.08, 1.3],
+    "anchor_y": 0.3
+  },
+  "captions": {
+    "font": "Montserrat ExtraBold",
+    "size": 66,
+    "uppercase": false,
+    "words_per_chunk": 4,
+    "max_chars": 22,
+    "primary": "#FFFFFF",
+    "highlight": "#FFFFFF",
+    "highlight_active": false,
+    "outline": "#000000",
+    "outline_w": 5,
+    "shadow": 2,
+    "spacing": 0,
+    "pos_y": 0.72,
+    "pop": false
+  },
+  "audio": {
+    "loudnorm": true
+  },
+  "output": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "crf": 18
+  },
+  "corrections": {
+    "monoidrato": "monohidrato"
+  }
+}

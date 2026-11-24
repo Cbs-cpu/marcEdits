@@ -489,7 +489,10 @@ def build_html(tl, dur, cutout_ok):
                 tw.append(f"tl.fromTo('#stage',{{x:-160,filter:'blur(14px)'}},{{x:0,filter:'blur(0px)',duration:.28,ease:'power3.out',immediateRender:false}},{s:.3f});")
                 tw.append(f"tl.set('#stage',{{filter:'none'}},{s + .3:.3f});")
         if c.get('pushin'):
-            tw.append(f"tl.fromTo('#push',{{scale:1}},{{scale:{1 + float(c.get('pushin_amount', .06)):.3f},duration:{d:.3f},ease:'none',immediateRender:false}},{t:.3f});")
+            amt = float(c.get('pushin_amount', .06))  # > 0 zoom in across the clip, < 0 zoom out (starts zoomed, opens up)
+            a0, a1 = (1, 1 + amt) if amt >= 0 else (1 - amt, 1)
+            ease = c.get('pushin_ease', 'none')
+            tw.append(f"tl.fromTo('#push',{{scale:{a0:.3f}}},{{scale:{a1:.3f},duration:{d:.3f},ease:'{ease}',immediateRender:false}},{t:.3f});")
             tw.append(f"tl.set('#push',{{scale:1}},{t + d:.3f});")
         t += d
     # ---- effects track

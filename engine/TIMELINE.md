@@ -31,7 +31,8 @@
 - The mix (voice + music with ducking + sfx → -14 LUFS) is done by the render; do not normalise beforehand.
 - v2 (professional editor):
   - `clips[].speed` (0.5–2, voice keeps its pitch), `clips[].transition` (`none|punch|zoom|flash|blur|whip`, entering
-    the clip), `clips[].pushin` + `pushin_amount` (slow zoom across the clip).
+    the clip), `clips[].pushin` + `pushin_amount` (slow zoom across the clip; negative amount = slow zoom out) + `pushin_ease`
+    (GSAP ease, default `none`; `sine.inOut` for a soft start/stop).
   - `captions[]`: `font` (Inter Tight, Montserrat, DM Serif Display, Instrument Serif, Caveat, Inter), `stroke`
     (outline and shadow), `box` (background), `anim` (`pop|fade|up|type|none`), `x` (horizontal offset in px).
   - `overlays[]`: stickers `{type: title|emoji|arrow|cart|circle, text, start, end, x, y (centre, px), size, color, bg,

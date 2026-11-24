@@ -39,7 +39,7 @@ function Item({ cat, it, onChanged }) {
       {it.kind === 'image' && <img src={media(it.path, it.v)} className="max-h-56 w-full rounded-lg object-contain" />}
       <textarea
         className="field h-20 resize-none text-[13px] leading-snug"
-        placeholder="Notas para Claude: cuándo usarlo, volumen, duración…"
+        placeholder="Notas para Claude"
         value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => dirty && save()}
       />
     </div>
@@ -74,7 +74,7 @@ function Trends() {
           {busy ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />} Actualizar con Claude
         </button>
       </div>
-      <p className="mb-3 text-xs text-muted">Tienen copyright: Claude deja el vídeo listo y tú añades el sonido desde TikTok al publicar (así además cuenta en la tendencia).</p>
+      <p className="mb-3 text-xs text-muted">Tienen copyright: se añaden en TikTok al publicar.</p>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data?.songs?.map((t, i) => (
           <div key={i} className="flex items-center gap-3 rounded-xl border border-line bg-card px-3 py-2.5">

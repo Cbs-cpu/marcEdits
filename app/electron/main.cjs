@@ -881,31 +881,92 @@ ipcMain.handle('edit:prepare', async (_e, { file, files, title }) => {
 });
 // Modo Exprés: engine/express.py hace TODO en un proceso (transcribir, Claude en una sola llamada sin herramientas,
 // verificar uniones, render ffmpeg con degradado). Objetivo: < 1 minuto.
-ipcMain.handle('edit:express', (_e, { id, title, notes, gradient }) => {
+ipcMain.handle('edit:express', (_e, { id, title, notes, gradient, zoom, refId }) => {
   const p = prepared.get(id);
   if (!p) throw new Error('Vídeo no preparado');
   prepared.delete(id);
   const dir = path.join(DIRS.edited, id);
   const mp = path.join(dir, 'meta.json');
   const t0 = Date.now();
-  writeJSON(mp, { id, title: title || id, source: rel(p.inputAbs), recipe: 'Exprés · cortes + degradado', status: 'processing',
+  writeJSON(mp, { id, title: title || id, source: rel(p.inputAbs), recipe: 'Exprés', status: 'processing',
     created: isoNow(), express: true, timing: { started: isoNow() } });
   if (notes) fs.writeFileSync(path.join(dir, 'prompt.txt'), `Modo Exprés
 Indicaciones: ${notes}`, 'utf8');
   send('lib:changed', 'edited');
-  return runJob({
+  // Referencia: si ya está analizada se pasa tal cual (la lee Claude en su única llamada); si no, se analiza antes
+  const ref = refId ? listReferences().find((r) => r.id === refId) : null;
+  const start = () => runExpressJob();
+  if (ref && ref.video && !ref.analysis && !ref.skill) {
+    return runClaude({
+      kind: 'skill', title: `Analizando referencia · ${ref.title || ref.id}`, prompt: skillPrompt(ref) + RUN_RULES,
+      onDone: () => { send('lib:changed', 'references'); start(); },
+    });
+  }
+  return start();
+  function runExpressJob() { return runJob({
     kind: 'edit', title: `⚡ Exprés · ${title || id}`, cmd: skillPython(),
     args: ['engine/express.py', id, ...p.inputs.map((x) => x.path), '--title', title || '', ...(notes ? ['--notes', notes] : []),
-      ...(gradient === false ? ['--no-gradient'] : [])],
+      ...(gradient === false ? ['--no-gradient'] : []), ...(zoom === false ? ['--no-zoom'] : []), ...(ref ? ['--ref', ref.id] : [])],
     parser: (l, emit) => emit(l.replace(/^\[express\]\s*/, ''), l.startsWith('[express]') ? 'tool' : 'dim'),
     onDone: (code) => {
       const m = readJSON(mp, {});
       m.timing = { ...(m.timing || {}), finished: isoNow(), seconds: secsSince(t0) };
       if (code !== 0 || !exists(path.join(dir, 'final.mp4'))) m.status = 'error'; else delete m.status;
+      if (ref) m.reference = ref.id;
       writeJSON(mp, m);
       send('lib:changed', 'edited');
     },
+  }); }
+});
+
+// Imágenes que pidió Claude en un vídeo exprés (meta.needs). Al adjuntar una se vuelve a montar solo con ffmpeg (~5 s).
+function rerenderExpress(id, desc) {
+  const dir = path.join(DIRS.edited, id);
+  const mp = path.join(dir, 'meta.json');
+  const backup = backupVersion(dir);
+  const t0 = Date.now();
+  writeJSON(mp, { ...readJSON(mp, {}), status: 'processing' });
+  send('lib:changed', 'edited');
+  return runJob({
+    kind: 'edit', title: `Imagen · ${readJSON(mp, {}).title || id}`, cmd: skillPython(), args: ['engine/express.py', id, '--rerender'],
+    parser: (l, emit) => emit(l.replace(/^\[express\]\s*/, ''), l.startsWith('[express]') ? 'tool' : 'dim'),
+    onDone: (code) => {
+      const m = readJSON(mp, {}); delete m.status;
+      if (code === 0) m.lastChange = { seconds: secsSince(t0), at: isoNow() };
+      writeJSON(mp, m);
+      if (code === 0) {
+        addHistory(dir, { type: 'imagen', desc, backup, seconds: secsSince(t0) });
+        chatPush(dir, { role: 'event', text: `${desc} en ${fmtSecs(secsSince(t0))}. Lo anterior quedó como ${backup}.` });
+      }
+      send('lib:changed', 'edited');
+    },
   });
+}
+ipcMain.handle('edited:attachImage', async (_e, { id, n, file }) => {
+  let f = file;
+  if (!f) {
+    const r = await dialog.showOpenDialog(win, { properties: ['openFile'], filters: [{ name: 'Imágenes', extensions: ['jpg', 'jpeg', 'png', 'webp'] }] });
+    if (r.canceled) return null;
+    f = r.filePaths[0];
+  }
+  const dir = path.join(DIRS.edited, id);
+  fs.mkdirSync(path.join(dir, 'media'), { recursive: true });
+  const dest = path.join(dir, 'media', `imagen-${n}${path.extname(f).toLowerCase() || '.jpg'}`);
+  await fs.promises.copyFile(f, dest);
+  const mp = path.join(dir, 'meta.json');
+  const m = readJSON(mp, {});
+  m.needs = (m.needs || []).map((x) => (x.n === n ? { ...x, image: rel(dest), skipped: false } : x));
+  writeJSON(mp, m);
+  return rerenderExpress(id, 'Imagen añadida');
+});
+ipcMain.handle('edited:skipImage', (_e, { id, n }) => {
+  const mp = path.join(DIRS.edited, id, 'meta.json');
+  const m = readJSON(mp, {});
+  const had = (m.needs || []).find((x) => x.n === n)?.image;
+  m.needs = (m.needs || []).map((x) => (x.n === n ? { ...x, image: null, skipped: true } : x));
+  writeJSON(mp, m);
+  send('lib:changed', 'edited');
+  return had ? rerenderExpress(id, 'Imagen quitada') : null;
 });
 
 ipcMain.handle('edit:discard', (_e, id) => {
@@ -1313,12 +1374,16 @@ function createWindow() {
       if (process.env.MARC_TEST_FILE) {
         await js(`window.__MARC_TEST_FILE = ${JSON.stringify(process.env.MARC_TEST_FILE.split('|'))};
           window.__MARC_TEST_CAPTIONS = ${JSON.stringify(process.env.MARC_TEST_CAPTIONS || '')}; window.__MARC_TEST_TIPS = ${JSON.stringify((process.env.MARC_TEST_TIPS || '').split(',').filter(Boolean))};
-          window.__MARC_TEST_EXTRA = ${JSON.stringify(process.env.MARC_TEST_EXTRA || '')}; window.__MARC_TEST_TITLE = ${JSON.stringify(process.env.MARC_TEST_TITLE || '')}`);
+          window.__MARC_TEST_EXTRA = ${JSON.stringify(process.env.MARC_TEST_EXTRA || '')}; window.__MARC_TEST_TITLE = ${JSON.stringify(process.env.MARC_TEST_TITLE || '')};
+          window.__MARC_TEST_REF = ${JSON.stringify(process.env.MARC_TEST_REF || '')}`);
         await click('Editar vídeo');
         if (process.env.MARC_TEST_EXPRESS) {
-          await wait(1500); await clickHas('Exprés'); await shot('express-0');
+          await wait(1500); await shot('express-0');
           await clickHas('Editar ya'); await waitJobs('express-run', 10);
           await click('Vídeos editados'); await shot('express-hecho');
+          await js(`[...document.querySelectorAll('[role=button]')].find(d => d.textContent.includes(${JSON.stringify(process.env.MARC_TEST_TITLE || '')}))?.click()`);
+          await wait(1500); await shot('express-ficha');
+          await js(`[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Info')?.click()`); await shot('express-info');
           app.quit(); return;
         }
         await clickHas('Completo');

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Clapperboard, FolderOpen, Trash2, Plus, Loader2, Scissors, Timer, MoreVertical, Sparkles, SlidersHorizontal,
-  History, Info, MessageSquare, Clock, Copy, SquarePen, Repeat, Volume2, VolumeX, Send, Check, RotateCcw, LogIn, Pencil, AlertTriangle, Play,
+  History, Info, MessageSquare, Clock, Copy, ImagePlus, X, SquarePen, Repeat, Volume2, VolumeX, Send, Check, RotateCcw, LogIn, Pencil, AlertTriangle, Play,
 } from 'lucide-react';
 import { api, media, fmtDur, fmtDate, fmtClock, useElapsed, useLibrary } from '../lib.js';
 import { Header, Empty, Badge } from '../components/ui.jsx';
@@ -111,7 +111,7 @@ function CaptionBox({ item }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => setText(item.caption || ''), [item.caption]);
   if (!item.caption && !text) {
-    return <div className="rounded-lg border border-dashed border-line p-3 text-xs text-muted">Sin descripción para TikTok. Pídesela a Claude en la conversación: «Escribe la descripción y los hashtags para TikTok».</div>;
+    return <div className="rounded-lg border border-dashed border-line p-3 text-xs text-muted">Sin descripción. Pídesela a Claude en la conversación.</div>;
   }
   return (
     <div className="flex flex-col gap-2">
@@ -198,6 +198,8 @@ function VideoWindow({ item, initialTab, onClose, onDeleted, onEditor }) {
             <button className="btn-icon" title="Cerrar" onClick={onClose}>✕</button>
           </div>
 
+          <NeedsBar item={item} />
+
           {item.lastError && (
             <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
               <AlertTriangle size={15} /> {item.lastError}
@@ -222,6 +224,35 @@ function VideoWindow({ item, initialTab, onClose, onDeleted, onEditor }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ---------- imágenes que pidió Claude (modo exprés) ----------
+const pendingNeeds = (it) => (it.needs || []).filter((x) => !x.image && !x.skipped);
+function NeedsBar({ item }) {
+  const [drag, setDrag] = useState(null);
+  const list = (item.needs || []).filter((x) => !x.skipped);
+  if (!list.length) return null;
+  return (
+    <div className="flex flex-col gap-1.5">
+      {list.map((nd) => (
+        <div key={nd.n}
+          onDragOver={(e) => { e.preventDefault(); setDrag(nd.n); }} onDragLeave={() => setDrag(null)}
+          onDrop={(e) => { e.preventDefault(); setDrag(null); const f = e.dataTransfer.files[0]; if (f) api.attachImage({ id: item.id, n: nd.n, file: api.pathForFile(f) }); }}
+          className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 transition-colors ${
+            nd.image ? 'border-line bg-card' : drag === nd.n ? 'border-accent bg-accent/10' : 'border-amber-500/30 bg-amber-500/[.07]'}`}>
+          <ImagePlus size={16} className={nd.image ? 'text-emerald-400' : 'text-amber-300'} />
+          <div className="min-w-0 flex-1 text-sm">
+            <div className="truncate">{nd.what} <span className="text-muted">· {fmtDur(nd.t)}</span></div>
+            <div className="truncate text-xs text-muted">«{nd.said}»</div>
+          </div>
+          <button className={nd.image ? 'btn-ghost py-1 text-xs' : 'btn-primary py-1 text-xs'} disabled={item.busy}
+            onClick={() => api.attachImage({ id: item.id, n: nd.n })}>{nd.image ? 'Cambiar' : 'Añadir'}</button>
+          <button className="btn-icon size-7" title={nd.image ? 'Quitar' : 'No hace falta'} disabled={item.busy}
+            onClick={() => api.skipImage({ id: item.id, n: nd.n })}><X size={14} /></button>
+        </div>
+      ))}
     </div>
   );
 }
@@ -322,6 +353,7 @@ export default function Edited({ onNew, onEditor }) {
                   <div className="absolute bottom-2 left-2 flex gap-1">
                     <Badge tone="dark"><Timer size={11} /> {fmtDur(it.duration_out)}</Badge>
                     {it.cuts != null && <Badge tone="dark"><Scissors size={11} /> {it.cuts}</Badge>}
+                    {pendingNeeds(it).length > 0 && <Badge tone="warn"><ImagePlus size={11} /> {pendingNeeds(it).length}</Badge>}
                     {it.timing?.seconds != null && <Badge tone="dark" title="Tiempo de edición"><Clock size={11} /> {fmtClock(it.timing.seconds)}</Badge>}
                     {it.versions?.length > 0 && <Badge tone="dark"><History size={11} /> {it.versions.length}</Badge>}
                   </div>

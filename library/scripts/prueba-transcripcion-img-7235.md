@@ -1,0 +1,3 @@
+# Prueba transcripción IMG_7235
+
+Dios, mirad que textura Y es que esto de aquí es el alimento que va a ayudar a ponerte realmente fuerte Ya que te va a aportar una gran fuente de energía Además de un gran porcentaje de proteína Lo vas a tener en un montón de sabores Y es que encima ahora vas a estar de suerte Porque aparte de que casi nunca hay stock Ahora la gente se lo está comprando a este precio No sé cuánto va a durar Esta oferta le queda muy poco tiempo Pero si te sigue apareciendo un cartón naranja aquí abajo simplemente tienes que hacer seleccionar tu usador favorito y a ponerse realmente fuerte bro

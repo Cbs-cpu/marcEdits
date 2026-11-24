@@ -1,0 +1,60 @@
+{
+ "version": 1,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "source": "inputs/whatsapp-video-2026-11-12-at-15-28-27-2026-11-12.mp4",
+ "clips": [
+  {
+   "in": 0.13,
+   "out": 5.75,
+   "zoom": 1.0,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 5.97,
+   "out": 28.65,
+   "zoom": 1.16,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 28.85,
+   "out": 33.19,
+   "zoom": 1.06,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  },
+  {
+   "in": 33.47,
+   "out": 47.17,
+   "zoom": 1.22,
+   "cx": 0.5,
+   "cy": 0.35,
+   "punch": false,
+   "transition": "none"
+  }
+ ],
+ "captions": [],
+ "overlays": [],
+ "effects": [],
+ "sfx": [],
+ "music": null,
+ "cutout": null,
+ "voice": {
+  "gain_db": 0,
+  "clean": true
+ },
+ "grade": "contrast(1.07) saturate(.9) brightness(.97)",
+ "look": "bold",
+ "progress": {
+  "enabled": false
+ }
+}

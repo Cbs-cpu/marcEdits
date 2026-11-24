@@ -1,0 +1,3 @@
+# Embutido ibérico · zooms
+
+Aunque parezca que te esté engañando con esto No me dedico a la charcutería Y es que yo no sé en qué momento Me he encontrado con todo este embutido ibérico en mi casa Lo único que hice fue pedir un pack Para poder tener embutido para todo el invierno Pero yo pensaba que me llegarían 4 o 5 paquetes Y es que me han llegado 20 la empresa esa Magna Ha lanzado unos packs exclusivos limitados Que van a durar muy poco, evidentemente Si a ti te sigue apareciendo un carrito verde aquí abajo Accede corriendo que significa que todavía quedan Las últimas unidades disponibles para ti
